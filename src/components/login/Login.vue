@@ -2,13 +2,11 @@
   <CenterTemplate>
     <div>
       <v-form onsubmit="return false;">
-        <v-text-field label="ログインID" hide-details="auto"></v-text-field>
-        <v-text-field label="パスワード"></v-text-field>
-        <v-col class="text-center" cols="12" sm="4">
-          <div class="my-2">
-            <v-btn large color="primary" @click="onLoginClick">ログイン</v-btn>
-          </div>
-        </v-col>
+        <v-text-field v-model="userId" placeholder="ログインID" outlined clearable></v-text-field>
+        <v-text-field v-model="password" placeholder="パスワード" outlined type="password"></v-text-field>
+        <v-layout align-center justify-center>
+          <v-btn large color="primary" @click="onLoginClick">ログイン</v-btn>
+        </v-layout>
       </v-form>
     </div>
   </CenterTemplate>
@@ -18,7 +16,8 @@
 export default {
   name: "login",
   data: () => ({
-    sheet: false
+    userId: "",
+    password: ""
   }),
   methods: {
     onLoginClick() {
