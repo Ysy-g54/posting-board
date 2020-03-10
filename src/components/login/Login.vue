@@ -1,16 +1,17 @@
 <template>
-  <div class="text-center elevation-2 pa-12 headline">
-    <div>ログイン</div>
+  <CenterTemplate>
     <div>
-      <v-text-field label="ログインID" :rules="rules" hide-details="auto"></v-text-field>
+      <v-form onsubmit="return false;">
+        <v-text-field label="ログインID" hide-details="auto"></v-text-field>
+        <v-text-field label="パスワード"></v-text-field>
+        <v-col class="text-center" cols="12" sm="4">
+          <div class="my-2">
+            <v-btn large color="primary" @click="onLoginClick">ログイン</v-btn>
+          </div>
+        </v-col>
+      </v-form>
     </div>
-    <div>
-      <v-text-field label="パスワード"></v-text-field>
-    </div>
-    <div>
-      <v-btn @click="onLoginClick">ログイン</v-btn>
-    </div>
-  </div>
+  </CenterTemplate>
 </template>
 
 <script>
@@ -20,8 +21,13 @@ export default {
     sheet: false
   }),
   methods: {
-    onLoginClick() {}
-  }
+    onLoginClick() {
+      this.$router.push({
+        name: "hello-world"
+      });
+    }
+  },
+  components: {}
 };
 </script>
 

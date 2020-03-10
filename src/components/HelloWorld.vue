@@ -1,4 +1,5 @@
 <template>
+<CenterTemplate>
   <div class="text-center">
     <v-bottom-sheet v-model="sheet" persistent>
       <template v-slot:activator="{ on }">
@@ -21,6 +22,7 @@
       </v-sheet>
     </v-bottom-sheet>
   </div>
+  <CenterTemplate>
 </template>
 
 <script>
