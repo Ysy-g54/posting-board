@@ -1,24 +1,34 @@
 <template>
   <div>
     <ThreadList></ThreadList>
-    <div>
-      <v-btn large color="secondary">スレッドを作成する</v-btn>
-    </div>
+    <ThreadRegistration @on-register-thread-click="showSnackbar"></ThreadRegistration>
+    <v-snackbar v-model="snackbar">
+      {{ snackbarMessage }}
+      <v-btn color="pink" text @click="snackbar = false">Close</v-btn>
+    </v-snackbar>
   </div>
 </template>
 
 <script>
 import ThreadList from "@/components/thread/ThreadList";
+import ThreadRegistration from "@/components/thread/ThreadRegistration";
 export default {
   name: "thread",
   data: () => ({
-    threads: []
+    snackbarMessage: "",
+    snackbar: false
   }),
-  methods: {},
+  methods: {
+    showSnackbar(message) {
+      this.snackbarMessage = message;
+      this.snackbar = !this.snackbar;
+    }
+  },
   computed: {},
   created() {},
   components: {
-    ThreadList
+    ThreadList,
+    ThreadRegistration
   }
 };
 </script>

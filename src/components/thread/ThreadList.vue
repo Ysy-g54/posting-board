@@ -5,6 +5,7 @@
         <v-list-item-content>
           <v-list-item-title v-html="thread.title"></v-list-item-title>
           <v-list-item-subtitle v-html="thread.subtitle"></v-list-item-subtitle>
+          <v-list-item-subtitle v-html="thread.date"></v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
       <v-divider v-if="index + 1 < threads.length" :key="`divider-${thread.threadId}`"></v-divider>
@@ -13,6 +14,7 @@
 </template>
 
 <script>
+import moment from "moment";
 export default {
   name: "thread-list",
   data: () => ({
@@ -29,18 +31,70 @@ export default {
   computed: {},
   created() {
     this.threads.push(
-      { threadId: 0, title: "ひとつめ", subtitle: "サブ" },
-      { threadId: 1, title: "ふたつめ", subtitle: "サブ" },
+      {
+        threadId: 0,
+        title: "ひとつめ",
+        subtitle: "サブ",
+        date: this.formatDate(
+          moment(new Date("2015-05-05")),
+          "YYYY/MM/DD HH:mm"
+        )
+      },
+      {
+        threadId: 1,
+        title: "ふたつめ",
+        subtitle: "サブ",
+        date: this.formatDate(
+          moment(new Date("2016-05-05")),
+          "YYYY/MM/DD HH:mm"
+        )
+      },
       {
         threadId: 2,
         title:
           "みっつめaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-        subtitle: "サブ"
+        subtitle: "サブ",
+        date: this.formatDate(
+          moment(new Date("2017-05-05")),
+          "YYYY/MM/DD HH:mm"
+        )
       },
-      { threadId: 3, title: "ひとつめ", subtitle: "サブ" },
-      { threadId: 4, title: "ふたつめ", subtitle: "サブ" },
-      { threadId: 5, title: "ひとつめ", subtitle: "サブ" },
-      { threadId: 6, title: "ふたつめ", subtitle: "サブ" }
+      {
+        threadId: 3,
+        title: "ひとつめ",
+        subtitle: "サブ",
+        date: this.formatDate(
+          moment(new Date("2018-05-05")),
+          "YYYY/MM/DD HH:mm"
+        )
+      },
+      {
+        threadId: 4,
+        title: "ふたつめ",
+        subtitle: "サブ",
+        date: this.formatDate(
+          moment(new Date("2019-05-05")),
+          "YYYY/MM/DD HH:mm"
+        )
+      },
+      {
+        threadId: 5,
+        title: "ひとつめ",
+        subtitle: "サブ",
+        date: this.formatDate(
+          moment(new Date("2020-05-05")),
+          "YYYY/MM/DD HH:mm"
+        )
+      },
+      {
+        threadId: 6,
+        title: "ふたつめ",
+        subtitle: "サブ",
+        date: this.formatDate(
+          moment(new Date("2020-05-06")),
+          "YYYY/MM/DD HH:mm"
+        )
+      }
     );
   },
   components: {}
