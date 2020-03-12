@@ -4,9 +4,7 @@
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
       <v-toolbar-title>posting-board</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn icon>
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
+      <v-text-field hide-details prepend-icon="mdi-magnify" placeholder="スレッド・レスの内容で検索" clearable></v-text-field>
     </v-toolbar>
     <router-view></router-view>
   </div>

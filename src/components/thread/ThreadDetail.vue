@@ -8,7 +8,7 @@
         </v-card>
       </template>
     </v-list>
-    <ThreadRegistration @on-register-thread-click="showSnackbar"></ThreadRegistration>
+    <ResponseRegistration @on-register-thread-click="showSnackbar"></ResponseRegistration>
     <v-snackbar v-model="snackbar">
       {{ snackbarMessage }}
       <v-btn color="pink" text @click="snackbar = false">Close</v-btn>
@@ -17,14 +17,21 @@
 </template>
 
 <script>
-import ThreadRegistration from "@/components/thread/ThreadRegistration";
+import ResponseRegistration from "@/components/response/ResponseRegistration";
 import moment from "moment";
 export default {
   name: "thread-detail",
   data: () => ({
+    snackbarMessage: "",
+    snackbar: false,
     threads: []
   }),
-  methods: {},
+  methods: {
+    showSnackbar(message) {
+      this.snackbarMessage = message;
+      this.snackbar = !this.snackbar;
+    }
+  },
   computed: {},
   created() {
     this.threads.push(
@@ -128,7 +135,7 @@ export default {
     );
   },
   components: {
-    ThreadRegistration
+    ResponseRegistration
   }
 };
 </script>

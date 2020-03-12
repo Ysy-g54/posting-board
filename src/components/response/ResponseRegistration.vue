@@ -2,15 +2,13 @@
   <div>
     <v-container>
       <v-flex md2>
-        <v-btn large color="primary" @click="registerThread">スレッドを作成する</v-btn>
+        <v-btn large color="primary" @click="registerThread">レスを送る</v-btn>
       </v-flex>
     </v-container>
     <v-container fluid fill-height>
       <v-layout align-center justify-center>
         <v-flex md8>
-          <v-text-field placeholder="タイトル" outlined clearable></v-text-field>
-          <v-select v-model="selection" :items="items" chips multiple outlined label="カテゴリ"></v-select>
-          <v-textarea placeholder="説明" outlined></v-textarea>
+          <v-textarea placeholder="レス内容" outlined></v-textarea>
         </v-flex>
       </v-layout>
     </v-container>
@@ -20,13 +18,10 @@
 <script>
 export default {
   name: "thread-registration",
-  data: () => ({
-    selection: [],
-    items: ["Foo", "Bar", "Fizz", "Buzz"]
-  }),
+  data: () => ({}),
   methods: {
     registerThread() {
-      this.$emit("on-register-thread-click", "スレッドを作成しました。");
+      this.$emit("on-register-thread-click", "レスを送りました。");
     }
   },
   computed: {},
