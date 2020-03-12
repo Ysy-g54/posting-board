@@ -9,21 +9,38 @@
         </v-layout>
       </v-form>
     </v-flex>
+    <v-snackbar v-model="snackbar">
+      {{ snackbarMessage }}
+      <v-btn color="pink" text @click="snackbar = false">Close</v-btn>
+    </v-snackbar>
   </CenterTemplate>
 </template>
 
 <script>
+import firebase from "firebase";
 export default {
   name: "login",
   data: () => ({
     mailAddress: "",
-    password: ""
+    password: "",
+    snackbarMessage: "",
+    snackbar: false
   }),
   methods: {
     onLoginClick() {
-      this.$router.push({
-        name: "thread"
-      });
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(this.mailAddress, this.password)
+        .then(() => {
+          this.$router.push({
+            name: "thread"
+          });
+        })
+        .catch(() => {
+          this.snackbarMessage =
+            "ログインに失敗しました。入力情報を確かめて、再度試してください。";
+          this.snackbar = !this.snackbar;
+        });
     }
   },
   components: {}
