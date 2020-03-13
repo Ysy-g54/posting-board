@@ -11,7 +11,7 @@
 
 <script>
 import _ from "lodash";
-import threadService from "@/service/thread-service";
+import threadService from "@/service/thread/thread-service";
 import ThreadList from "@/components/thread/ThreadList";
 import ThreadRegistration from "@/components/thread/ThreadRegistration";
 export default {

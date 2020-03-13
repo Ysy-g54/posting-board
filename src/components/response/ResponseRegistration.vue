@@ -17,7 +17,7 @@
 
 <script>
 export default {
-  name: "thread-registration",
+  name: "response-registration",
   data: () => ({}),
   methods: {
     registerThread() {

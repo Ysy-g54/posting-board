@@ -28,7 +28,7 @@
 
 <script>
 import firebase from "firebase";
-import threadService from "@/service/thread-service";
+import threadService from "@/service/thread/thread-service";
 import { categories } from "@/constants";
 export default {
   name: "thread-registration",

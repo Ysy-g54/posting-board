@@ -2,9 +2,9 @@ import firebase from "firebase";
 import "firebase/firestore";
 
 /**
- * スレッド情報を取得します。
+ * スレッドリスト情報を取得します。
  * 
- * @returns スレッド情報
+ * @returns スレッドリスト情報
  */
 function searchAll() {
 	return firebase.firestore().collection("thread").get();
