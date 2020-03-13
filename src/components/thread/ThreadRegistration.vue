@@ -7,8 +7,15 @@
     </v-container>
     <v-container fluid fill-height>
       <v-layout align-center justify-center>
-        <v-flex md8>
-          <v-text-field v-model="title" placeholder="タイトル" outlined clearable></v-text-field>
+        <v-flex md8 refs="thread">
+          <v-text-field
+            v-model="title"
+            placeholder="タイトル"
+            outlined
+            clearable
+            required
+            :error-messages="getTitleError"
+          ></v-text-field>
           <v-select
             v-model="selectedCategories"
             item-text="categoryNm"
@@ -29,7 +36,7 @@
 <script>
 import threadService from "@/service/thread/thread-service";
 import { categories } from "@/constants";
-// import { required } from "vuelidate/lib/validators";
+import { required } from "vuelidate/lib/validators";
 export default {
   name: "thread-registration",
   data: () => ({
@@ -38,17 +45,17 @@ export default {
     description: "",
     categories: categories
   }),
-  //   validations: {
-  //     title: {
-  //       required
-  //     }
-  //   },
+  validations: {
+    title: {
+      required
+    }
+  },
   methods: {
     async registerThread() {
-      //   this.$v.$touch();
-      //   if (this.$v.$invalid) {
-      //     return;
-      //   }
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        return;
+      }
 
       let thread = {
         title: this.title,
@@ -60,13 +67,18 @@ export default {
       this.title = "";
       this.selectedCategories = [];
       this.description = "";
+      this.$v.$reset();
       await this.$emit("on-register-thread-click", "スレッドを作成しました。");
     }
   },
   computed: {
-    // getTitleError() {
-    //   return this.$v.title.required ? [] : "タイトルは必須入力です。";
-    // }
+    getTitleError() {
+      if (this.$v.title.$dirty && !this.$v.title.required) {
+        return "タイトルは必須入力です。";
+      } else {
+        return [];
+      }
+    }
   },
   created() {},
   components: {}

@@ -8,7 +8,13 @@
     <v-container fluid fill-height>
       <v-layout align-center justify-center>
         <v-flex md8>
-          <v-textarea v-model="content" placeholder="レス内容" outlined></v-textarea>
+          <v-textarea
+            v-model="content"
+            placeholder="レス内容"
+            outlined
+            required
+            :error-messages="getContentError"
+          ></v-textarea>
         </v-flex>
       </v-layout>
     </v-container>
@@ -17,14 +23,25 @@
 
 <script>
 import responseService from "@/service/response/response-service";
+import { required } from "vuelidate/lib/validators";
 export default {
   name: "response-registration",
   data: () => ({
     content: "",
     targetResponse: {}
   }),
+  validations: {
+    content: {
+      required
+    }
+  },
   methods: {
     async registerResponse() {
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        return;
+      }
+
       let response = {
         content: this.content,
         insertDateTime: new Date(Date.now())
@@ -36,10 +53,11 @@ export default {
         };
         await responseService.register(target);
       } else {
-        this.targetResponse.responseList.push(response);
+        await this.targetResponse.responseList.push(response);
         await responseService.modify(this.targetResponse, this.responseId);
       }
       this.content = await "";
+      this.$v.$reset();
       await this.$emit("on-register-response-click", "レスを送りました。");
     }
   },
@@ -52,7 +70,15 @@ export default {
       this.targetResponse = this.responseContent;
     }
   },
-  computed: {},
+  computed: {
+    getContentError() {
+      if (this.$v.content.$dirty && !this.$v.content.required) {
+        return "レスは必須入力です。";
+      } else {
+        return [];
+      }
+    }
+  },
   created() {},
   components: {}
 };
