@@ -3,7 +3,14 @@
     <v-flex sm8 md4>
       <v-form onsubmit="return false;">
         <v-text-field v-model="mailAddress" placeholder="メールアドレス" outlined clearable></v-text-field>
-        <v-text-field v-model="password" placeholder="パスワード" outlined type="password"></v-text-field>
+        <v-text-field
+          v-model="password"
+          placeholder="パスワード"
+          outlined
+          :type="showPassword ? 'text' : 'password'"
+          :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+          @click:append="changeShowPassword"
+        ></v-text-field>
         <v-layout align-center justify-center>
           <v-btn large color="primary" @click="onLoginClick">ログイン</v-btn>
         </v-layout>
@@ -24,9 +31,13 @@ export default {
     mailAddress: "",
     password: "",
     snackbarMessage: "",
-    snackbar: false
+    snackbar: false,
+    showPassword: false
   }),
   methods: {
+    changeShowPassword() {
+      this.showPassword = !this.showPassword;
+    },
     onLoginClick() {
       firebase
         .auth()

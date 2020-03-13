@@ -8,9 +8,18 @@
     <v-container fluid fill-height>
       <v-layout align-center justify-center>
         <v-flex md8>
-          <v-text-field placeholder="タイトル" outlined clearable></v-text-field>
-          <v-select v-model="selection" :items="items" chips multiple outlined label="カテゴリ"></v-select>
-          <v-textarea placeholder="説明" outlined></v-textarea>
+          <v-text-field v-model="title" placeholder="タイトル" outlined clearable></v-text-field>
+          <v-select
+            v-model="selectedCategories"
+            item-text="categoryNm"
+            item-value="categoryId"
+            :items="categories"
+            chips
+            multiple
+            outlined
+            label="カテゴリ"
+          ></v-select>
+          <v-textarea v-model="description" placeholder="説明" outlined></v-textarea>
         </v-flex>
       </v-layout>
     </v-container>
@@ -18,15 +27,30 @@
 </template>
 
 <script>
+import firebase from "firebase";
+import threadService from "@/service/thread-service";
+import { categories } from "@/constants";
 export default {
   name: "thread-registration",
   data: () => ({
-    selection: [],
-    items: ["Foo", "Bar", "Fizz", "Buzz"]
+    title: "",
+    selectedCategories: [],
+    description: "",
+    categories: categories
   }),
   methods: {
-    registerThread() {
-      this.$emit("on-register-thread-click", "スレッドを作成しました。");
+    async registerThread() {
+      let thread = {
+        title: this.title,
+        categories: this.selectedCategories,
+        description: this.description,
+        insertDateTime: firebase.firestore.FieldValue.serverTimestamp()
+      };
+      await threadService.register(thread);
+      this.title = "";
+      this.selectedCategories = [];
+      this.description = "";
+      await this.$emit("on-register-thread-click", "スレッドを作成しました。");
     }
   },
   computed: {},
