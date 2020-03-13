@@ -2,6 +2,15 @@ import firebase from "firebase";
 import "firebase/firestore";
 
 /**
+ * レスポンスリスト情報を取得します。
+ * 
+ * @returns レスポンスリスト情報
+ */
+function searchAll() {
+	return firebase.firestore().collection("response").get();
+}
+
+/**
  * スレッドIDをもとにレスポンスリスト情報を取得します。
  * 
  * @returns レスポンスリスト情報
@@ -30,6 +39,7 @@ function modify(response, responseId) {
 }
 
 export default {
+	searchAll,
 	searchByThreadId,
 	register,
 	modify

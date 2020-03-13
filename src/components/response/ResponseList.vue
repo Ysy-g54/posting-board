@@ -12,18 +12,12 @@
 <script>
 export default {
   name: "response-list",
-  data: () => ({
-    responseList: []
-  }),
+  data: () => ({}),
   methods: {},
   props: {
-    responseContent: { type: Object, required: false }
+    responseList: { type: Array, required: false }
   },
-  watch: {
-    responseContent() {
-      this.responseList = this.responseContent.responseList;
-    }
-  },
+  watch: {},
   computed: {},
   created() {},
   components: {}
@@ -32,8 +26,4 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.v-list {
-  height: 550px;
-  overflow-y: auto;
-}
 </style>
