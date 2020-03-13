@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ThreadList :threadList="resultThreadList"></ThreadList>
+    <ThreadList :threadList="resultThreadList[0]"></ThreadList>
     <ResponseList
       v-for="(responseContent, index) in resultResponseContentList"
       :key="index"

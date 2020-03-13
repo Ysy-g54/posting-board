@@ -19,5 +19,7 @@ Vue.mixin(Mixin);
 new Vue({
 	render: h => h(App),
 	router,
-	vuetify
+	vuetify,
+	created() {
+	}
 }).$mount("#app");

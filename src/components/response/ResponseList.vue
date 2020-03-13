@@ -17,8 +17,8 @@ export default {
   props: {
     responseList: { type: Array, required: false }
   },
-  watch: {},
   computed: {},
+  watch: {},
   created() {},
   components: {}
 };

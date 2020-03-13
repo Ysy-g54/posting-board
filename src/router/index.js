@@ -42,6 +42,10 @@ const router = new Router({
 					meta: { isPublic: false, title: "スレッド・スレの検索結果" }
 				}
 			]
+		},
+		{
+			path: "*",
+			redirect: "/browse/thread"
 		}
 	]
 });
