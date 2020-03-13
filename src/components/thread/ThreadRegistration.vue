@@ -27,9 +27,9 @@
 </template>
 
 <script>
-import firebase from "firebase";
 import threadService from "@/service/thread/thread-service";
 import { categories } from "@/constants";
+// import { required } from "vuelidate/lib/validators";
 export default {
   name: "thread-registration",
   data: () => ({
@@ -38,13 +38,23 @@ export default {
     description: "",
     categories: categories
   }),
+  //   validations: {
+  //     title: {
+  //       required
+  //     }
+  //   },
   methods: {
     async registerThread() {
+      //   this.$v.$touch();
+      //   if (this.$v.$invalid) {
+      //     return;
+      //   }
+
       let thread = {
         title: this.title,
         categories: this.selectedCategories,
         description: this.description,
-        insertDateTime: firebase.firestore.FieldValue.serverTimestamp()
+        insertDateTime: new Date(Date.now())
       };
       await threadService.register(thread);
       this.title = "";
@@ -53,7 +63,11 @@ export default {
       await this.$emit("on-register-thread-click", "スレッドを作成しました。");
     }
   },
-  computed: {},
+  computed: {
+    // getTitleError() {
+    //   return this.$v.title.required ? [] : "タイトルは必須入力です。";
+    // }
+  },
   created() {},
   components: {}
 };

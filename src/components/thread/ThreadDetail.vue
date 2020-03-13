@@ -1,7 +1,11 @@
 <template>
   <div>
     <ResponseList :responseContent="responseContent"></ResponseList>
-    <ResponseRegistration @on-register-thread-click="showSnackbar"></ResponseRegistration>
+    <ResponseRegistration
+      :responseContent="responseContent"
+      :responseId="responseId"
+      @on-register-response-click="showSnackbar"
+    ></ResponseRegistration>
     <v-snackbar v-model="snackbar">
       {{ snackbarMessage }}
       <v-btn color="pink" text @click="snackbar = false">Close</v-btn>
@@ -18,7 +22,8 @@ export default {
   data: () => ({
     snackbarMessage: "",
     snackbar: false,
-    responseContent: {}
+    responseContent: {},
+    responseId: ""
   }),
   methods: {
     async showSnackbar(message) {
@@ -32,9 +37,11 @@ export default {
           this.$route.params.threadId
         );
         querySnapshot.forEach(document => {
-          console.error(document.data());
           this.responseContent = document.data();
+          this.responseId = document.id;
         });
+      } else {
+        this.$router.back();
       }
     }
   },

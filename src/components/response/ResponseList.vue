@@ -1,9 +1,9 @@
 <template>
   <v-list three-line>
-    <template v-for="response in responseList">
-      <v-card class="mx-auto" outlined :key="response.responseId">
-        <div>{{ response.content}}</div>
-        <v-list-item-subtitle v-html="`作成日: ${ formatDate(response.insertDateTime)}`"></v-list-item-subtitle>
+    <template v-for="(response, index) in responseList">
+      <v-card class="mx-auto" outlined :key="index">
+        <div>{{ response.content }}</div>
+        <v-list-item-subtitle v-html="`送った日: ${ formatDate(response.insertDateTime)}`"></v-list-item-subtitle>
       </v-card>
     </template>
   </v-list>
@@ -12,10 +12,17 @@
 <script>
 export default {
   name: "response-list",
-  data: () => ({}),
+  data: () => ({
+    responseList: []
+  }),
   methods: {},
   props: {
     responseContent: { type: Object, required: false }
+  },
+  watch: {
+    responseContent() {
+      this.responseList = this.responseContent.responseList;
+    }
   },
   computed: {},
   created() {},

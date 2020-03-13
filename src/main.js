@@ -6,11 +6,13 @@ import router from "./router";
 import vuetify from "@/plugins/vuetify";
 import CenterTemplate from "@/components/layout/CenterTemplate";
 import Mixin from "@/util/mixin";
+import Vuelidate from 'vuelidate';
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
 Vue.config.productionTip = false;
+Vue.use(Vuelidate);
 Vue.component("CenterTemplate", CenterTemplate);
 Vue.mixin(Mixin);
 
