@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Toolbar :title="thread.title"></Toolbar>
     <ResponseList :responseList="responseContent.responseList"></ResponseList>
     <ResponseRegistration
       :responseContent="responseContent"
@@ -15,15 +16,18 @@
 
 <script>
 import responseService from "@/service/response/response-service";
+import threadService from "@/service/thread/thread-service";
 import ResponseList from "@/components/response/ResponseList";
 import ResponseRegistration from "@/components/response/ResponseRegistration";
+import Toolbar from "@/components/layout/Toolbar";
 export default {
   name: "thread-detail",
   data: () => ({
     snackbarMessage: "",
     snackbar: false,
     responseContent: {},
-    responseId: ""
+    responseId: "",
+    thread: {}
   }),
   methods: {
     async showSnackbar(message) {
@@ -43,15 +47,27 @@ export default {
       } else {
         this.$router.back();
       }
+    },
+    async searchThread() {
+      if (this.$route.params.threadId !== undefined) {
+        let querySnapshot = await threadService.searchByThreadId(
+          this.$route.params.threadId
+        );
+        if (querySnapshot.exists) {
+          this.thread = querySnapshot.data();
+        }
+      }
     }
   },
   computed: {},
   created() {
     this.searchResponse();
+    this.searchThread();
   },
   components: {
     ResponseList,
-    ResponseRegistration
+    ResponseRegistration,
+    Toolbar
   }
 };
 </script>
@@ -59,7 +75,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .v-list {
-  height: 550px;
+  height: 520px;
   overflow-y: auto;
 }
 </style>

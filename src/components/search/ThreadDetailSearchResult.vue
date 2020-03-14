@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Toolbar :title="'検索結果 ' + 	resultCount + '件'"></Toolbar>
     <ThreadList :threadList="resultThreadList[0]"></ThreadList>
     <ResponseList
       v-for="(responseContent, index) in resultResponseContentList"
@@ -15,13 +16,16 @@ import responseService from "@/service/response/response-service";
 import threadService from "@/service/thread/thread-service";
 import ResponseList from "@/components/response/ResponseList";
 import ThreadList from "@/components/thread/ThreadList";
+import Toolbar from "@/components/layout/Toolbar";
 export default {
   name: "thread-detail-search-result",
   data: () => ({
     responseContentList: [],
     resultResponseContentList: [],
+    resultResponseCount: 0,
     threadList: [],
-    resultThreadList: []
+    resultThreadList: [],
+    resultCount: 0
   }),
   methods: {
     async searchResponse() {
@@ -32,15 +36,19 @@ export default {
     },
     async filterResponse() {
       this.resultResponseContentList = [];
-      await this.responseContentList.forEach(async responseContent =>
+      this.resultResponseCount = 0;
+      await this.responseContentList.forEach(async (responseContent, index) => {
         this.resultResponseContentList.push(
           await responseContent.responseList.filter(
             response =>
               response.content !== null &&
               response.content.includes(this.$route.query.q)
           )
-        )
-      );
+        );
+        this.resultResponseCount += this.resultResponseContentList[
+          index
+        ].length;
+      });
     },
     async searchThread() {
       let querySnapshot = await threadService.searchAll();
@@ -60,6 +68,11 @@ export default {
             threadContent.title.includes(this.$route.query.q)
         )
       );
+    },
+    async calcCount() {
+      this.resultCount = 0;
+      this.resultCount =
+        this.resultResponseCount + this.resultThreadList[0].length;
     }
   },
   computed: {},
@@ -68,6 +81,7 @@ export default {
       if (this.$route.query.q !== undefined) {
         await this.filterResponse();
         await this.filterThread();
+        await this.calcCount();
       }
     }
   },
@@ -76,10 +90,12 @@ export default {
     await this.filterResponse();
     await this.searchThread();
     await this.filterThread();
+    await this.calcCount();
   },
   components: {
     ResponseList,
-    ThreadList
+    ThreadList,
+    Toolbar
   }
 };
 </script>

@@ -11,6 +11,15 @@ function searchAll() {
 }
 
 /**
+ * スレッドIDをもとにスレッド情報を取得します。
+ * @param  {String} threadId
+ * @returns スレッド情報
+ */
+function searchByThreadId(threadId) {
+	return firebase.firestore().collection("thread").doc(threadId).get();
+}
+
+/**
  * スレッド情報を登録します。
  * @param  {Object} thread
  * @returns 登録したスレッド情報
@@ -21,5 +30,6 @@ function register(thread) {
 
 export default {
 	searchAll,
+	searchByThreadId,
 	register
 };

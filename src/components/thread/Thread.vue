@@ -1,5 +1,6 @@
 <template>
   <div>
+    <v-subheader>スレッド一覧</v-subheader>
     <ThreadList :threadList="threadList"></ThreadList>
     <ThreadRegistration @on-register-thread-click="showSnackbar"></ThreadRegistration>
     <v-snackbar v-model="snackbar">
@@ -51,7 +52,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .v-list {
-  height: 550px;
+  height: 520px;
   overflow-y: auto;
 }
 </style>

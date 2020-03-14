@@ -45,7 +45,7 @@ const router = new Router({
 		},
 		{
 			path: "*",
-			redirect: "/browse/thread"
+			redirect: "/thread"
 		}
 	]
 });
