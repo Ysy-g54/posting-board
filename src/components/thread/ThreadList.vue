@@ -1,6 +1,6 @@
 <template>
   <v-list three-line>
-    <template v-for="(thread, index) in threadList">
+    <template v-for="thread in threadList">
       <v-list-item :key="thread.threadId" @click="goThreadDetail(thread.threadId)">
         <v-list-item-content>
           <v-list-item-title v-html="thread.title"></v-list-item-title>
