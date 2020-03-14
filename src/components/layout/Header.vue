@@ -1,7 +1,16 @@
 <template>
   <div>
     <v-toolbar color="indigo lighten-1" dark>
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+      <v-menu offset-y>
+        <template v-slot:activator="{ on }">
+          <v-app-bar-nav-icon v-on="on"></v-app-bar-nav-icon>
+        </template>
+        <v-list>
+          <v-list-item @click="logout">
+            <v-list-item-title>{{ "ログアウト" }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
       <v-toolbar-title>posting-board</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-text-field
@@ -18,6 +27,7 @@
 </template>
 
 <script>
+import firebase from "firebase";
 export default {
   data: () => ({
     q: ""
@@ -28,6 +38,12 @@ export default {
       this.$router.push({
         name: "search",
         query: { q: this.q }
+      });
+    },
+    async logout() {
+      await firebase.auth().signOut();
+      await this.$router.push({
+        name: "login"
       });
     }
   },

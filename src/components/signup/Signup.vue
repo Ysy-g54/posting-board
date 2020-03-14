@@ -1,14 +1,8 @@
 <template>
   <div>
-    <v-toolbar color="indigo lighten-1" dark>
-      <v-toolbar-title>posting-board</v-toolbar-title>
-      <v-spacer></v-spacer>
-      <div class="my-2" @click="goSignup">
-        <v-btn text small>アカウント作成する</v-btn>
-      </div>
-    </v-toolbar>
+    <Toolbar :title="'アカウントを作成する'"></Toolbar>
     <CenterTemplate>
-      <v-flex sm8 md4 @keyup.enter="onLoginClick">
+      <v-flex sm8 md4 @keyup.enter="doSignup">
         <v-form onsubmit="return false;">
           <v-text-field v-model="mailAddress" placeholder="メールアドレス" outlined clearable></v-text-field>
           <v-text-field
@@ -20,7 +14,7 @@
             @click:append="changeShowPassword"
           ></v-text-field>
           <v-layout align-center justify-center>
-            <v-btn large color="primary" @click="onLoginClick">ログイン</v-btn>
+            <v-btn large color="primary" @click="doSignup">作成する</v-btn>
           </v-layout>
         </v-form>
       </v-flex>
@@ -34,8 +28,9 @@
 
 <script>
 import firebase from "firebase";
+import Toolbar from "@/components/layout/Toolbar";
 export default {
-  name: "login",
+  name: "signup",
   data: () => ({
     mailAddress: "",
     password: "",
@@ -47,10 +42,10 @@ export default {
     changeShowPassword() {
       this.showPassword = !this.showPassword;
     },
-    onLoginClick() {
+    doSignup() {
       firebase
         .auth()
-        .signInWithEmailAndPassword(this.mailAddress, this.password)
+        .createUserWithEmailAndPassword(this.mailAddress, this.password)
         .then(() => {
           this.$router.push({
             name: "thread"
@@ -58,17 +53,14 @@ export default {
         })
         .catch(() => {
           this.snackbarMessage =
-            "ログインに失敗しました。入力情報を確かめて、再度試してください。";
+            "アカウント作成に失敗しました。入力情報を確かめて、再度試してください。";
           this.snackbar = !this.snackbar;
         });
-    },
-    goSignup() {
-      this.$router.push({
-        name: "signup"
-      });
     }
   },
-  components: {}
+  components: {
+    Toolbar
+  }
 };
 </script>
 

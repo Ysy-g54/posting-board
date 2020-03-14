@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Toolbar :title="thread.title"></Toolbar>
+    <Toolbar :title="title"></Toolbar>
     <ResponseList :responseList="responseContent.responseList"></ResponseList>
     <ResponseRegistration
       :responseContent="responseContent"
@@ -27,7 +27,8 @@ export default {
     snackbar: false,
     responseContent: {},
     responseId: "",
-    thread: {}
+    thread: {},
+    title: ""
   }),
   methods: {
     async showSnackbar(message) {
@@ -55,6 +56,14 @@ export default {
         );
         if (querySnapshot.exists) {
           this.thread = querySnapshot.data();
+          let categories = "";
+          this.thread.categories.forEach((category, index) => {
+            categories += this.formatCategory(category);
+            if (this.thread.categories.length > index + 1) {
+              categories += ", ";
+            }
+          });
+          this.title = `タイトル:${this.thread.title}   カテゴリ:${categories}`;
         }
       }
     }

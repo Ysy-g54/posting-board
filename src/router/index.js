@@ -5,6 +5,7 @@ import Login from "@/components/login/Login";
 import ThreadDetailSearchResult from "@/components/search/ThreadDetailSearchResult";
 import Thread from "@/components/thread/Thread";
 import ThreadDetail from "@/components/thread/ThreadDetail";
+import Signup from "@/components/signup/Signup";
 import firebase from "firebase";
 
 Vue.use(Router);
@@ -42,6 +43,12 @@ const router = new Router({
 					meta: { isPublic: false, title: "スレッド・スレの検索結果" }
 				}
 			]
+		},
+		{
+			path: "/signup",
+			name: "signup",
+			component: Signup,
+			meta: { isPublic: true, title: "アカウントを作成する" }
 		},
 		{
 			path: "*",

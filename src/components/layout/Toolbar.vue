@@ -16,7 +16,7 @@ export default {
     }
   },
   props: {
-    title: { type: String, required: "" }
+    title: { type: String, default: "" }
   },
   watch: {},
   created() {}
