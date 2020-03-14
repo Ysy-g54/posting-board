@@ -1,7 +1,10 @@
 <template>
   <div>
     <Toolbar :title="'検索結果 ' + 	resultCount + '件'"></Toolbar>
+    <v-subheader v-if="resultThreadList[0].length !== 0">{{ "スレッド一覧" }}</v-subheader>
     <ThreadList :threadList="resultThreadList[0]"></ThreadList>
+    <v-divider class="mx-4" vertical></v-divider>
+    <v-subheader v-if="resultResponseCount !== 0">{{ "レス一覧" }}</v-subheader>
     <ResponseList
       v-for="(responseContent, index) in resultResponseContentList"
       :key="index"
