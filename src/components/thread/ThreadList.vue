@@ -1,6 +1,6 @@
 <template>
   <v-list three-line>
-    <template v-for="thread in threadList">
+    <template v-for="(thread, index) in threadList">
       <v-list-item :key="thread.threadId" @click="goThreadDetail(thread.threadId)">
         <v-list-item-content>
           <v-list-item-title v-html="thread.title"></v-list-item-title>
@@ -11,7 +11,7 @@
               class="grey--text caption"
             >他{{ thread.categories.length - index }}つタグが付いています。</span>
           </span>
-          <v-list-item-subtitle v-html="thread.description"></v-list-item-subtitle>
+          <v-list-item-subtitle v-if="thread.description !== ''" v-html="thread.description"></v-list-item-subtitle>
           <v-list-item-subtitle v-html="`作成日: ${ formatDate(thread.insertDateTime)}`"></v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>

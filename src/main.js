@@ -21,5 +21,8 @@ new Vue({
 	router,
 	vuetify,
 	created() {
+		if (this.$router.history.current.name === "login") {
+			this.$router.push({ name: "thread" });
+		}
 	}
 }).$mount("#app");

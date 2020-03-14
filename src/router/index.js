@@ -65,7 +65,6 @@ router.beforeEach((to, from, next) => {
 		// 遷移先がルート認証必要な場合は、ログインしているかどうか確認します。
 		firebase.auth().onAuthStateChanged(currentUser => {
 			if (currentUser) {
-				// ログインしている場合は指定している画面へ遷移します。
 				next();
 			} else {
 				// ログインしていない場合はログイン画面へ遷移します。
