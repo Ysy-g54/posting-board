@@ -11,7 +11,11 @@
           </v-list-item>
         </v-list>
       </v-menu>
-      <v-toolbar-title>posting-board</v-toolbar-title>
+      <v-toolbar-title>
+        <div @click="goThread">
+          <v-btn class="custom-transform-class text-none" text>posting-board</v-btn>
+        </div>
+      </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-text-field
         @keyup.enter="searchThreadDetail"
@@ -40,6 +44,11 @@ export default {
         query: { q: this.q }
       });
     },
+    goThread() {
+      this.$router.push({
+        name: "thread"
+      });
+    },
     async logout() {
       await firebase.auth().signOut();
       await this.$router.push({
@@ -47,7 +56,13 @@ export default {
       });
     }
   },
-  watch: {},
+  watch: {
+    async "$route.query.q"() {
+      if (this.$route.query.q !== undefined) {
+        this.q = this.$route.query.q;
+      }
+    }
+  },
   created() {
     this.q = this.$route.query.q;
   }

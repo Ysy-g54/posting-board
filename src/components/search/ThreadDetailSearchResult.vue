@@ -1,7 +1,7 @@
 <template>
   <div>
     <Toolbar :title="'検索結果 ' + 	resultCount + '件'"></Toolbar>
-    <v-subheader v-if="resultThreadList[0].length !== 0">{{ "スレッド一覧" }}</v-subheader>
+    <v-subheader v-if="notEmptyThread">{{ "スレッド一覧" }}</v-subheader>
     <ThreadList :threadList="resultThreadList[0]"></ThreadList>
     <v-divider class="mx-4" vertical></v-divider>
     <v-subheader v-if="resultResponseCount !== 0">{{ "レス一覧" }}</v-subheader>
@@ -78,7 +78,11 @@ export default {
         this.resultResponseCount + this.resultThreadList[0].length;
     }
   },
-  computed: {},
+  computed: {
+    notEmptyThread() {
+      return !_.isEmpty(this.resultThreadList[0]);
+    }
+  },
   watch: {
     async "$route.query.q"() {
       if (this.$route.query.q !== undefined) {

@@ -10,7 +10,7 @@
         <v-flex md8>
           <v-textarea
             v-model="content"
-            placeholder="レス内容"
+            placeholder="レス(※内容の更新・削除はできないのでご注意ください。)"
             outlined
             required
             :error-messages="getContentError"

@@ -10,7 +10,7 @@
         <v-flex md8 refs="thread">
           <v-text-field
             v-model="title"
-            placeholder="タイトル"
+            placeholder="タイトル(※内容の更新・削除はできないのでご注意ください。)"
             outlined
             clearable
             required
@@ -26,7 +26,7 @@
             outlined
             label="カテゴリ"
           ></v-select>
-          <v-textarea v-model="description" placeholder="説明" outlined></v-textarea>
+          <v-textarea v-model="description" placeholder="説明(※内容の更新・削除はできないのでご注意ください。)" outlined></v-textarea>
         </v-flex>
       </v-layout>
     </v-container>
