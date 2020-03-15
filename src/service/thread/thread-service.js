@@ -7,7 +7,7 @@ import "firebase/firestore";
  * @returns スレッドリスト情報
  */
 function searchAll() {
-	return firebase.firestore().collection("thread").get();
+	return firebase.firestore().collection("thread").orderBy("insertDateTime", "desc").get();
 }
 
 /**
