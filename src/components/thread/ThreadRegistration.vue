@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-container>
-      <v-flex md2>
+      <v-flex>
         <v-btn large color="primary" @click="registerThread">スレッドを作成する</v-btn>
       </v-flex>
     </v-container>
@@ -10,7 +10,7 @@
         <v-flex md8 refs="thread">
           <v-text-field
             v-model="title"
-            placeholder="タイトル(※内容の更新・削除はできないのでご注意ください。)"
+            placeholder="タイトル(※更新・削除はできません。)"
             outlined
             clearable
             required
@@ -26,7 +26,7 @@
             outlined
             label="カテゴリ"
           ></v-select>
-          <v-textarea v-model="description" placeholder="説明(※内容の更新・削除はできないのでご注意ください。)" outlined></v-textarea>
+          <v-textarea v-model="description" placeholder="説明(※更新・削除はできません。)" outlined></v-textarea>
         </v-flex>
       </v-layout>
     </v-container>

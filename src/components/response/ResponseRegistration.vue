@@ -1,13 +1,13 @@
 <template>
   <div>
     <v-container>
-      <v-flex md2>
+      <v-flex>
         <v-btn large color="primary" @click="registerResponse">レスを送る</v-btn>
       </v-flex>
     </v-container>
     <v-container fluid fill-height>
       <v-layout align-center justify-center>
-        <v-flex md8>
+        <v-flex md12>
           <v-textarea
             v-model="content"
             placeholder="レス(※内容の更新・削除はできないのでご注意ください。)"

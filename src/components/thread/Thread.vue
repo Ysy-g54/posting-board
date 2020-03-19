@@ -1,13 +1,19 @@
 <template>
-  <div>
-    <v-subheader>スレッド一覧</v-subheader>
-    <ThreadList :threadList="threadList"></ThreadList>
-    <ThreadRegistration @on-register-thread-click="showSnackbar"></ThreadRegistration>
+  <v-container fluid>
+    <v-row>
+      <v-col cols="8">
+        <v-subheader>スレッド一覧</v-subheader>
+        <ThreadList :threadList="threadList"></ThreadList>
+      </v-col>
+      <v-col cols="4">
+        <ThreadRegistration @on-register-thread-click="showSnackbar"></ThreadRegistration>
+      </v-col>
+    </v-row>
     <v-snackbar v-model="snackbar">
       {{ snackbarMessage }}
       <v-btn color="pink" text @click="snackbar = false">Close</v-btn>
     </v-snackbar>
-  </div>
+  </v-container>
 </template>
 
 <script>
@@ -52,7 +58,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .v-list {
-  height: 440px;
+  height: 540px;
   overflow-y: auto;
 }
 </style>

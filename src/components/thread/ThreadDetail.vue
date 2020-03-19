@@ -1,17 +1,23 @@
 <template>
-  <div>
+  <v-container fluid>
     <Toolbar :title="title"></Toolbar>
-    <ResponseList :responseList="responseContent.responseList"></ResponseList>
-    <ResponseRegistration
-      :responseContent="responseContent"
-      :responseId="responseId"
-      @on-register-response-click="showSnackbar"
-    ></ResponseRegistration>
+    <v-row>
+      <v-col cols="8">
+        <ResponseList :responseList="responseContent.responseList"></ResponseList>
+      </v-col>
+      <v-col cols="4">
+        <ResponseRegistration
+          :responseContent="responseContent"
+          :responseId="responseId"
+          @on-register-response-click="showSnackbar"
+        ></ResponseRegistration>
+      </v-col>
+    </v-row>
     <v-snackbar v-model="snackbar">
       {{ snackbarMessage }}
       <v-btn color="pink" text @click="snackbar = false">Close</v-btn>
     </v-snackbar>
-  </div>
+  </v-container>
 </template>
 
 <script>
@@ -84,7 +90,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .v-list {
-  height: 440px;
+  height: 540px;
   overflow-y: auto;
 }
 </style>
