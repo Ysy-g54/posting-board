@@ -1,11 +1,11 @@
 <template>
   <v-container fluid>
     <v-row>
-      <v-col cols="8">
+      <v-col>
         <v-subheader>スレッド一覧</v-subheader>
         <ThreadList :threadList="threadList"></ThreadList>
       </v-col>
-      <v-col cols="4">
+      <v-col>
         <ThreadRegistration @on-register-thread-click="showSnackbar"></ThreadRegistration>
       </v-col>
     </v-row>

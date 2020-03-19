@@ -42,11 +42,15 @@ export default {
       this.resultResponseCount = 0;
       await this.responseContentList.forEach(async (responseContent, index) => {
         this.resultResponseContentList.push(
-          await responseContent.responseList.filter(
-            response =>
-              response.content !== null &&
-              response.content.includes(this.$route.query.q)
-          )
+          await responseContent.responseList
+            .filter(
+              response =>
+                response.content !== null &&
+                response.content.includes(this.$route.query.q)
+            )
+            .map(content =>
+              _.set(content, "threadId", responseContent.threadId)
+            )
         );
         this.resultResponseCount += this.resultResponseContentList[
           index

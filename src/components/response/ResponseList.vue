@@ -4,6 +4,9 @@
       <v-card class="mx-auto" outlined :key="index">
         <div>{{ response.content }}</div>
         <v-list-item-subtitle v-html="`送った日: ${ formatDate(response.insertDateTime)}`"></v-list-item-subtitle>
+        <v-card-actions v-if="response.threadId !== undefined">
+          <v-btn @click="goThreadDetail(response.threadId)" text color="accent">{{'対象のスレッドを見に行く'}}</v-btn>
+        </v-card-actions>
       </v-card>
     </template>
   </v-list>
@@ -13,7 +16,14 @@
 export default {
   name: "response-list",
   data: () => ({}),
-  methods: {},
+  methods: {
+    goThreadDetail(threadId) {
+      this.$router.push({
+        name: "thread-detail",
+        params: { threadId }
+      });
+    }
+  },
   props: {
     responseList: { type: Array, required: false }
   },

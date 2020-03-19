@@ -2,10 +2,10 @@
   <v-container fluid>
     <Toolbar :title="title"></Toolbar>
     <v-row>
-      <v-col cols="8">
+      <v-col>
         <ResponseList :responseList="responseContent.responseList"></ResponseList>
       </v-col>
-      <v-col cols="4">
+      <v-col>
         <ResponseRegistration
           :responseContent="responseContent"
           :responseId="responseId"
