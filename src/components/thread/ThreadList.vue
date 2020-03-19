@@ -5,7 +5,10 @@
         <v-list-item-content>
           <v-list-item-title v-html="thread.title"></v-list-item-title>
           <span v-for="(category, index) in thread.categories" :key="category">
-            <v-chip v-if="index === 0">{{ formatCategory(category) }}</v-chip>
+            <v-chip
+              v-if="index === 0"
+              :color="getCategoryColor(category)"
+            >{{ formatCategory(category) }}</v-chip>
             <span
               v-else-if="index === 1"
               class="grey--text caption"

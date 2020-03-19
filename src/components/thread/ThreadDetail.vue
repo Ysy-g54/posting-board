@@ -1,6 +1,9 @@
 <template>
   <v-container fluid>
     <Toolbar :title="title"></Toolbar>
+    <span v-for="category in thread.categories" :key="category">
+      <v-chip :color="getCategoryColor(category)">{{ formatCategory(category) }}</v-chip>
+    </span>
     <v-row>
       <v-col>
         <ResponseList :responseList="responseContent.responseList"></ResponseList>
@@ -62,14 +65,7 @@ export default {
         );
         if (querySnapshot.exists) {
           this.thread = querySnapshot.data();
-          let categories = "";
-          this.thread.categories.forEach((category, index) => {
-            categories += this.formatCategory(category);
-            if (this.thread.categories.length > index + 1) {
-              categories += ", ";
-            }
-          });
-          this.title = `タイトル:${this.thread.title}   カテゴリ:${categories}`;
+          this.title = `タイトル: ${this.thread.title}`;
         }
       }
     }

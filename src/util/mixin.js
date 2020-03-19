@@ -33,6 +33,16 @@ export default {
 				return m.format(format);
 			}
 		},
+		getCategoryColor(categoryId) {
+			let categoryColor = "";
+			categories.find(category => {
+				if (categoryId === category.categoryId) {
+					categoryColor = category.color;
+					return true;
+				}
+			});
+			return categoryColor;
+		},
 		formatCategory(categoryId) {
 			let categoryNm = "";
 			categories.find(category => {
