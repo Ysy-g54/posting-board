@@ -3,18 +3,18 @@
 	"short_name": "board",
 	"icons": [
 		{
-			"src": "/public/posting-board.png",
+			"src": "/public/img/icons/posting-board.png",
 			"sizes": "192x192",
 			"type": "image/png"
 		},
 		{
-			"src": "/public/posting-board.png",
+			"src": "/public/img/icons/posting-board.png",
 			"sizes": "512x512",
 			"type": "image/png"
 		}
 	],
 	"start_url": "/index.html",
 	"display": "standalone",
-	"background_color": "blue",
-	"theme_color": "blue"
+	"background_color": "#5C6BC0",
+	"theme_color": "#2196F3"
 }
