@@ -7,6 +7,7 @@ import vuetify from "@/plugins/vuetify";
 import CenterTemplate from "@/components/layout/CenterTemplate";
 import Mixin from "@/util/mixin";
 import Vuelidate from 'vuelidate';
+import './registerServiceWorker'
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
