@@ -1,8 +1,8 @@
 {
 	"name": "posting-board",
 	"short_name": "board",
-	"theme_color": "#FFFFFF",
-	"background_color": "#5c6bc0",
+	"theme_color": "#5c6bc0",
+	"background_color": "#FFFFFF",
 	"display": "standalone",
 	"start_url": "/index.html",
 	"icons": [
