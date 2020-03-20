@@ -1,9 +1,9 @@
 <template>
   <v-list three-line>
     <template v-for="(thread, index) in threadList">
-      <v-list-item :key="thread.threadId" @click="goThreadDetail(thread.threadId)">
+      <v-list-item :key="thread.threadId">
         <v-list-item-content>
-          <v-list-item-title v-html="thread.title"></v-list-item-title>
+          <a v-html="thread.title" @click="goThreadDetail(thread.threadId)"></a>
           <span v-for="(category, index) in thread.categories" :key="category">
             <v-chip
               v-if="index === 0"
