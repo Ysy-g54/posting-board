@@ -1,4 +1,19 @@
 {
-  "indexes": [],
+  "indexes": [
+    {
+      "collectionGroup": "thread",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "insertDateTime",
+          "order": "DESCENDING"
+        },
+        {
+          "fieldPath": "categories",
+          "arrayConfig": "CONTAINS"
+        }
+      ]
+    }
+  ],
   "fieldOverrides": []
 }
