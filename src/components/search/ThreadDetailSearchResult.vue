@@ -5,11 +5,14 @@
     <ThreadList :threadList="resultThreadList[0]"></ThreadList>
     <v-divider class="mx-4" vertical></v-divider>
     <v-subheader v-if="resultResponseCount !== 0">{{ "レス一覧" }}</v-subheader>
-    <ResponseList
-      v-for="(responseContent, index) in resultResponseContentList"
-      :key="index"
-      :responseList="responseContent"
-    ></ResponseList>
+    <div v-for="responseContent in resultResponseContentList" :key="responseContent[0].threadId">
+      <v-btn
+        :to="{name: 'thread-detail', params: { threadId: responseContent[0].threadId }}"
+        text
+        color="accent"
+      >{{'下記レスがあるスレッドを見に行く'}}</v-btn>
+      <ResponseList :responseList="responseContent"></ResponseList>
+    </div>
   </div>
 </template>
 
@@ -40,21 +43,18 @@ export default {
     async filterResponse() {
       this.resultResponseContentList = [];
       this.resultResponseCount = 0;
-      await this.responseContentList.forEach(async (responseContent, index) => {
-        this.resultResponseContentList.push(
-          await responseContent.responseList
-            .filter(
-              response =>
-                response.content !== null &&
-                response.content.includes(this.$route.query.q)
-            )
-            .map(content =>
-              _.set(content, "threadId", responseContent.threadId)
-            )
-        );
-        this.resultResponseCount += this.resultResponseContentList[
-          index
-        ].length;
+      await this.responseContentList.forEach(async responseContent => {
+        let filterResponseContent = await responseContent.responseList
+          .filter(
+            response =>
+              response.content !== null &&
+              response.content.includes(this.$route.query.q)
+          )
+          .map(content => _.set(content, "threadId", responseContent.threadId));
+        if (filterResponseContent.length !== 0) {
+          this.resultResponseContentList.push(filterResponseContent);
+          this.resultResponseCount += filterResponseContent.length;
+        }
       });
     },
     async searchThread() {

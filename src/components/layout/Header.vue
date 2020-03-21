@@ -12,8 +12,8 @@
         </v-list>
       </v-menu>
       <v-toolbar-title>
-        <div @click="goThread">
-          <v-btn class="custom-transform-class text-none" text>posting-board</v-btn>
+        <div>
+          <v-btn class="custom-transform-class text-none" text :to="{name: 'thread'}">posting-board</v-btn>
         </div>
       </v-toolbar-title>
       <v-spacer></v-spacer>
@@ -42,11 +42,6 @@ export default {
       this.$router.push({
         name: "search",
         query: { q: this.q }
-      });
-    },
-    goThread() {
-      this.$router.push({
-        name: "thread"
       });
     },
     async logout() {
