@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-toolbar color="indigo lighten-1" dark>
+    <v-toolbar class="sticky" color="indigo lighten-1" dark>
       <v-toolbar-title>posting-board</v-toolbar-title>
       <v-spacer></v-spacer>
       <div class="my-2" @click="goSignup">
@@ -74,4 +74,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
 </style>
