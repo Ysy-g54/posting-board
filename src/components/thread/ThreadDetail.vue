@@ -6,7 +6,7 @@
     </span>
     <v-row>
       <v-col>
-        <ResponseList :responseList="responseContent.responseList"></ResponseList>
+        <ResponseList :responseList="responseContent.responseList" :emptyStateFlg="emptyStateFlg"></ResponseList>
       </v-col>
       <v-col>
         <ResponseRegistration
@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import _ from "lodash";
 import responseService from "@/service/response/response-service";
 import threadService from "@/service/thread/thread-service";
 import ResponseList from "@/components/response/ResponseList";
@@ -37,7 +38,8 @@ export default {
     responseContent: {},
     responseId: "",
     thread: {},
-    title: ""
+    title: "",
+    emptyStateFlg: false
   }),
   methods: {
     async showSnackbar(message) {
@@ -54,6 +56,7 @@ export default {
           this.responseContent = document.data();
           this.responseId = document.id;
         });
+        this.emptyStateFlg = _.isEmpty(this.responseContent);
       } else {
         this.$router.back();
       }
