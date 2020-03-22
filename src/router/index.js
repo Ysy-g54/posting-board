@@ -19,7 +19,7 @@ const router = new Router({
 			meta: { isPublic: true, title: "ログイン" }
 		},
 		{
-			path: "",
+			path: "/brouse",
 			component: Header,
 			props: true,
 			children: [
