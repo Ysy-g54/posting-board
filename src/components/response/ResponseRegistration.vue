@@ -7,21 +7,33 @@
     </v-container>
     <v-container fluid fill-height>
       <v-layout align-center justify-center>
-        <v-flex md12>
-          <v-textarea
-            v-model="content"
-            placeholder="レス(※内容の更新・削除はできないのでご注意ください。)"
-            outlined
-            required
-            :error-messages="getContentError"
-          ></v-textarea>
-        </v-flex>
+        <v-tabs>
+          <v-tab>編集</v-tab>
+          <v-tab>プレビュー</v-tab>
+          <v-tab-item>
+            <v-flex md12>
+              <v-textarea
+                v-model="content"
+                placeholder="レス(※内容の更新・削除はできないのでご注意ください。)"
+                outlined
+                required
+                :error-messages="getContentError"
+              ></v-textarea>
+            </v-flex>
+          </v-tab-item>
+          <v-tab-item>
+            <v-flex md12 class="preview">
+              <div v-html="compiledMarkdown"></div>
+            </v-flex>
+          </v-tab-item>
+        </v-tabs>
       </v-layout>
     </v-container>
   </div>
 </template>
 
 <script>
+import marked from "marked";
 import responseService from "@/service/response/response-service";
 import { required } from "vuelidate/lib/validators";
 export default {
@@ -77,6 +89,9 @@ export default {
       } else {
         return [];
       }
+    },
+    compiledMarkdown() {
+      return marked(this.content);
     }
   },
   created() {},
@@ -88,5 +103,9 @@ export default {
 <style scoped>
 .container {
   text-align: -webkit-right;
+}
+
+.preview {
+  text-align: -webkit-left;
 }
 </style>
