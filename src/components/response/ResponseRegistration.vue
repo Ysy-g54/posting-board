@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import marked from "marked";
 import responseService from "@/service/response/response-service";
 import { required } from "vuelidate/lib/validators";
@@ -48,6 +49,7 @@ export default {
     }
   },
   methods: {
+    ...mapGetters(["getLoginUser"]),
     async registerResponse() {
       this.$v.$touch();
       if (this.$v.$invalid) {
@@ -56,7 +58,8 @@ export default {
 
       let response = {
         content: this.content,
-        insertDateTime: new Date(Date.now())
+        insertDateTime: new Date(Date.now()),
+        insertUserId: this.getLoginUser().uid
       };
       if (this.responseId === "") {
         let target = {

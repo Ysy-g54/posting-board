@@ -2,7 +2,7 @@
   <div>
     <Toolbar :title="'検索結果 ' + 	resultCount + '件'"></Toolbar>
     <v-subheader v-if="notEmptyThread">{{ "スレッド一覧" }}</v-subheader>
-    <ThreadList :threadList="resultThreadList[0]"></ThreadList>
+    <ThreadList :threadList="resultThreadList[0]" @on-remove-thread-detail-click="showSnackbar"></ThreadList>
     <v-divider class="mx-4" vertical></v-divider>
     <v-subheader v-if="resultResponseCount !== 0">{{ "レス一覧" }}</v-subheader>
     <div v-for="responseContent in resultResponseContentList" :key="responseContent[0].threadId">
@@ -13,6 +13,10 @@
       >{{'下記レスがあるスレッドを見に行く'}}</v-btn>
       <ResponseList :responseList="responseContent"></ResponseList>
     </div>
+    <v-snackbar v-model="snackbar">
+      {{ snackbarMessage }}
+      <v-btn color="pink" text @click="snackbar = false">Close</v-btn>
+    </v-snackbar>
   </div>
 </template>
 
@@ -26,6 +30,8 @@ import Toolbar from "@/components/layout/Toolbar";
 export default {
   name: "thread-detail-search-result",
   data: () => ({
+    snackbarMessage: "",
+    snackbar: false,
     responseContentList: [],
     resultResponseContentList: [],
     resultResponseCount: 0,
@@ -34,7 +40,17 @@ export default {
     resultCount: 0
   }),
   methods: {
+    async showSnackbar(message) {
+      this.snackbarMessage = await message;
+      this.snackbar = await !this.snackbar;
+      await this.searchResponse();
+      await this.filterResponse();
+      await this.searchThread();
+      await this.filterThread();
+      await this.calcCount();
+    },
     async searchResponse() {
+      this.responseContentList = [];
       let querySnapshot = await responseService.searchAll();
       querySnapshot.forEach(document => {
         this.responseContentList.push(document.data());
@@ -64,6 +80,7 @@ export default {
         let threadSnapshot = _.set(document.data(), "threadId", document.id);
         threadListSnapshot.push(threadSnapshot);
       });
+      this.threadList = [];
       this.threadList = threadListSnapshot;
     },
     async filterThread() {
