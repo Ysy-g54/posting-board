@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import threadService from "@/service/thread/thread-service";
 import { categories } from "@/constants";
 import { required } from "vuelidate/lib/validators";
@@ -51,6 +52,7 @@ export default {
     }
   },
   methods: {
+    ...mapGetters(["getLoginUser"]),
     async registerThread() {
       this.$v.$touch();
       if (this.$v.$invalid) {
@@ -61,6 +63,7 @@ export default {
         title: this.title,
         categories: this.selectedCategories,
         description: this.description,
+        insertUserId: this.getLoginUser().uid,
         insertDateTime: new Date(Date.now())
       };
       await threadService.register(thread);

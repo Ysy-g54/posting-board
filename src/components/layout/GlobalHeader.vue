@@ -6,7 +6,7 @@
           <v-app-bar-nav-icon v-on="on"></v-app-bar-nav-icon>
         </template>
         <v-list>
-          <v-list-item @click="logout">
+          <v-list-item @click="onLogoutClick">
             <v-list-item-title>{{ "ログアウト" }}</v-list-item-title>
           </v-list-item>
         </v-list>
@@ -30,12 +30,13 @@
 </template>
 
 <script>
-import firebase from "firebase";
+import { mapActions } from "vuex";
 export default {
   data: () => ({
     q: ""
   }),
   methods: {
+    ...mapActions(["logout"]),
     searchThreadDetail() {
       document.activeElement.blur();
       this.$router.push({
@@ -43,8 +44,8 @@ export default {
         query: { q: this.q }
       });
     },
-    async logout() {
-      await firebase.auth().signOut();
+    async onLogoutClick() {
+      await this.logout();
       await this.$router.push({
         name: "login"
       });

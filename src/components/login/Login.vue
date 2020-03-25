@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import firebase from "firebase";
+import { mapActions } from "vuex";
 export default {
   name: "login",
   data: () => ({
@@ -44,23 +44,23 @@ export default {
     showPassword: false
   }),
   methods: {
+    ...mapActions(["loginByEmailAndPassword"]),
     changeShowPassword() {
       this.showPassword = !this.showPassword;
     },
-    onLoginClick() {
-      firebase
-        .auth()
-        .signInWithEmailAndPassword(this.mailAddress, this.password)
-        .then(() => {
-          this.$router.push({
-            name: "thread"
-          });
-        })
-        .catch(() => {
-          this.snackbarMessage =
-            "ログインに失敗しました。入力情報を確かめて、再度試してください。";
-          this.snackbar = !this.snackbar;
-        });
+    async onLoginClick() {
+      let data = await {
+        mailAddress: this.mailAddress,
+        password: this.password
+      };
+      await this.loginByEmailAndPassword(data).catch(() => {
+        this.snackbarMessage =
+          "ログインに失敗しました。入力情報を確かめて、再度試してください。";
+        this.snackbar = !this.snackbar;
+      });
+      await this.$router.push({
+        name: "thread"
+      });
     },
     goSignup() {
       this.$router.push({
