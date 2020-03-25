@@ -28,8 +28,17 @@ function register(thread) {
 	return firebase.firestore().collection("thread").add(thread);
 }
 
+/**
+ * スレッドIDをもとにスレッド情報を削除します。
+ * @param  {String} threadId
+ */
+function remove(threadId) {
+	firebase.firestore().collection("thread").doc(threadId).delete();
+}
+
 export default {
 	searchAll,
 	searchByThreadId,
-	register
+	register,
+	remove
 };

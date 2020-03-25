@@ -37,10 +37,18 @@ function register(response) {
 function modify(response, responseId) {
 	return firebase.firestore().collection("response").doc(responseId).set(response);
 }
+/**
+ * レスポンスIDをもとにレスポンス情報を削除します。
+ * @param  {String} responseId
+ */
+function remove(responseId) {
+	firebase.firestore().collection("response").doc(responseId).delete();
+}
 
 export default {
 	searchAll,
 	searchByThreadId,
 	register,
-	modify
+	modify,
+	remove
 };

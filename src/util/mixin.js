@@ -79,7 +79,7 @@ export default {
 		}
 	},
 	mounted() {
-		let title = this.$route.meta.title;
+		let title = this.$route !== undefined ? this.$route.meta.title : undefined;
 		if (title !== undefined) {
 			document.title = `${title} - posting-board`;
 		} else {

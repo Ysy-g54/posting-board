@@ -17,29 +17,81 @@
           <v-list-item-subtitle v-if="thread.description !== ''" v-html="thread.description"></v-list-item-subtitle>
           <v-list-item-subtitle v-html="`作成日: ${ formatDate(thread.insertDateTime)}`"></v-list-item-subtitle>
         </v-list-item-content>
+        <v-menu v-if="thread.insertUserId === getLoginUser.uid" offset-y>
+          <template v-slot:activator="{ on }">
+            <v-btn icon v-on="on">
+              <v-icon>mdi-dots-vertical</v-icon>
+            </v-btn>
+          </template>
+          <v-list>
+            <v-list-item @click="openDialog(thread.threadId)">
+              <v-icon>mdi-delete</v-icon>
+              <v-list-item-title>{{ "削除する" }}</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
       </v-list-item>
       <v-divider v-if="index + 1 < threadList.length" :key="`divider-${thread.threadId}`"></v-divider>
     </template>
+    <v-dialog v-model="showDialog">
+      <v-card>
+        <v-card-text>スレッド内のレスポンス情報も全て削除しますが、よろしいですか?</v-card-text>
+        <v-card-actions>
+          <v-btn color="secondary" text @click="closeDialog">キャンセル</v-btn>
+          <v-btn color="secondary" text @click="removeThreadDetail">OK</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-list>
 </template>
 
 <script>
+import responseService from "@/service/response/response-service";
+import threadService from "@/service/thread/thread-service";
+import { mapGetters } from "vuex";
 export default {
   name: "thread-list",
-  data: () => ({}),
+  data: () => ({
+    showDialog: false,
+    targetThreadId: ""
+  }),
   methods: {
     goThreadDetail(threadId) {
       this.$router.push({
         name: "thread-detail",
         params: { threadId }
       });
+    },
+    openDialog(threadId) {
+      this.targetThreadId = threadId;
+      this.showDialog = true;
+    },
+    closeDialog() {
+      this.showDialog = false;
+    },
+    async removeThreadDetail() {
+      let querySnapshot = await responseService.searchByThreadId(
+        this.targetThreadId
+      );
+      await querySnapshot.forEach(async document => {
+        let responseId = document.id;
+        await responseService.remove(responseId);
+      });
+      await threadService.remove(this.targetThreadId);
+      await this.closeDialog();
+      await this.$emit(
+        "on-remove-thread-detail-click",
+        "スレッドを削除しました。"
+      );
     }
   },
   props: {
     threadList: { type: Array, required: false }
   },
-  computed: {},
   watch: {},
+  computed: {
+    ...mapGetters(["getLoginUser"])
+  },
   created() {},
   components: {}
 };

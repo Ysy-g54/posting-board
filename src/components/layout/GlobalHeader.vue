@@ -6,6 +6,13 @@
           <v-app-bar-nav-icon v-on="on"></v-app-bar-nav-icon>
         </template>
         <v-list>
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title>{{ getLoginUser.displayName }}</v-list-item-title>
+              <v-list-item-title>{{ getLoginUser.mailAddress }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-divider></v-divider>
           <v-list-item @click="onLogoutClick">
             <v-list-item-title>{{ "ログアウト" }}</v-list-item-title>
           </v-list-item>
@@ -30,7 +37,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   data: () => ({
     q: ""
@@ -57,6 +64,9 @@ export default {
         this.q = this.$route.query.q;
       }
     }
+  },
+  computed: {
+    ...mapGetters(["getLoginUser"])
   },
   created() {
     if (this.$route.query.q !== undefined) {

@@ -4,6 +4,7 @@
     <CenterTemplate>
       <v-flex sm8 md4 @keyup.enter="doSignup">
         <v-form onsubmit="return false;">
+          <v-text-field v-model="userName" placeholder="アカウント名" outlined clearable></v-text-field>
           <v-text-field v-model="mailAddress" placeholder="メールアドレス" outlined clearable></v-text-field>
           <v-text-field
             v-model="password"
@@ -27,6 +28,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import firebase from "firebase";
 import Toolbar from "@/components/layout/Toolbar";
 export default {
@@ -34,28 +36,33 @@ export default {
   data: () => ({
     mailAddress: "",
     password: "",
+    userName: "",
     snackbarMessage: "",
     snackbar: false,
     showPassword: false
   }),
   methods: {
+    ...mapActions(["findLoginUser"]),
     changeShowPassword() {
       this.showPassword = !this.showPassword;
     },
-    doSignup() {
-      firebase
+    async doSignup() {
+      await firebase
         .auth()
         .createUserWithEmailAndPassword(this.mailAddress, this.password)
-        .then(() => {
-          this.$router.push({
-            name: "thread"
-          });
-        })
         .catch(() => {
           this.snackbarMessage =
             "アカウント作成に失敗しました。入力情報を確かめて、再度試してください。";
           this.snackbar = !this.snackbar;
         });
+      let signupUser = await firebase.auth().currentUser;
+      await signupUser.updateProfile({
+        displayName: this.userName
+      });
+      await this.findLoginUser();
+      await this.$router.push({
+        name: "thread"
+      });
     }
   },
   components: {
