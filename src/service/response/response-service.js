@@ -11,6 +11,15 @@ function searchAll() {
 }
 
 /**
+ * レスポンスIDをもとにレスポンス情報を取得します。
+ * @param  {String} responseId
+ * @returns レスポンス情報
+ */
+function searchByResponseId(responseId) {
+	return firebase.firestore().collection("response").doc(responseId).get();
+}
+
+/**
  * スレッドIDをもとにレスポンスリスト情報を取得します。
  * 
  * @returns レスポンスリスト情報
@@ -47,6 +56,7 @@ function remove(responseId) {
 
 export default {
 	searchAll,
+	searchByResponseId,
 	searchByThreadId,
 	register,
 	modify,

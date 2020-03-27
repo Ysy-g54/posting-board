@@ -68,12 +68,20 @@ export default {
         };
         await responseService.register(target);
       } else {
+        await this.searchResponseById();
         await this.targetResponse.responseList.push(response);
         await responseService.modify(this.targetResponse, this.responseId);
       }
       this.content = await "";
       this.$v.$reset();
       await this.$emit("on-register-response-click", "レスを送りました。");
+    },
+    async searchResponseById() {
+      let resultResponse = await responseService.searchByResponseId(
+        this.responseId
+      );
+      this.targetResponse.responseList = [];
+      this.targetResponse.responseList = resultResponse.data().responseList;
     }
   },
   props: {

@@ -2,7 +2,7 @@
   <div v-if="emptyStateFlg">
     <EmptyState></EmptyState>
   </div>
-  <div v-else>
+  <div v-else class="response-list">
     <v-list three-line>
       <template v-for="(response, index) in responseList">
         <v-card class="mx-auto" outlined :key="index">
