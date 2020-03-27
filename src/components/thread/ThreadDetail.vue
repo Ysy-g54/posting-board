@@ -25,7 +25,7 @@
 
 <script>
 import _ from "lodash";
-import responseService from "@/service/response/response-service";
+import database from "@/service/database";
 import threadService from "@/service/thread/thread-service";
 import ResponseList from "@/components/response/ResponseList";
 import ResponseRegistration from "@/components/response/ResponseRegistration";
@@ -35,6 +35,7 @@ export default {
   data: () => ({
     snackbarMessage: "",
     snackbar: false,
+    content: {},
     responseContent: {},
     responseId: "",
     thread: {},
@@ -45,21 +46,6 @@ export default {
     async showSnackbar(message) {
       this.snackbarMessage = await message;
       this.snackbar = await !this.snackbar;
-      await this.searchResponse();
-    },
-    async searchResponse() {
-      if (this.$route.params.threadId !== undefined) {
-        let querySnapshot = await responseService.searchByThreadId(
-          this.$route.params.threadId
-        );
-        querySnapshot.forEach(document => {
-          this.responseContent = document.data();
-          this.responseId = document.id;
-        });
-        this.emptyStateFlg = _.isEmpty(this.responseContent);
-      } else {
-        this.$router.back();
-      }
     },
     async searchThread() {
       if (this.$route.params.threadId !== undefined) {
@@ -73,10 +59,23 @@ export default {
       }
     }
   },
+  firestore: {
+    content: database.collection("response")
+  },
+  watch: {
+    async content() {
+      await this.content.forEach(async document => {
+        if (document.threadId === this.$route.params.threadId) {
+          this.responseContent = await document;
+          this.responseId = await document.id;
+        }
+      });
+      this.emptyStateFlg = await _.isEmpty(this.responseContent);
+    }
+  },
   computed: {},
-  created() {
-    this.searchResponse();
-    this.searchThread();
+  async created() {
+    await this.searchThread();
   },
   components: {
     ResponseList,

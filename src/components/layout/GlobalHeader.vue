@@ -14,6 +14,7 @@
           </v-list-item>
           <v-divider></v-divider>
           <v-list-item @click="onLogoutClick">
+            <v-icon>mdi-exit-to-app</v-icon>
             <v-list-item-title>{{ "ログアウト" }}</v-list-item-title>
           </v-list-item>
         </v-list>
