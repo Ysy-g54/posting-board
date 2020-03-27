@@ -117,6 +117,7 @@ export default {
 }
 
 .preview {
+  height: 260px;
   text-align: -webkit-left;
 }
 </style>
