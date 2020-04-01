@@ -8,7 +8,7 @@
       </div>
     </v-toolbar>
     <CenterTemplate>
-      <v-flex sm8 md4 @keyup.enter="onLoginClick">
+      <v-flex sm8 md4>
         <v-form onsubmit="return false;">
           <v-text-field v-model="mailAddress" placeholder="メールアドレス" outlined clearable></v-text-field>
           <v-text-field
@@ -23,6 +23,14 @@
             <v-btn large color="primary" @click="onLoginClick">ログイン</v-btn>
           </v-layout>
         </v-form>
+        <v-layout align-center justify-center>
+          <div>または</div>
+        </v-layout>
+        <v-layout align-center justify-center>
+          <v-btn large @click="onGoogleLoginClick">
+            <img src="@/assets/google.png" width="32" height="32" />Googleアカウントでログイン
+          </v-btn>
+        </v-layout>
       </v-flex>
       <v-snackbar v-model="snackbar">
         {{ snackbarMessage }}
@@ -44,7 +52,7 @@ export default {
     showPassword: false
   }),
   methods: {
-    ...mapActions(["loginByEmailAndPassword"]),
+    ...mapActions(["loginByEmailAndPassword", "loginByGoogleAccount"]),
     changeShowPassword() {
       this.showPassword = !this.showPassword;
     },
@@ -61,6 +69,9 @@ export default {
       await this.$router.push({
         name: "thread"
       });
+    },
+    async onGoogleLoginClick() {
+      await this.loginByGoogleAccount();
     },
     goSignup() {
       this.$router.push({

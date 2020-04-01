@@ -37,6 +37,11 @@ const store = new Vuex.Store({
 					context.commit("setLoginUser");
 				});
 		},
+		async loginByGoogleAccount(context) {
+			let provider = await new firebase.auth.GoogleAuthProvider();
+			await firebase.auth().signInWithRedirect(provider);
+			await context.commit("setLoginUser");
+		},
 		async findLoginUser(context) {
 			await context.commit("setLoginUser");
 		},
