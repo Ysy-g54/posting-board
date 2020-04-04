@@ -3,6 +3,7 @@
     <v-row>
       <v-col cols="12" sm="6" md="6" lg="6" xl="6">
         <v-subheader>スレッド一覧</v-subheader>
+        <span>{{ getThreadCount }} 個</span>
         <ThreadList :threadList="threadList" @on-remove-thread-detail-click="showSnackbar"></ThreadList>
       </v-col>
       <v-col cols="12" sm="6" md="6" lg="6" xl="6">
@@ -44,7 +45,11 @@ export default {
       this.threadList = threadListSnapshot;
     }
   },
-  computed: {},
+  computed: {
+    getThreadCount() {
+      return this.threadList.length;
+    }
+  },
   created() {
     this.searchThread();
   },
@@ -58,7 +63,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .v-list {
-  height: 540px;
+  height: 538px;
   overflow-y: auto;
 }
 </style>

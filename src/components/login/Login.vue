@@ -26,11 +26,7 @@
         <v-layout align-center justify-center>
           <div>または</div>
         </v-layout>
-        <v-layout align-center justify-center>
-          <v-btn large @click="onGoogleLoginClick">
-            <img src="@/assets/google.png" width="32" height="32" />Googleアカウントでログイン
-          </v-btn>
-        </v-layout>
+        <GoogleAccount :btnOperationName="'ログイン'"></GoogleAccount>
       </v-flex>
       <v-snackbar v-model="snackbar">
         {{ snackbarMessage }}
@@ -42,6 +38,7 @@
 
 <script>
 import { mapActions } from "vuex";
+import GoogleAccount from "@/components/login/GoogleAccount";
 export default {
   name: "login",
   data: () => ({
@@ -79,7 +76,9 @@ export default {
       });
     }
   },
-  components: {}
+  components: {
+    GoogleAccount
+  }
 };
 </script>
 

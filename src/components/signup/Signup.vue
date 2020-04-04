@@ -18,6 +18,10 @@
             <v-btn large color="primary" @click="doSignup">作成する</v-btn>
           </v-layout>
         </v-form>
+        <v-layout align-center justify-center>
+          <div>または</div>
+        </v-layout>
+        <GoogleAccount :btnOperationName="'作成する'"></GoogleAccount>
       </v-flex>
       <v-snackbar v-model="snackbar">
         {{ snackbarMessage }}
@@ -30,6 +34,7 @@
 <script>
 import { mapActions } from "vuex";
 import firebase from "firebase";
+import GoogleAccount from "@/components/login/GoogleAccount";
 import Toolbar from "@/components/layout/Toolbar";
 export default {
   name: "signup",
@@ -66,6 +71,7 @@ export default {
     }
   },
   components: {
+    GoogleAccount,
     Toolbar
   }
 };

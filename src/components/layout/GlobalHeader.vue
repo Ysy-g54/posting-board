@@ -25,33 +25,18 @@
         </div>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-text-field
-        @keyup.enter="searchThreadDetail"
-        v-model="q"
-        hide-details
-        prepend-icon="mdi-magnify"
-        placeholder="検索..."
-        clearable
-      ></v-text-field>
+      <ThreadDetailSearchField></ThreadDetailSearchField>
     </v-toolbar>
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import ThreadDetailSearchField from "@/components/search/ThreadDetailSearchField";
 export default {
-  data: () => ({
-    q: ""
-  }),
+  data: () => ({}),
   methods: {
     ...mapActions(["logout"]),
-    searchThreadDetail() {
-      document.activeElement.blur();
-      this.$router.push({
-        name: "search",
-        query: { q: this.q }
-      });
-    },
     async onLogoutClick() {
       await this.logout();
       await this.$router.push({
@@ -59,20 +44,13 @@ export default {
       });
     }
   },
-  watch: {
-    async "$route.query.q"() {
-      if (this.$route.query.q !== undefined) {
-        this.q = this.$route.query.q;
-      }
-    }
-  },
+  watch: {},
   computed: {
     ...mapGetters(["getLoginUser"])
   },
-  created() {
-    if (this.$route.query.q !== undefined) {
-      this.q = this.$route.query.q;
-    }
+  created() {},
+  components: {
+    ThreadDetailSearchField
   }
 };
 </script>
