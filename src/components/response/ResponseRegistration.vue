@@ -57,6 +57,7 @@ export default {
       }
 
       let response = {
+        uniqueId: new Date().getTime().toString(16) + this.getLoginUser().uid,
         content: this.content,
         insertDateTime: new Date(Date.now()),
         insertUserId: this.getLoginUser().uid

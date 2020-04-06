@@ -2,7 +2,10 @@
   <div>
     <Toolbar :title="'検索結果 ' + 	resultCount + '件'"></Toolbar>
     <v-subheader v-if="notEmptyThread">{{ "スレッド一覧" }}</v-subheader>
-    <ThreadList :threadList="resultThreadList[0]" @on-remove-thread-detail-click="showSnackbar"></ThreadList>
+    <ThreadList
+      :threadList="resultThreadList[0]"
+      @on-remove-thread-detail-click="redrawThreadDetail"
+    ></ThreadList>
     <v-divider class="mx-4" vertical></v-divider>
     <v-subheader v-if="resultResponseCount !== 0">{{ "レス一覧" }}</v-subheader>
     <div v-for="responseContent in resultResponseContentList" :key="responseContent[0].threadId">
@@ -11,7 +14,7 @@
         text
         color="accent"
       >{{'下記レスがあるスレッドを見に行く'}}</v-btn>
-      <ResponseList :responseList="responseContent"></ResponseList>
+      <ResponseList :responseList="responseContent" @on-remove-response-click="redrawResponse"></ResponseList>
     </div>
     <v-snackbar v-model="snackbar">
       {{ snackbarMessage }}
@@ -43,17 +46,13 @@ export default {
     async showSnackbar(message) {
       this.snackbarMessage = await message;
       this.snackbar = await !this.snackbar;
-      await this.searchResponse();
-      await this.filterResponse();
-      await this.searchThread();
-      await this.filterThread();
-      await this.calcCount();
     },
     async searchResponse() {
       this.responseContentList = [];
       let querySnapshot = await responseService.searchAll();
       querySnapshot.forEach(document => {
-        this.responseContentList.push(document.data());
+        let responseContent = _.set(document.data(), "responseId", document.id);
+        this.responseContentList.push(responseContent);
       });
     },
     async filterResponse() {
@@ -66,7 +65,10 @@ export default {
               response.content !== null &&
               response.content.includes(this.$route.query.q)
           )
-          .map(content => _.set(content, "threadId", responseContent.threadId));
+          .map(content => _.set(content, "threadId", responseContent.threadId))
+          .map(content =>
+            _.set(content, "responseId", responseContent.responseId)
+          );
         if (filterResponseContent.length !== 0) {
           this.resultResponseContentList.push(filterResponseContent);
           this.resultResponseCount += filterResponseContent.length;
@@ -92,6 +94,20 @@ export default {
             threadContent.title.includes(this.$route.query.q)
         )
       );
+    },
+    async redrawThreadDetail(message) {
+      await this.searchResponse();
+      await this.filterResponse();
+      await this.searchThread();
+      await this.filterThread();
+      await this.calcCount();
+      await this.showSnackbar(message);
+    },
+    async redrawResponse(message) {
+      await this.searchResponse();
+      await this.filterResponse();
+      await this.calcCount();
+      await this.showSnackbar(message);
     },
     async calcCount() {
       this.resultCount = 0;

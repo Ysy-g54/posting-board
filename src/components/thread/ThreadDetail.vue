@@ -68,6 +68,9 @@ export default {
         if (document.threadId === this.$route.params.threadId) {
           this.responseContent = await document;
           this.responseId = await document.id;
+          await this.responseContent.responseList.forEach(async response => {
+            _.set(response, "responseId", this.responseId);
+          });
         }
       });
       this.emptyStateFlg = await _.isEmpty(this.responseContent);
