@@ -14,7 +14,7 @@
             <v-flex md12>
               <v-textarea
                 v-model="content"
-                placeholder="レス(※更新・削除はできません...。)"
+                placeholder="レス(※更新はできません...。)"
                 outlined
                 required
                 :error-messages="getContentError"

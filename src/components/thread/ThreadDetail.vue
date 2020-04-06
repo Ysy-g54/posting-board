@@ -6,7 +6,11 @@
     </span>
     <v-row>
       <v-col cols="12" sm="6" md="6" lg="6" xl="6">
-        <ResponseList :responseList="responseContent.responseList" :emptyStateFlg="emptyStateFlg"></ResponseList>
+        <ResponseList
+          :responseList="responseContent.responseList"
+          :emptyStateFlg="emptyStateFlg"
+          @on-remove-response-click="showSnackbar"
+        ></ResponseList>
       </v-col>
       <v-col cols="12" sm="6" md="6" lg="6" xl="6">
         <ResponseRegistration
@@ -73,7 +77,9 @@ export default {
           });
         }
       });
-      this.emptyStateFlg = await _.isEmpty(this.responseContent);
+      this.emptyStateFlg =
+        (await _.isEmpty(this.responseContent)) ||
+        (await this.responseContent.responseList.length) === 0;
     }
   },
   computed: {},
