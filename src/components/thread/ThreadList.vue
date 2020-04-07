@@ -35,7 +35,7 @@
     </template>
     <v-dialog v-model="showDialog">
       <v-card>
-        <v-card-text>スレッド内のレスポンス情報も全て削除しますが、よろしいですか?</v-card-text>
+        <v-card-text>{{ 'スレッド内のレスポンス情報も全て削除しますが、よろしいですか?' }}</v-card-text>
         <v-card-actions>
           <v-btn color="secondary" text @click="closeDialog">キャンセル</v-btn>
           <v-btn color="secondary" text @click="removeThreadDetail">OK</v-btn>

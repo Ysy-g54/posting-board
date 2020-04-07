@@ -4,21 +4,13 @@
   </div>
   <div v-else class="response-list">
     <v-list three-line>
-      <template v-for="(response, index) in responseList">
-        <v-card class="mx-auto" outlined :key="index">
-          <div v-html="compiledMarkdown(response.content)"></div>
-          <v-list-item-subtitle v-html="`送った日: ${ formatDate(response.insertDateTime)}`"></v-list-item-subtitle>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn
-              v-if="response.insertUserId === getLoginUser.uid"
-              icon
-              @click="removeResponse(response)"
-            >
-              <v-icon>mdi-delete</v-icon>
-            </v-btn>
-          </v-card-actions>
-        </v-card>
+      <template v-for="response in responseList">
+        <Response
+          :response="response"
+          :key="response.uniqueId"
+          @on-remove-response-click="removeResponse"
+          @on-modification-response-click="modifyNice"
+        ></Response>
       </template>
     </v-list>
   </div>
@@ -26,17 +18,40 @@
 
 <script>
 import { mapGetters } from "vuex";
-import marked from "marked";
 import responseService from "@/service/response/response-service";
 import EmptyState from "@/components/layout/EmptyState";
+import Response from "@/components/response/Response";
 export default {
   name: "response-list",
   data: () => ({
     targetResponse: []
   }),
   methods: {
-    compiledMarkdown(content) {
-      return marked(content);
+    async searchResponseById(responseId) {
+      let resultResponse = await responseService.searchByResponseId(responseId);
+      this.targetResponse = [];
+      this.targetResponse = resultResponse.data();
+    },
+    async modifyNice(response) {
+      await this.searchResponseById(response.responseId);
+      let snackBarMessage = "";
+      await this.targetResponse.responseList.forEach(async target => {
+        if (target.uniqueId === response.uniqueId) {
+          if (target.niceList.indexOf(this.getLoginUser.uid) === -1) {
+            snackBarMessage = "高く評価したレスに追加しました。";
+            await target.niceList.push(this.getLoginUser.uid);
+          } else if (target.niceList === undefined) {
+            target.niceList = await [this.getLoginUser.uid];
+          } else {
+            snackBarMessage = "高く評価したレスから削除しました。";
+            target.niceList = await target.niceList.filter(
+              nice => nice !== this.getLoginUser.uid
+            );
+          }
+        }
+      });
+      await responseService.modify(this.targetResponse, response.responseId);
+      await this.$emit("on-modification-response-click", snackBarMessage);
     },
     async removeResponse(response) {
       await this.searchResponseById(response.responseId);
@@ -45,11 +60,6 @@ export default {
       );
       await responseService.modify(this.targetResponse, response.responseId);
       await this.$emit("on-remove-response-click", "レスを削除しました。");
-    },
-    async searchResponseById(responseId) {
-      let resultResponse = await responseService.searchByResponseId(responseId);
-      this.targetResponse = [];
-      this.targetResponse = resultResponse.data();
     }
   },
   props: {
@@ -62,7 +72,8 @@ export default {
   watch: {},
   created() {},
   components: {
-    EmptyState
+    EmptyState,
+    Response
   }
 };
 </script>

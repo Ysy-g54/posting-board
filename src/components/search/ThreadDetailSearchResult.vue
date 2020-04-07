@@ -14,7 +14,10 @@
         text
         color="accent"
       >{{'下記レスがあるスレッドを見に行く'}}</v-btn>
-      <ResponseList :responseList="responseContent" @on-remove-response-click="redrawResponse"></ResponseList>
+      <ResponseList
+        :responseList="responseContent"
+        @on-modification-response-click="redrawResponse"
+      ></ResponseList>
     </div>
     <v-snackbar v-model="snackbar">
       {{ snackbarMessage }}

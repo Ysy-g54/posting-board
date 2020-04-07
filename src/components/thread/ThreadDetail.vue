@@ -9,7 +9,7 @@
         <ResponseList
           :responseList="responseContent.responseList"
           :emptyStateFlg="emptyStateFlg"
-          @on-remove-response-click="showSnackbar"
+          @on-modification-response-click="showSnackbar"
         ></ResponseList>
       </v-col>
       <v-col cols="12" sm="6" md="6" lg="6" xl="6">
