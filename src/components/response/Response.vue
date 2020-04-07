@@ -45,14 +45,6 @@ export default {
   },
   computed: {
     ...mapGetters(["getLoginUser"])
-    // isNotNiceClick() {
-    //   this.response.niceList.forEach(nice => {
-    //     if (nice === this.getLoginUser.uid) {
-    //       return false;
-    //     }
-    //   });
-    //   return true;
-    // }
   },
   watch: {},
   created() {},
