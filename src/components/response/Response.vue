@@ -5,7 +5,8 @@
     <v-card-actions>
       <v-spacer></v-spacer>
       <v-btn icon @click="modifyNice(response)">
-        <v-icon>mdi-thumb-up</v-icon>
+        <v-icon v-if="isNotNiceClick">mdi-thumb-up</v-icon>
+        <v-icon v-else color="blue">mdi-thumb-up</v-icon>
       </v-btn>
       <div>{{ response.niceList.length }}</div>
       <!-- <v-icon>mdi-share-variant</v-icon> -->
@@ -44,7 +45,14 @@ export default {
     response: { type: Object, required: true }
   },
   computed: {
-    ...mapGetters(["getLoginUser"])
+    ...mapGetters(["getLoginUser"]),
+    isNotNiceClick() {
+      if (this.response.niceList.indexOf(this.getLoginUser.uid) === -1) {
+        return true;
+      } else {
+        return false;
+      }
+    }
   },
   watch: {},
   created() {},
@@ -54,5 +62,4 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 </style>

@@ -39,9 +39,6 @@ export default {
     ...mapActions(["logout"]),
     async onLogoutClick() {
       await this.logout();
-      await this.$router.push({
-        name: "login"
-      });
     }
   },
   watch: {},
