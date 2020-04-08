@@ -59,7 +59,10 @@ export default {
         content => content.uniqueId !== response.uniqueId
       );
       await responseService.modify(this.targetResponse, response.responseId);
-      await this.$emit("on-modification-response-click", "レスを削除しました。");
+      await this.$emit(
+        "on-modification-response-click",
+        "レスを削除しました。"
+      );
     }
   },
   props: {

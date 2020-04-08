@@ -23,7 +23,7 @@ export default {
 	}),
 	methods: {
 		formatDate(date, format) {
-			if (!_.isDate(date) && _.isEmpty(date)) {
+			if (!_.isDate(date) && _.isEmpty(date) || date.toLocaleString().indexOf('Timestamp') === -1) {
 				return "";
 			}
 			let m = moment(date.toDate());
