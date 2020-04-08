@@ -54,7 +54,10 @@ const router = new Router({
 			path: "*",
 			redirect: "/thread"
 		}
-	]
+	],
+	scrollBehavior() {
+		return { x: 0, y: 0 }
+	}
 });
 
 router.beforeEach((to, from, next) => {
