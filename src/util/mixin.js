@@ -1,5 +1,6 @@
 import _ from "lodash";
 import moment from "moment";
+import marked from "marked";
 import { categories } from "@/constants";
 
 export default {
@@ -87,6 +88,7 @@ export default {
 		}
 	},
 	created() {
+		marked.setOptions({ breaks: true });
 		window.removeEventListener("beforeunload", this.handler);
 	},
 	destroyed() { }
