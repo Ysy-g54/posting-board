@@ -40,8 +40,14 @@ const router = new Router({
 					query: { q: "word" },
 					name: "search",
 					component: ThreadDetailSearchResult,
-					meta: { isPublic: false, title: "スレッド・スレの検索結果" }
+					meta: { isPublic: false, title: "スレッド・レスの検索結果" }
 				}
+				// {
+				// 	path: "/my-favorite-response",
+				// 	name: "my-favorite-response",
+				// 	component: ThreadDetailSearchResult,
+				// 	meta: { isPublic: false, title: "高く評価したレス一覧" }
+				// }
 			]
 		},
 		{

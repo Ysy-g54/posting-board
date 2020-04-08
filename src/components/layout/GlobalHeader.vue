@@ -13,7 +13,7 @@
             </v-list-item-content>
           </v-list-item>
           <!-- <v-divider></v-divider>
-          <v-list-item>
+          <v-list-item :to="{name: 'my-favorite-response'}">
             <v-icon>mdi-thumb-up</v-icon>
             <v-list-item-title>{{ '高く評価したレスを確認する' }}</v-list-item-title>
           </v-list-item>-->

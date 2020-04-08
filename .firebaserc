@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "posting-board-test"
+    "default": "posting-board-test",
+    "posting-board": "posting-board-test"
   }
 }
