@@ -6,6 +6,8 @@ jobs:
       # ジョブ実行環境のDockerイメージを記述
       - image: circleci/node:12.16.1
     steps:
+      # ソースコードのチェックアウト
+      - checkout
       # 順に実行したいコマンドとコマンドに名前をつけます
       - run:
           name: npm install
