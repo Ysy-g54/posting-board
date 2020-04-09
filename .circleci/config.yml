@@ -18,7 +18,7 @@ jobs:
       - run:
           # プロジェクト上のfirebase-toolsでデプロイします
           name: deploy to Firebase Hosting
-          command: ./node_modules/.bin/firebase deploy --token=$FIREBASE_TOKEN
+          command: ./node_modules/.bin/firebase deploy --only hosting --project default --token=$FIREBASE_TOKEN
 
 workflows:
   version: 2
