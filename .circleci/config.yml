@@ -1,50 +1,31 @@
-# version: 2
-# jobs:
-#   # ジョブ名
-#   deploy_master: 
-#     docker:
-#       # ジョブ実行環境のDockerイメージを記述
-#       - image: circleci/node:12.16.1
-#     steps:
-#       # ソースコードのチェックアウト
-#       - checkout
-#       # 順に実行したいコマンドとコマンドに名前をつけます
-#       - run:
-#           name: npm install
-#           command: npm install
-#       - run:
-#           name: npm run build
-#           command: npm run build
-#       - run:
-#           name: deploy to Firebase Hosting
-#           # プロジェクト上のfirebase-toolsでデプロイします
-#           command: ./node_modules/.bin/firebase deploy --project default  --token "$FIREBASE_TOKEN"
-
-# workflows:
-#   version: 2
-#   # ワークフローの名前
-#   deploy_master:
-#     jobs:
-#       # 上で定義したジョブを指定します
-#       - deploy_master:
-#           filters:
-#             branches:
-#               # masterブランチのみを実行対象とします
-#               only: master
-
-version: 2.1
-description: Firebase デプロイ用の Orb
-commands:
-  deploy:
-    description: Firebase にデプロイ
-    parameters:
-      token:
-        type: string
-        description: Firebase デプロイトークン
+version: 2
+jobs:
+  # ジョブ名
+  deploy_master: 
+    docker:
+      # ジョブ実行環境のDockerイメージを記述
+      - image: circleci/node:12.16.1
     steps:
+      # 順に実行したいコマンドとコマンドに名前をつけます
       - run:
-          name: Firebase ツールをインストール
-          command: npm install --prefix=./firebase-deploy firebase-tools
+          name: npm install
+          command: npm install
       - run:
-          name: Firebase にデプロイ
-          command: ./firebase-deploy/node_modules/.bin/firebase deploy --token="$FIREBASE_TOKEN"
+          name: npm run build
+          command: npm run build
+      - run:
+          # プロジェクト上のfirebase-toolsでデプロイします
+          name: deploy to Firebase Hosting
+          command: ./node_modules/.bin/firebase deploy --project default  --token=$FIREBASE_TOKEN
+
+workflows:
+  version: 2
+  # ワークフローの名前
+  deploy_master:
+    jobs:
+      # 上で定義したジョブを指定します
+      - deploy_master:
+          filters:
+            branches:
+              # masterブランチのみを実行対象とします
+              only: master
