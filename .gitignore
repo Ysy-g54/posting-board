@@ -1,5 +1,4 @@
 /src/configs/*
-!/src/configs/firebase.js
 
 .DS_Store
 node_modules
