@@ -1,53 +1,59 @@
 <template>
-  <v-list three-line>
-    <template v-for="(thread, index) in threadList">
-      <v-list-item :key="thread.threadId">
-        <v-list-item-content>
-          <a v-html="thread.title" @click="goThreadDetail(thread.threadId)"></a>
-          <span v-for="(category, index) in thread.categories" :key="category">
-            <v-chip
-              v-if="index === 0"
-              :color="getCategoryColor(category)"
-            >{{ formatCategory(category) }}</v-chip>
-            <span
-              v-else-if="index === 1"
-              class="grey--text caption"
-            >他{{ thread.categories.length - index }}つタグが付いています。</span>
-          </span>
-          <v-list-item-subtitle v-if="thread.description !== ''" v-html="thread.description"></v-list-item-subtitle>
-          <v-list-item-subtitle v-html="`作成日: ${ formatDate(thread.insertDateTime)}`"></v-list-item-subtitle>
-        </v-list-item-content>
-        <v-menu v-if="thread.insertUserId === getLoginUser.uid" offset-y>
-          <template v-slot:activator="{ on }">
-            <v-btn icon v-on="on">
-              <v-icon>mdi-dots-vertical</v-icon>
-            </v-btn>
-          </template>
-          <v-list>
-            <v-list-item @click="openDialog(thread.threadId)">
-              <v-icon>mdi-delete</v-icon>
-              <v-list-item-title>{{ "削除する" }}</v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-menu>
-      </v-list-item>
-      <v-divider v-if="index + 1 < threadList.length" :key="`divider-${thread.threadId}`"></v-divider>
-    </template>
-    <v-dialog v-model="showDialog">
-      <v-card>
-        <v-card-text>{{ 'スレッド内のレスポンス情報も全て削除しますが、よろしいですか?' }}</v-card-text>
-        <v-card-actions>
-          <v-btn color="secondary" text @click="closeDialog">キャンセル</v-btn>
-          <v-btn color="secondary" text @click="removeThreadDetail">OK</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-  </v-list>
+  <div v-if="emptyStateFlg">
+    <EmptyState :message="'表示するスレッドがありません。スレッドを作成して話してみましょう！'"></EmptyState>
+  </div>
+  <div v-else>
+    <v-list three-line>
+      <template v-for="(thread, index) in threadList">
+        <v-list-item :key="thread.threadId">
+          <v-list-item-content>
+            <a v-html="thread.title" @click="goThreadDetail(thread.threadId)"></a>
+            <span v-for="(category, index) in thread.categories" :key="category">
+              <v-chip
+                v-if="index === 0"
+                :color="getCategoryColor(category)"
+              >{{ formatCategory(category) }}</v-chip>
+              <span
+                v-else-if="index === 1"
+                class="grey--text caption"
+              >他{{ thread.categories.length - index }}つタグが付いています。</span>
+            </span>
+            <v-list-item-subtitle v-if="thread.description !== ''" v-html="thread.description"></v-list-item-subtitle>
+            <v-list-item-subtitle v-html="`作成日: ${ formatDate(thread.insertDateTime)}`"></v-list-item-subtitle>
+          </v-list-item-content>
+          <v-menu v-if="thread.insertUserId === getLoginUser.uid" offset-y>
+            <template v-slot:activator="{ on }">
+              <v-btn icon v-on="on">
+                <v-icon>mdi-dots-vertical</v-icon>
+              </v-btn>
+            </template>
+            <v-list>
+              <v-list-item @click="openDialog(thread.threadId)">
+                <v-icon>mdi-delete</v-icon>
+                <v-list-item-title>{{ "削除する" }}</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </v-list-item>
+        <v-divider v-if="index + 1 < threadList.length" :key="`divider-${thread.threadId}`"></v-divider>
+      </template>
+      <v-dialog v-model="showDialog">
+        <v-card>
+          <v-card-text>{{ 'スレッド内のレスポンス情報も全て削除しますが、よろしいですか?' }}</v-card-text>
+          <v-card-actions>
+            <v-btn color="secondary" text @click="closeDialog">キャンセル</v-btn>
+            <v-btn color="secondary" text @click="removeThreadDetail">OK</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-list>
+  </div>
 </template>
 
 <script>
 import responseService from "@/service/response/response-service";
 import threadService from "@/service/thread/thread-service";
+import EmptyState from "@/components/layout/EmptyState";
 import { mapGetters } from "vuex";
 export default {
   name: "thread-list",
@@ -86,14 +92,17 @@ export default {
     }
   },
   props: {
-    threadList: { type: Array, required: false }
+    threadList: { type: Array, required: false },
+    emptyStateFlg: { type: Boolean, default: false }
   },
   watch: {},
   computed: {
     ...mapGetters(["getLoginUser"])
   },
   created() {},
-  components: {}
+  components: {
+    EmptyState
+  }
 };
 </script>
 

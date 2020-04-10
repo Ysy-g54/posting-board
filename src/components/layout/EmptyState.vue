@@ -2,7 +2,7 @@
   <v-content>
     <v-layout align-center justify-center>
       <div>
-        <v-subheader>{{ "表示するレスがありません。レスを送ってみましょう！" }}</v-subheader>
+        <v-subheader>{{ message }}</v-subheader>
       </div>
     </v-layout>
     <v-container fluid fill-height>
@@ -18,6 +18,9 @@
 <script>
 export default {
   name: "empty-state",
-  data: () => ({})
+  data: () => ({}),
+  props: {
+    message: { type: String, required: true }
+  }
 };
 </script>

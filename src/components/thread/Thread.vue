@@ -4,7 +4,11 @@
       <v-col cols="12" sm="6" md="6" lg="6" xl="6">
         <v-subheader>スレッド一覧</v-subheader>
         <span>{{ getThreadCount }} 個</span>
-        <ThreadList :threadList="threadList" @on-remove-thread-detail-click="showSnackbar"></ThreadList>
+        <ThreadList
+          :threadList="threadList"
+          :emptyStateFlg="emptyStateFlg"
+          @on-remove-thread-detail-click="showSnackbar"
+        ></ThreadList>
       </v-col>
       <v-col cols="12" sm="6" md="6" lg="6" xl="6">
         <ThreadRegistration @on-register-thread-click="showSnackbar"></ThreadRegistration>
@@ -27,7 +31,8 @@ export default {
   data: () => ({
     snackbarMessage: "",
     snackbar: false,
-    threadList: []
+    threadList: [],
+    emptyStateFlg: false
   }),
   methods: {
     async showSnackbar(message) {
@@ -38,11 +43,12 @@ export default {
     async searchThread() {
       let querySnapshot = await threadService.searchAll();
       let threadListSnapshot = [];
-      querySnapshot.forEach(document => {
+      await querySnapshot.forEach(document => {
         let threadSnapshot = _.set(document.data(), "threadId", document.id);
         threadListSnapshot.push(threadSnapshot);
       });
       this.threadList = threadListSnapshot;
+      this.emptyStateFlg = _.isEmpty(this.threadList);
     }
   },
   computed: {
