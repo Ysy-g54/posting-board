@@ -12,11 +12,11 @@
               <v-list-item-title>{{ getLoginUser.mailAddress }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-          <!-- <v-divider></v-divider>
-          <v-list-item :to="{name: 'my-favorite-response'}">
+          <v-divider></v-divider>
+          <v-list-item :to="{name: 'favorite-response'}">
             <v-icon>mdi-thumb-up</v-icon>
             <v-list-item-title>{{ '高く評価したレスを確認する' }}</v-list-item-title>
-          </v-list-item>-->
+          </v-list-item>
           <v-divider></v-divider>
           <v-list-item @click="onLogoutClick">
             <v-icon>mdi-exit-to-app</v-icon>

@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <Toolbar :title="title"></Toolbar>
-    <span v-for="category in thread.categories" :key="category">
+    <span v-for="category in thread.categories" :key="category.categoryId">
       <v-chip :color="getCategoryColor(category)">{{ formatCategory(category) }}</v-chip>
     </span>
     <v-row>

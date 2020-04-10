@@ -8,9 +8,6 @@ import Mixin from "@/util/mixin";
 import Vuelidate from 'vuelidate';
 import './registerServiceWorker';
 import { mapActions } from "vuex";
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 Vue.config.productionTip = false;
 Vue.use(Vuelidate);

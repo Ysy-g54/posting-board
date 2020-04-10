@@ -8,7 +8,7 @@
     ></ThreadList>
     <v-divider class="mx-4" vertical></v-divider>
     <v-subheader v-if="resultResponseCount !== 0">{{ "レス一覧" }}</v-subheader>
-    <div v-for="responseContent in resultResponseContentList" :key="responseContent[0].threadId">
+    <div v-for="responseContent in resultResponseContentList" :key="responseContent.uniqueId">
       <v-btn
         :to="{name: 'thread-detail', params: { threadId: responseContent[0].threadId }}"
         text

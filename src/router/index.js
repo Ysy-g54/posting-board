@@ -1,11 +1,12 @@
 import Vue from "vue";
 import Router from "vue-router";
+import FavoriteResponse from "@/components/favorite/FavoriteResponse";
 import Header from "@/components/layout/Header";
 import Login from "@/components/login/Login";
+import Signup from "@/components/signup/Signup";
 import ThreadDetailSearchResult from "@/components/search/ThreadDetailSearchResult";
 import Thread from "@/components/thread/Thread";
 import ThreadDetail from "@/components/thread/ThreadDetail";
-import Signup from "@/components/signup/Signup";
 import firebase from "firebase";
 
 Vue.use(Router);
@@ -41,13 +42,13 @@ const router = new Router({
 					name: "search",
 					component: ThreadDetailSearchResult,
 					meta: { isPublic: false, title: "スレッド・レスの検索結果" }
+				},
+				{
+					path: "/favorite-response",
+					name: "favorite-response",
+					component: FavoriteResponse,
+					meta: { isPublic: false, title: "高く評価したレス一覧" }
 				}
-				// {
-				// 	path: "/my-favorite-response",
-				// 	name: "my-favorite-response",
-				// 	component: ThreadDetailSearchResult,
-				// 	meta: { isPublic: false, title: "高く評価したレス一覧" }
-				// }
 			]
 		},
 		{
