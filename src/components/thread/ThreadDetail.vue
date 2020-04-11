@@ -49,7 +49,7 @@ export default {
   methods: {
     async showSnackbar(message) {
       this.snackbarMessage = await message;
-      this.snackbar = await !this.snackbar;
+      this.snackbar = true;
     },
     async searchThread() {
       if (this.$route.params.threadId !== undefined) {

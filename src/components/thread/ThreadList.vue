@@ -3,7 +3,7 @@
     <EmptyState :message="'表示するスレッドがありません。スレッドを作成して話してみましょう！'"></EmptyState>
   </div>
   <div v-else>
-    <v-list three-line>
+    <v-list three-line class="thread-list">
       <template v-for="(thread, index) in threadList">
         <v-list-item :key="thread.threadId">
           <v-list-item-content>

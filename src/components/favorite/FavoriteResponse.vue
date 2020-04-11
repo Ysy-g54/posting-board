@@ -2,21 +2,26 @@
   <div>
     <Toolbar :title="count + '件'"></Toolbar>
     <v-subheader v-if="count !== 0">{{ "レス一覧" }}</v-subheader>
-    <div v-for="responseContent in resultResponseContentList" :key="responseContent.uniqueId">
-      <v-btn
-        :to="{name: 'thread-detail', params: { threadId: responseContent[0].threadId }}"
-        text
-        color="accent"
-      >{{'下記レスがあるスレッドを見に行く'}}</v-btn>
-      <ResponseList
-        :responseList="responseContent"
-        @on-modification-response-click="redrawResponse"
-      ></ResponseList>
+    <div v-if="emptyStateFlg">
+      <EmptyState :message="'高く評価したレスがありません。レスを見ていき、高く評価してみましょう！'"></EmptyState>
     </div>
-    <v-snackbar v-model="snackbar">
-      {{ snackbarMessage }}
-      <v-btn color="pink" text @click="snackbar = false">Close</v-btn>
-    </v-snackbar>
+    <div v-else>
+      <div v-for="responseContent in resultResponseContentList" :key="responseContent.uniqueId">
+        <v-btn
+          :to="{name: 'thread-detail', params: { threadId: responseContent[0].threadId }}"
+          text
+          color="accent"
+        >{{'下記レスがあるスレッドを見に行く'}}</v-btn>
+        <ResponseList
+          :responseList="responseContent"
+          @on-modification-response-click="redrawResponse"
+        ></ResponseList>
+      </div>
+      <v-snackbar v-model="snackbar">
+        {{ snackbarMessage }}
+        <v-btn color="pink" text @click="snackbar = false">Close</v-btn>
+      </v-snackbar>
+    </div>
   </div>
 </template>
 
@@ -24,6 +29,7 @@
 import _ from "lodash";
 import { mapGetters } from "vuex";
 import responseService from "@/service/response/response-service";
+import EmptyState from "@/components/layout/EmptyState";
 import ResponseList from "@/components/response/ResponseList";
 import Toolbar from "@/components/layout/Toolbar";
 export default {
@@ -33,12 +39,13 @@ export default {
     snackbar: false,
     responseContentList: [],
     resultResponseContentList: [],
-    count: 0
+    count: 0,
+    emptyStateFlg: false
   }),
   methods: {
     async showSnackbar(message) {
       this.snackbarMessage = await message;
-      this.snackbar = await !this.snackbar;
+      this.snackbar = true;
     },
     async searchResponse() {
       this.responseContentList = [];
@@ -61,7 +68,10 @@ export default {
             _.set(content, "responseId", responseContent.responseId)
           );
         if (filterResponseContent.length !== 0) {
+          this.emptyStateFlg = false;
           this.resultResponseContentList.push(filterResponseContent);
+        } else {
+          this.emptyStateFlg = true;
         }
         this.count = filterResponseContent.length;
       });
@@ -81,6 +91,7 @@ export default {
     await this.filterResponse();
   },
   components: {
+    EmptyState,
     ResponseList,
     Toolbar
   }

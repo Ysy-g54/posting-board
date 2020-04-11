@@ -48,7 +48,7 @@ export default {
   methods: {
     async showSnackbar(message) {
       this.snackbarMessage = await message;
-      this.snackbar = await !this.snackbar;
+      this.snackbar = true;
     },
     async searchResponse() {
       this.responseContentList = [];

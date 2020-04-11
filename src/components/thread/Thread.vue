@@ -37,7 +37,7 @@ export default {
   methods: {
     async showSnackbar(message) {
       this.snackbarMessage = await message;
-      this.snackbar = await !this.snackbar;
+      this.snackbar = true;
       await this.searchThread();
     },
     async searchThread() {
@@ -68,7 +68,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.v-list {
+.thread-list {
   height: 538px;
   overflow-y: auto;
 }
