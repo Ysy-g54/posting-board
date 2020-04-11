@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-container fluid>
     <Toolbar :title="'アカウントを作成する'"></Toolbar>
     <CenterTemplate>
       <v-flex sm8 md4 @keyup.enter="doSignup">
@@ -28,7 +28,7 @@
         <v-btn color="pink" text @click="snackbar = false">Close</v-btn>
       </v-snackbar>
     </CenterTemplate>
-  </div>
+  </v-container>
 </template>
 
 <script>

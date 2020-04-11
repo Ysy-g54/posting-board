@@ -1,35 +1,41 @@
 <template>
-  <div>
+  <v-container fluid>
     <Toolbar :title="'検索結果 ' + 	resultCount + '件'"></Toolbar>
-    <v-subheader v-if="notEmptyThread">{{ "スレッド一覧" }}</v-subheader>
-    <ThreadList
-      :threadList="resultThreadList[0]"
-      @on-remove-thread-detail-click="redrawThreadDetail"
-    ></ThreadList>
-    <v-divider class="mx-4" vertical></v-divider>
-    <v-subheader v-if="resultResponseCount !== 0">{{ "レス一覧" }}</v-subheader>
-    <div v-for="responseContent in resultResponseContentList" :key="responseContent.uniqueId">
-      <v-btn
-        :to="{name: 'thread-detail', params: { threadId: responseContent[0].threadId }}"
-        text
-        color="accent"
-      >{{'下記レスがあるスレッドを見に行く'}}</v-btn>
-      <ResponseList
-        :responseList="responseContent"
-        @on-modification-response-click="redrawResponse"
-      ></ResponseList>
+    <div v-if="emptyStateFlg">
+      <EmptyState :message="'条件を変えて再度検索してみてください・・・。'"></EmptyState>
     </div>
-    <v-snackbar v-model="snackbar">
-      {{ snackbarMessage }}
-      <v-btn color="pink" text @click="snackbar = false">Close</v-btn>
-    </v-snackbar>
-  </div>
+    <div v-else>
+      <v-subheader v-if="notEmptyThread">{{ "スレッド一覧" }}</v-subheader>
+      <ThreadList
+        :threadList="resultThreadList[0]"
+        @on-remove-thread-detail-click="redrawThreadDetail"
+      ></ThreadList>
+      <v-divider class="mx-4" vertical></v-divider>
+      <v-subheader v-if="resultResponseCount !== 0">{{ "レス一覧" }}</v-subheader>
+      <div v-for="responseContent in resultResponseContentList" :key="responseContent.uniqueId">
+        <v-btn
+          :to="{name: 'thread-detail', params: { threadId: responseContent[0].threadId }}"
+          text
+          color="accent"
+        >{{'下記レスがあるスレッドを見に行く'}}</v-btn>
+        <ResponseList
+          :responseList="responseContent"
+          @on-modification-response-click="redrawResponse"
+        ></ResponseList>
+      </div>
+      <v-snackbar v-model="snackbar">
+        {{ snackbarMessage }}
+        <v-btn color="pink" text @click="snackbar = false">Close</v-btn>
+      </v-snackbar>
+    </div>
+  </v-container>
 </template>
 
 <script>
 import _ from "lodash";
 import responseService from "@/service/response/response-service";
 import threadService from "@/service/thread/thread-service";
+import EmptyState from "@/components/layout/EmptyState";
 import ResponseList from "@/components/response/ResponseList";
 import ThreadList from "@/components/thread/ThreadList";
 import Toolbar from "@/components/layout/Toolbar";
@@ -43,7 +49,8 @@ export default {
     resultResponseCount: 0,
     threadList: [],
     resultThreadList: [],
-    resultCount: 0
+    resultCount: 0,
+    emptyStateFlg: false
   }),
   methods: {
     async showSnackbar(message) {
@@ -104,18 +111,23 @@ export default {
       await this.searchThread();
       await this.filterThread();
       await this.calcCount();
+      await this.isEmptySearchResult();
       await this.showSnackbar(message);
     },
     async redrawResponse(message) {
       await this.searchResponse();
       await this.filterResponse();
       await this.calcCount();
+      await this.isEmptySearchResult();
       await this.showSnackbar(message);
     },
     async calcCount() {
       this.resultCount = 0;
       this.resultCount =
         this.resultResponseCount + this.resultThreadList[0].length;
+    },
+    async isEmptySearchResult() {
+      this.emptyStateFlg = this.resultCount === 0 ? true : false;
     }
   },
   computed: {
@@ -129,6 +141,7 @@ export default {
         await this.filterResponse();
         await this.filterThread();
         await this.calcCount();
+        await this.isEmptySearchResult();
       }
     }
   },
@@ -138,8 +151,10 @@ export default {
     await this.searchThread();
     await this.filterThread();
     await this.calcCount();
+    await this.isEmptySearchResult();
   },
   components: {
+    EmptyState,
     ResponseList,
     ThreadList,
     Toolbar

@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <v-container fluid>
     <Toolbar :title="count + '件'"></Toolbar>
-    <v-subheader v-if="count !== 0">{{ "レス一覧" }}</v-subheader>
     <div v-if="emptyStateFlg">
-      <EmptyState :message="'高く評価したレスがありません。レスを見ていき、高く評価してみましょう！'"></EmptyState>
+      <EmptyState :message="'高く評価したレスはありません。レスを見ていき、高く評価してみましょう！'"></EmptyState>
     </div>
     <div v-else>
+      <v-subheader>{{ "レス一覧" }}</v-subheader>
       <div v-for="responseContent in resultResponseContentList" :key="responseContent.uniqueId">
         <v-btn
           :to="{name: 'thread-detail', params: { threadId: responseContent[0].threadId }}"
@@ -22,7 +22,7 @@
         <v-btn color="pink" text @click="snackbar = false">Close</v-btn>
       </v-snackbar>
     </div>
-  </div>
+  </v-container>
 </template>
 
 <script>
