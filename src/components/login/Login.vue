@@ -10,7 +10,12 @@
     <CenterTemplate>
       <v-flex sm8 md4>
         <v-form onsubmit="return false;">
-          <v-text-field v-model="mailAddress" placeholder="メールアドレス" outlined clearable></v-text-field>
+          <v-text-field
+            v-model="mailAddress"
+            placeholder="メールアドレス"
+            outlined
+            clearable
+          ></v-text-field>
           <v-text-field
             v-model="password"
             placeholder="パスワード"
@@ -40,7 +45,6 @@
 import { mapActions } from "vuex";
 import GoogleAccount from "@/components/login/GoogleAccount";
 export default {
-  name: "login",
   data: () => ({
     mailAddress: "",
     password: "",

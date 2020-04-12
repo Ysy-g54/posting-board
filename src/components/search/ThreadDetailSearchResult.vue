@@ -1,8 +1,10 @@
 <template>
   <v-container fluid>
-    <Toolbar :title="'検索結果 ' + 	resultCount + '件'"></Toolbar>
+    <Toolbar :title="'検索結果 ' + resultCount + '件'"></Toolbar>
     <div v-if="emptyStateFlg">
-      <EmptyState :message="'条件を変えて再度検索してみてください・・・。'"></EmptyState>
+      <EmptyState
+        :message="'条件を変えて再度検索してみてください・・・。'"
+      ></EmptyState>
     </div>
     <div v-else>
       <v-subheader v-if="notEmptyThread">{{ "スレッド一覧" }}</v-subheader>
@@ -11,13 +13,22 @@
         @on-remove-thread-detail-click="redrawThreadDetail"
       ></ThreadList>
       <v-divider class="mx-4" vertical></v-divider>
-      <v-subheader v-if="resultResponseCount !== 0">{{ "レス一覧" }}</v-subheader>
-      <div v-for="responseContent in resultResponseContentList" :key="responseContent.uniqueId">
+      <v-subheader v-if="resultResponseCount !== 0">{{
+        "レス一覧"
+      }}</v-subheader>
+      <div
+        v-for="responseContent in resultResponseContentList"
+        :key="responseContent.uniqueId"
+      >
         <v-btn
-          :to="{name: 'thread-detail', params: { threadId: responseContent[0].threadId }}"
+          :to="{
+            name: 'thread-detail',
+            params: { threadId: responseContent[0].threadId }
+          }"
           text
           color="accent"
-        >{{'下記レスがあるスレッドを見に行く'}}</v-btn>
+          >{{ "下記レスがあるスレッドを見に行く" }}</v-btn
+        >
         <ResponseList
           :responseList="responseContent"
           @on-modification-response-click="redrawResponse"
@@ -163,5 +174,4 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-</style>
+<style scoped></style>

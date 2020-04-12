@@ -2,7 +2,9 @@
   <div>
     <v-container>
       <v-flex>
-        <v-btn large color="primary" @click="registerThread">スレッドを作成する</v-btn>
+        <v-btn large color="primary" @click="registerThread"
+          >スレッドを作成する</v-btn
+        >
       </v-flex>
     </v-container>
     <v-container fluid fill-height>
@@ -26,7 +28,11 @@
             outlined
             label="カテゴリ"
           ></v-select>
-          <v-textarea v-model="description" placeholder="説明(※更新はできません...。)" outlined></v-textarea>
+          <v-textarea
+            v-model="description"
+            placeholder="説明(※更新はできません...。)"
+            outlined
+          ></v-textarea>
         </v-flex>
       </v-layout>
     </v-container>
@@ -39,7 +45,6 @@ import threadService from "@/service/thread/thread-service";
 import { categories } from "@/constants";
 import { required } from "vuelidate/lib/validators";
 export default {
-  name: "thread-registration",
   data: () => ({
     title: "",
     selectedCategories: [],

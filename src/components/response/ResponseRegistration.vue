@@ -2,7 +2,9 @@
   <div>
     <v-container>
       <v-flex>
-        <v-btn large color="primary" @click="registerResponse">レスを送る</v-btn>
+        <v-btn large color="primary" @click="registerResponse"
+          >レスを送る</v-btn
+        >
       </v-flex>
     </v-container>
     <v-container fluid fill-height>
@@ -38,7 +40,6 @@ import marked from "marked";
 import responseService from "@/service/response/response-service";
 import { required } from "vuelidate/lib/validators";
 export default {
-  name: "response-registration",
   data: () => ({
     content: "",
     targetResponse: {}

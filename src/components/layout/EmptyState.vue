@@ -17,7 +17,6 @@
 
 <script>
 export default {
-  name: "empty-state",
   data: () => ({}),
   props: {
     message: { type: String, required: true }

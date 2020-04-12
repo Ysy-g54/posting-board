@@ -8,25 +8,36 @@
         <v-list>
           <v-list-item>
             <v-list-item-content>
-              <v-list-item-title>{{ getLoginUser.displayName }}</v-list-item-title>
-              <v-list-item-title>{{ getLoginUser.mailAddress }}</v-list-item-title>
+              <v-list-item-title>{{
+                getLoginUser.displayName
+              }}</v-list-item-title>
+              <v-list-item-title>{{
+                getLoginUser.mailAddress
+              }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <v-divider></v-divider>
-          <v-list-item :to="{name: 'favorite-response'}">
+          <v-list-item :to="{ name: 'favorite-response' }">
             <v-icon>mdi-thumb-up</v-icon>
-            <v-list-item-title>{{ '高く評価したレスを確認する' }}</v-list-item-title>
+            <v-list-item-title>{{
+              "高く評価したレスを確認する"
+            }}</v-list-item-title>
           </v-list-item>
           <v-divider></v-divider>
           <v-list-item @click="onLogoutClick">
             <v-icon>mdi-exit-to-app</v-icon>
-            <v-list-item-title>{{ 'ログアウト' }}</v-list-item-title>
+            <v-list-item-title>{{ "ログアウト" }}</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
       <v-toolbar-title>
         <div>
-          <v-btn class="custom-transform-class text-none" text :to="{name: 'thread'}">posting-board</v-btn>
+          <v-btn
+            class="custom-transform-class text-none"
+            text
+            :to="{ name: 'thread' }"
+            >posting-board</v-btn
+          >
         </div>
       </v-toolbar-title>
       <v-spacer></v-spacer>

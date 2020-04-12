@@ -1,6 +1,8 @@
 <template>
   <div v-if="emptyStateFlg">
-    <EmptyState :message="'表示するレスがありません。レスを送ってみましょう！'"></EmptyState>
+    <EmptyState
+      :message="'表示するレスがありません。レスを送ってみましょう！'"
+    ></EmptyState>
   </div>
   <div v-else class="response-list">
     <v-list three-line>
@@ -22,7 +24,6 @@ import responseService from "@/service/response/response-service";
 import EmptyState from "@/components/layout/EmptyState";
 import Response from "@/components/response/Response";
 export default {
-  name: "response-list",
   data: () => ({
     targetResponse: []
   }),
@@ -35,19 +36,20 @@ export default {
     async modifyNice(response) {
       await this.searchResponseById(response.responseId);
       let snackBarMessage = "";
-      await this.targetResponse.responseList.forEach(async target => {
+      await this.targetResponse.responseList.find(target => {
         if (target.uniqueId === response.uniqueId) {
           if (target.niceList.indexOf(this.getLoginUser.uid) === -1) {
             snackBarMessage = "高く評価したレスに追加しました。";
-            await target.niceList.push(this.getLoginUser.uid);
+            target.niceList.push(this.getLoginUser.uid);
           } else if (target.niceList === undefined) {
-            target.niceList = await [this.getLoginUser.uid];
+            target.niceList = [this.getLoginUser.uid];
           } else {
             snackBarMessage = "高く評価したレスから削除しました。";
-            target.niceList = await target.niceList.filter(
+            target.niceList = target.niceList.filter(
               nice => nice !== this.getLoginUser.uid
             );
           }
+          return true;
         }
       });
       await responseService.modify(this.targetResponse, response.responseId);
@@ -82,5 +84,4 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-</style>
+<style scoped></style>

@@ -4,8 +4,18 @@
     <CenterTemplate>
       <v-flex sm8 md4 @keyup.enter="doSignup">
         <v-form onsubmit="return false;">
-          <v-text-field v-model="userName" placeholder="アカウント名" outlined clearable></v-text-field>
-          <v-text-field v-model="mailAddress" placeholder="メールアドレス" outlined clearable></v-text-field>
+          <v-text-field
+            v-model="userName"
+            placeholder="アカウント名"
+            outlined
+            clearable
+          ></v-text-field>
+          <v-text-field
+            v-model="mailAddress"
+            placeholder="メールアドレス"
+            outlined
+            clearable
+          ></v-text-field>
           <v-text-field
             v-model="password"
             placeholder="パスワード"
@@ -37,7 +47,6 @@ import firebase from "firebase";
 import GoogleAccount from "@/components/login/GoogleAccount";
 import Toolbar from "@/components/layout/Toolbar";
 export default {
-  name: "signup",
   data: () => ({
     mailAddress: "",
     password: "",
@@ -78,5 +87,4 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-</style>
+<style scoped></style>

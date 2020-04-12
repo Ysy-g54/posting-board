@@ -2,16 +2,27 @@
   <v-container fluid>
     <Toolbar :title="count + '件'"></Toolbar>
     <div v-if="emptyStateFlg">
-      <EmptyState :message="'高く評価したレスはありません。レスを見ていき、高く評価してみましょう！'"></EmptyState>
+      <EmptyState
+        :message="
+          '高く評価したレスはありません。レスを見ていき、高く評価してみましょう！'
+        "
+      ></EmptyState>
     </div>
     <div v-else>
       <v-subheader>{{ "レス一覧" }}</v-subheader>
-      <div v-for="responseContent in resultResponseContentList" :key="responseContent.uniqueId">
+      <div
+        v-for="responseContent in filteredResponseList"
+        :key="responseContent.uniqueId"
+      >
         <v-btn
-          :to="{name: 'thread-detail', params: { threadId: responseContent[0].threadId }}"
+          :to="{
+            name: 'thread-detail',
+            params: { threadId: responseContent[0].threadId }
+          }"
           text
           color="accent"
-        >{{'下記レスがあるスレッドを見に行く'}}</v-btn>
+          >{{ "下記レスがあるスレッドを見に行く" }}</v-btn
+        >
         <ResponseList
           :responseList="responseContent"
           @on-modification-response-click="redrawResponse"
@@ -33,12 +44,11 @@ import EmptyState from "@/components/layout/EmptyState";
 import ResponseList from "@/components/response/ResponseList";
 import Toolbar from "@/components/layout/Toolbar";
 export default {
-  name: "favorite-response",
   data: () => ({
     snackbarMessage: "",
     snackbar: false,
-    responseContentList: [],
-    resultResponseContentList: [],
+    responseList: [],
+    filteredResponseList: [],
     count: 0,
     emptyStateFlg: false
   }),
@@ -48,18 +58,18 @@ export default {
       this.snackbar = true;
     },
     async searchResponse() {
-      this.responseContentList = [];
+      this.responseList = [];
       let querySnapshot = await responseService.searchAll();
       querySnapshot.forEach(document => {
         let responseContent = _.set(document.data(), "responseId", document.id);
-        this.responseContentList.push(responseContent);
+        this.responseList.push(responseContent);
       });
     },
     async filterResponse() {
-      this.resultResponseContentList = [];
+      this.filteredResponseList = [];
       this.count = 0;
-      await this.responseContentList.forEach(async responseContent => {
-        let filterResponseContent = await responseContent.responseList
+      await this.responseList.forEach(async responseContent => {
+        let filteredResponseContent = await responseContent.responseList
           .filter(
             response => response.niceList.indexOf(this.getLoginUser.uid) !== -1
           )
@@ -67,13 +77,13 @@ export default {
           .map(content =>
             _.set(content, "responseId", responseContent.responseId)
           );
-        if (filterResponseContent.length !== 0) {
+        if (filteredResponseContent.length !== 0) {
+          this.filteredResponseList.push(filteredResponseContent);
           this.emptyStateFlg = false;
-          this.resultResponseContentList.push(filterResponseContent);
         } else {
           this.emptyStateFlg = true;
         }
-        this.count = filterResponseContent.length;
+        this.count = filteredResponseContent.length;
       });
     },
     async redrawResponse(message) {
@@ -99,5 +109,4 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-</style>
+<style scoped></style>

@@ -1,7 +1,9 @@
 <template>
   <v-card class="mx-auto" outlined>
     <div v-html="compiledMarkdown(response.content)"></div>
-    <v-list-item-subtitle v-html="`送った日: ${ formatDate(response.insertDateTime)}`"></v-list-item-subtitle>
+    <v-list-item-subtitle
+      v-html="`送った日: ${formatDate(response.insertDateTime)}`"
+    ></v-list-item-subtitle>
     <v-card-actions>
       <v-spacer></v-spacer>
       <v-btn icon @click="modifyNice(response)">
@@ -26,7 +28,6 @@
 import { mapGetters } from "vuex";
 import marked from "marked";
 export default {
-  name: "response",
   data: () => ({
     targetResponse: []
   }),
@@ -61,5 +62,4 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-</style>
+<style scoped></style>

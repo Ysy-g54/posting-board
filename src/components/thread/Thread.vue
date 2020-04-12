@@ -11,7 +11,9 @@
         ></ThreadList>
       </v-col>
       <v-col cols="12" sm="6" md="6" lg="6" xl="6">
-        <ThreadRegistration @on-register-thread-click="showSnackbar"></ThreadRegistration>
+        <ThreadRegistration
+          @on-register-thread-click="showSnackbar"
+        ></ThreadRegistration>
       </v-col>
     </v-row>
     <v-snackbar v-model="snackbar">
@@ -27,7 +29,6 @@ import threadService from "@/service/thread/thread-service";
 import ThreadList from "@/components/thread/ThreadList";
 import ThreadRegistration from "@/components/thread/ThreadRegistration";
 export default {
-  name: "thread",
   data: () => ({
     snackbarMessage: "",
     snackbar: false,

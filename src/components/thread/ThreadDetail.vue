@@ -2,7 +2,9 @@
   <v-container fluid>
     <Toolbar :title="title"></Toolbar>
     <span v-for="category in thread.categories" :key="category.categoryId">
-      <v-chip :color="getCategoryColor(category)">{{ formatCategory(category) }}</v-chip>
+      <v-chip :color="getCategoryColor(category)">{{
+        formatCategory(category)
+      }}</v-chip>
     </span>
     <v-row>
       <v-col cols="12" sm="6" md="6" lg="6" xl="6">
@@ -35,7 +37,6 @@ import ResponseList from "@/components/response/ResponseList";
 import ResponseRegistration from "@/components/response/ResponseRegistration";
 import Toolbar from "@/components/layout/Toolbar";
 export default {
-  name: "thread-detail",
   data: () => ({
     snackbarMessage: "",
     snackbar: false,
