@@ -73,12 +73,14 @@ export default {
           );
         if (filteredResponseContent.length !== 0) {
           this.filteredResponses.push(filteredResponseContent);
-          this.emptyStateFlg = false;
-        } else {
-          this.emptyStateFlg = true;
         }
-        this.count = filteredResponseContent.length;
+        this.count += filteredResponseContent.length;
       });
+      if (this.count !== 0) {
+        this.emptyStateFlg = false;
+      } else {
+        this.emptyStateFlg = true;
+      }
     },
     async redrawResponse(message) {
       await this.searchResponse();
