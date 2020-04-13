@@ -2,7 +2,7 @@
   <v-container fluid>
     <Toolbar :title="'検索結果 ' + count + '件'"></Toolbar>
     <div v-if="emptyStateFlg">
-      <EmptyState :message="'条件を変えて再度検索してみてください・・・。'"></EmptyState>
+      <EmptyState :message="'条件を変えて再度検索してみてください...。'"></EmptyState>
     </div>
     <div v-else>
       <v-subheader v-if="notEmptyThread">{{ "スレッド一覧" }}</v-subheader>
