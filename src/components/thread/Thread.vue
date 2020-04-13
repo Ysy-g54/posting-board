@@ -5,15 +5,13 @@
         <v-subheader>スレッド一覧</v-subheader>
         <span>{{ getThreadCount }} 個</span>
         <ThreadList
-          :threadList="threadList"
+          :threadList="threads"
           :emptyStateFlg="emptyStateFlg"
           @on-remove-thread-detail-click="showSnackbar"
         ></ThreadList>
       </v-col>
       <v-col cols="12" sm="6" md="6" lg="6" xl="6">
-        <ThreadRegistration
-          @on-register-thread-click="showSnackbar"
-        ></ThreadRegistration>
+        <ThreadRegistration @on-register-thread-click="showSnackbar"></ThreadRegistration>
       </v-col>
     </v-row>
     <v-snackbar v-model="snackbar">
@@ -32,7 +30,7 @@ export default {
   data: () => ({
     snackbarMessage: "",
     snackbar: false,
-    threadList: [],
+    threads: [],
     emptyStateFlg: false
   }),
   methods: {
@@ -48,13 +46,13 @@ export default {
         let threadSnapshot = _.set(document.data(), "threadId", document.id);
         threadListSnapshot.push(threadSnapshot);
       });
-      this.threadList = threadListSnapshot;
-      this.emptyStateFlg = _.isEmpty(this.threadList);
+      this.threads = threadListSnapshot;
+      this.emptyStateFlg = _.isEmpty(this.threads);
     }
   },
   computed: {
     getThreadCount() {
-      return this.threadList.length;
+      return this.threads.length;
     }
   },
   created() {

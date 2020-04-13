@@ -2,9 +2,11 @@
   <v-container fluid>
     <Toolbar :title="title"></Toolbar>
     <span v-for="category in thread.categories" :key="category.categoryId">
-      <v-chip :color="getCategoryColor(category)">{{
+      <v-chip :color="getCategoryColor(category)">
+        {{
         formatCategory(category)
-      }}</v-chip>
+        }}
+      </v-chip>
     </span>
     <v-row>
       <v-col cols="12" sm="6" md="6" lg="6" xl="6">
@@ -69,13 +71,14 @@ export default {
   },
   watch: {
     async content() {
-      await this.content.forEach(async document => {
+      await this.content.find(document => {
         if (document.threadId === this.$route.params.threadId) {
-          this.responseContent = await document;
-          this.responseId = await document.id;
-          await this.responseContent.responseList.forEach(async response => {
+          this.responseContent = document;
+          this.responseId = document.id;
+          this.responseContent.responseList.forEach(response => {
             _.set(response, "responseId", this.responseId);
           });
+          return true;
         }
       });
       this.emptyStateFlg =

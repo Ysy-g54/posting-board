@@ -2,18 +2,13 @@
   <v-container fluid>
     <Toolbar :title="count + '件'"></Toolbar>
     <div v-if="emptyStateFlg">
-      <EmptyState
-        :message="
+      <EmptyState :message="
           '高く評価したレスはありません。レスを見ていき、高く評価してみましょう！'
-        "
-      ></EmptyState>
+        "></EmptyState>
     </div>
     <div v-else>
       <v-subheader>{{ "レス一覧" }}</v-subheader>
-      <div
-        v-for="responseContent in filteredResponseList"
-        :key="responseContent.uniqueId"
-      >
+      <div v-for="responseContent in filteredResponses" :key="responseContent.uniqueId">
         <v-btn
           :to="{
             name: 'thread-detail',
@@ -21,8 +16,7 @@
           }"
           text
           color="accent"
-          >{{ "下記レスがあるスレッドを見に行く" }}</v-btn
-        >
+        >{{ "下記レスがあるスレッドを見に行く" }}</v-btn>
         <ResponseList
           :responseList="responseContent"
           @on-modification-response-click="redrawResponse"
@@ -47,8 +41,8 @@ export default {
   data: () => ({
     snackbarMessage: "",
     snackbar: false,
-    responseList: [],
-    filteredResponseList: [],
+    responses: [],
+    filteredResponses: [],
     count: 0,
     emptyStateFlg: false
   }),
@@ -58,17 +52,17 @@ export default {
       this.snackbar = true;
     },
     async searchResponse() {
-      this.responseList = [];
+      this.responses = [];
       let querySnapshot = await responseService.searchAll();
       querySnapshot.forEach(document => {
         let responseContent = _.set(document.data(), "responseId", document.id);
-        this.responseList.push(responseContent);
+        this.responses.push(responseContent);
       });
     },
     async filterResponse() {
-      this.filteredResponseList = [];
+      this.filteredResponses = [];
       this.count = 0;
-      await this.responseList.forEach(async responseContent => {
+      await this.responses.forEach(async responseContent => {
         let filteredResponseContent = await responseContent.responseList
           .filter(
             response => response.niceList.indexOf(this.getLoginUser.uid) !== -1
@@ -78,7 +72,7 @@ export default {
             _.set(content, "responseId", responseContent.responseId)
           );
         if (filteredResponseContent.length !== 0) {
-          this.filteredResponseList.push(filteredResponseContent);
+          this.filteredResponses.push(filteredResponseContent);
           this.emptyStateFlg = false;
         } else {
           this.emptyStateFlg = true;

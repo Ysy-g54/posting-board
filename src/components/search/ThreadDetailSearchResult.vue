@@ -1,25 +1,22 @@
 <template>
   <v-container fluid>
-    <Toolbar :title="'検索結果 ' + resultCount + '件'"></Toolbar>
+    <Toolbar :title="'検索結果 ' + count + '件'"></Toolbar>
     <div v-if="emptyStateFlg">
-      <EmptyState
-        :message="'条件を変えて再度検索してみてください・・・。'"
-      ></EmptyState>
+      <EmptyState :message="'条件を変えて再度検索してみてください・・・。'"></EmptyState>
     </div>
     <div v-else>
       <v-subheader v-if="notEmptyThread">{{ "スレッド一覧" }}</v-subheader>
       <ThreadList
-        :threadList="resultThreadList[0]"
+        :threadList="filteredThreads[0]"
         @on-remove-thread-detail-click="redrawThreadDetail"
       ></ThreadList>
       <v-divider class="mx-4" vertical></v-divider>
-      <v-subheader v-if="resultResponseCount !== 0">{{
+      <v-subheader v-if="responseCount !== 0">
+        {{
         "レス一覧"
-      }}</v-subheader>
-      <div
-        v-for="responseContent in resultResponseContentList"
-        :key="responseContent.uniqueId"
-      >
+        }}
+      </v-subheader>
+      <div v-for="responseContent in filteredResponseContents" :key="responseContent.uniqueId">
         <v-btn
           :to="{
             name: 'thread-detail',
@@ -27,8 +24,7 @@
           }"
           text
           color="accent"
-          >{{ "下記レスがあるスレッドを見に行く" }}</v-btn
-        >
+        >{{ "下記レスがあるスレッドを見に行く" }}</v-btn>
         <ResponseList
           :responseList="responseContent"
           @on-modification-response-click="redrawResponse"
@@ -51,16 +47,15 @@ import ResponseList from "@/components/response/ResponseList";
 import ThreadList from "@/components/thread/ThreadList";
 import Toolbar from "@/components/layout/Toolbar";
 export default {
-  name: "thread-detail-search-result",
   data: () => ({
     snackbarMessage: "",
     snackbar: false,
-    responseContentList: [],
-    resultResponseContentList: [],
-    resultResponseCount: 0,
-    threadList: [],
-    resultThreadList: [],
-    resultCount: 0,
+    responseContents: [],
+    filteredResponseContents: [],
+    responseCount: 0,
+    threads: [],
+    filteredThreads: [],
+    count: 0,
     emptyStateFlg: false
   }),
   methods: {
@@ -69,17 +64,17 @@ export default {
       this.snackbar = true;
     },
     async searchResponse() {
-      this.responseContentList = [];
+      this.responseContents = [];
       let querySnapshot = await responseService.searchAll();
       querySnapshot.forEach(document => {
         let responseContent = _.set(document.data(), "responseId", document.id);
-        this.responseContentList.push(responseContent);
+        this.responseContents.push(responseContent);
       });
     },
     async filterResponse() {
-      this.resultResponseContentList = [];
-      this.resultResponseCount = 0;
-      await this.responseContentList.forEach(async responseContent => {
+      this.filteredResponseContents = [];
+      this.responseCount = 0;
+      await this.responseContents.forEach(async responseContent => {
         let filterResponseContent = await responseContent.responseList
           .filter(
             response =>
@@ -91,8 +86,8 @@ export default {
             _.set(content, "responseId", responseContent.responseId)
           );
         if (filterResponseContent.length !== 0) {
-          this.resultResponseContentList.push(filterResponseContent);
-          this.resultResponseCount += filterResponseContent.length;
+          this.filteredResponseContents.push(filterResponseContent);
+          this.responseCount += filterResponseContent.length;
         }
       });
     },
@@ -103,13 +98,13 @@ export default {
         let threadSnapshot = _.set(document.data(), "threadId", document.id);
         threadListSnapshot.push(threadSnapshot);
       });
-      this.threadList = [];
-      this.threadList = threadListSnapshot;
+      this.threads = [];
+      this.threads = threadListSnapshot;
     },
     async filterThread() {
-      this.resultThreadList = [];
-      await this.resultThreadList.push(
-        await this.threadList.filter(
+      this.filteredThreads = [];
+      await this.filteredThreads.push(
+        await this.threads.filter(
           threadContent =>
             threadContent.title !== null &&
             threadContent.title.includes(this.$route.query.q)
@@ -133,17 +128,16 @@ export default {
       await this.showSnackbar(message);
     },
     async calcCount() {
-      this.resultCount = 0;
-      this.resultCount =
-        this.resultResponseCount + this.resultThreadList[0].length;
+      this.count = 0;
+      this.count = this.responseCount + this.filteredThreads[0].length;
     },
     async isEmptySearchResult() {
-      this.emptyStateFlg = this.resultCount === 0 ? true : false;
+      this.emptyStateFlg = this.count === 0;
     }
   },
   computed: {
     notEmptyThread() {
-      return !_.isEmpty(this.resultThreadList[0]);
+      return !_.isEmpty(this.filteredThreads[0]);
     }
   },
   watch: {
