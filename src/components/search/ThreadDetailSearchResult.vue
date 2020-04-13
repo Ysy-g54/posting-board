@@ -78,7 +78,7 @@ export default {
         let filterResponseContent = await responseContent.responseList
           .filter(
             response =>
-              response.content !== null &&
+              response.content !== "" &&
               response.content.includes(this.$route.query.q)
           )
           .map(content => _.set(content, "threadId", responseContent.threadId))
@@ -106,7 +106,7 @@ export default {
       await this.filteredThreads.push(
         await this.threads.filter(
           threadContent =>
-            threadContent.title !== null &&
+            threadContent.title !== "" &&
             threadContent.title.includes(this.$route.query.q)
         )
       );
