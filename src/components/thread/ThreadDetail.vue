@@ -85,8 +85,9 @@ export default {
         }
       });
       this.emptyStateFlg =
-        (await _.isEmpty(this.responseContent)) ||
-        (await this.responseContent.responseList.length) === 0;
+        this.content.length !== 0 &&
+        (this.responseContent.responseList === undefined ||
+          this.responseContent.responseList.length === 0);
     }
   },
   computed: {},
