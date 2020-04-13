@@ -1,8 +1,6 @@
 <template>
   <div v-if="emptyStateFlg">
-    <EmptyState
-      :message="'表示するレスがありません。レスを送ってみましょう！'"
-    ></EmptyState>
+    <EmptyState :message="'レスがまだ送られていないようです...。レスを送ってみましょう！'"></EmptyState>
   </div>
   <div v-else class="response-list">
     <v-list three-line>
