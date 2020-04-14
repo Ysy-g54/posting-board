@@ -30,6 +30,21 @@
         </v-flex>
       </v-layout>
     </v-container>
+    <v-dialog v-model="showDialog" max-width="290">
+      <v-card>
+        <v-card-text>
+          {{
+          "スレッドを登録するならサインアップする必要があります！"
+          }}
+          <v-layout align-center justify-center>
+            <v-btn color="primary" class="ma-2" dark :to="{ name: 'signup' }">{{ 'サインアップする！' }}</v-btn>
+          </v-layout>
+        </v-card-text>
+        <v-card-actions>
+          <v-btn color="secondary" text @click="closeDialog">{{ 'キャンセル' }}</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -40,6 +55,7 @@ import { categories } from "@/constants";
 import { required } from "vuelidate/lib/validators";
 export default {
   data: () => ({
+    showDialog: false,
     title: "",
     selectedCategories: [],
     description: "",
@@ -51,9 +67,11 @@ export default {
     }
   },
   methods: {
-    ...mapGetters(["getLoginUser"]),
     async registerThread() {
-      await this.goTopByAuthState();
+      if (!this.getLoginUser.isAuthState) {
+        this.showDialog = true;
+        return;
+      }
       this.$v.$touch();
       if (this.$v.$invalid) {
         return;
@@ -63,7 +81,7 @@ export default {
         title: this.title,
         categories: this.selectedCategories,
         description: this.description,
-        insertUserId: this.getLoginUser().uid,
+        insertUserId: this.getLoginUser.uid,
         insertDateTime: new Date(Date.now())
       };
       await threadService.register(thread);
@@ -72,6 +90,9 @@ export default {
       this.description = "";
       this.$v.$reset();
       await this.$emit("on-register-thread-click", "スレッドを作成しました。");
+    },
+    closeDialog() {
+      this.showDialog = false;
     }
   },
   computed: {
@@ -81,7 +102,8 @@ export default {
       } else {
         return [];
       }
-    }
+    },
+    ...mapGetters(["getLoginUser"])
   },
   created() {},
   components: {}

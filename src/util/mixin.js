@@ -2,7 +2,6 @@ import _ from "lodash";
 import moment from "moment";
 import marked from "marked";
 import { categories } from "@/constants";
-import firebase from "firebase";
 
 export default {
   beforeRouteLeave(to, from, next) {
@@ -58,16 +57,6 @@ export default {
       });
       return categoryNm;
     },
-    async goTopByAuthState() {
-      await firebase.auth().onAuthStateChanged(async currentUser => {
-        if (currentUser) {
-          return;
-        }
-        await this.$router.push({
-          name: "login"
-        });
-      });
-    },
     handler(event) {
       event.returnValue = "行った変更が保存されない可能性があります。";
     },
@@ -84,6 +73,7 @@ export default {
       this.isEdited = false;
     }
   },
+  computed: {},
   watch: {
     isEdited() {
       if (this.isEdited) {

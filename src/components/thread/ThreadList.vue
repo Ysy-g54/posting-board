@@ -41,7 +41,7 @@
         </v-list-item>
         <v-divider v-if="index + 1 < threadList.length" :key="`divider-${thread.threadId}`"></v-divider>
       </template>
-      <v-dialog v-model="showDialog">
+      <v-dialog v-model="showDialog" max-width="290">
         <v-card>
           <v-card-text>
             {{

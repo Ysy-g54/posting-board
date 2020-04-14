@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-toolbar color="indigo lighten-1" dark>
-      <v-menu v-if="getLoginUser.uid !== ''" offset-y>
+      <v-menu v-if="getLoginUser.isAuthState" offset-y>
         <template v-slot:activator="{ on }">
           <v-app-bar-nav-icon v-on="on"></v-app-bar-nav-icon>
         </template>

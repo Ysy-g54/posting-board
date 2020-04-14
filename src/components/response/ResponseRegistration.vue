@@ -2,9 +2,7 @@
   <div>
     <v-container>
       <v-flex>
-        <v-btn large color="primary" @click="registerResponse"
-          >レスを送る</v-btn
-        >
+        <v-btn large color="primary" @click="registerResponse">レスを送る</v-btn>
       </v-flex>
     </v-container>
     <v-container fluid fill-height>
@@ -31,6 +29,21 @@
         </v-tabs>
       </v-layout>
     </v-container>
+    <v-dialog v-model="showDialog" max-width="290">
+      <v-card>
+        <v-card-text>
+          {{
+          "レスを登録するならサインアップする必要があります！"
+          }}
+          <v-layout align-center justify-center>
+            <v-btn color="primary" class="ma-2" dark :to="{ name: 'signup' }">{{ 'サインアップする！' }}</v-btn>
+          </v-layout>
+        </v-card-text>
+        <v-card-actions>
+          <v-btn color="secondary" text @click="closeDialog">{{ 'キャンセル' }}</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -42,6 +55,7 @@ import { required } from "vuelidate/lib/validators";
 export default {
   data: () => ({
     content: "",
+    showDialog: false,
     targetResponse: {}
   }),
   validations: {
@@ -50,20 +64,25 @@ export default {
     }
   },
   methods: {
-    ...mapGetters(["getLoginUser"]),
     async registerResponse() {
+      if (!this.getLoginUser.isAuthState) {
+        this.showDialog = true;
+        return;
+      }
+
       this.$v.$touch();
       if (this.$v.$invalid) {
         return;
       }
 
       let response = {
-        uniqueId: new Date().getTime().toString(16) + this.getLoginUser().uid,
+        uniqueId: new Date().getTime().toString(16) + this.getLoginUser.uid,
         content: this.content,
         niceList: [],
         insertDateTime: new Date(Date.now()),
-        insertUserId: this.getLoginUser().uid
+        insertUserId: this.getLoginUser.uid
       };
+
       if (this.responseId === "") {
         let target = {
           responseList: [response],
@@ -85,6 +104,9 @@ export default {
       );
       this.targetResponse.responseList = [];
       this.targetResponse.responseList = resultResponse.data().responseList;
+    },
+    closeDialog() {
+      this.showDialog = false;
     }
   },
   props: {
@@ -97,6 +119,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(["getLoginUser"]),
     getContentError() {
       if (this.$v.content.$dirty && !this.$v.content.required) {
         return "レスは必須入力です。";
