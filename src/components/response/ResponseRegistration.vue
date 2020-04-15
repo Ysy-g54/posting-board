@@ -29,21 +29,7 @@
         </v-tabs>
       </v-layout>
     </v-container>
-    <v-dialog v-model="showDialog" max-width="290">
-      <v-card>
-        <v-card-text>
-          {{
-          "レスを登録するならサインアップする必要があります！"
-          }}
-          <v-layout align-center justify-center>
-            <v-btn color="primary" class="ma-2" dark :to="{ name: 'signup' }">{{ 'サインアップする！' }}</v-btn>
-          </v-layout>
-        </v-card-text>
-        <v-card-actions>
-          <v-btn color="secondary" text @click="closeDialog">{{ 'キャンセル' }}</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+    <SignUpGuideDialog ref="SignUpGuideDialog" :actionMessage="'レスを登録するなら'"></SignUpGuideDialog>
   </div>
 </template>
 
@@ -52,10 +38,10 @@ import { mapGetters } from "vuex";
 import marked from "marked";
 import responseService from "@/service/response/response-service";
 import { required } from "vuelidate/lib/validators";
+import SignUpGuideDialog from "@/components/dialog/SignUpGuideDialog";
 export default {
   data: () => ({
     content: "",
-    showDialog: false,
     targetResponse: {}
   }),
   validations: {
@@ -66,7 +52,7 @@ export default {
   methods: {
     async registerResponse() {
       if (!this.getLoginUser.isAuthState) {
-        this.showDialog = true;
+        this.$refs.SignUpGuideDialog.openDialog();
         return;
       }
 
@@ -104,9 +90,6 @@ export default {
       );
       this.targetResponse.responseList = [];
       this.targetResponse.responseList = resultResponse.data().responseList;
-    },
-    closeDialog() {
-      this.showDialog = false;
     }
   },
   props: {
@@ -132,7 +115,9 @@ export default {
     }
   },
   created() {},
-  components: {}
+  components: {
+    SignUpGuideDialog
+  }
 };
 </script>
 

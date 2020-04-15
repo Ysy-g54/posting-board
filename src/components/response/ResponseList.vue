@@ -13,21 +13,7 @@
         ></Response>
       </template>
     </v-list>
-    <v-dialog v-model="showDialog" max-width="290">
-      <v-card>
-        <v-card-text>
-          {{
-          "レスを高評価するならサインアップする必要があります！"
-          }}
-          <v-layout align-center justify-center>
-            <v-btn color="primary" class="ma-2" dark :to="{ name: 'signup' }">{{ 'サインアップする！' }}</v-btn>
-          </v-layout>
-        </v-card-text>
-        <v-card-actions>
-          <v-btn color="secondary" text @click="closeDialog">{{ 'キャンセル' }}</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+    <SignUpGuideDialog ref="SignUpGuideDialog" :actionMessage="'レスを高評価するなら'"></SignUpGuideDialog>
   </div>
 </template>
 
@@ -36,9 +22,9 @@ import { mapGetters } from "vuex";
 import responseService from "@/service/response/response-service";
 import EmptyState from "@/components/layout/EmptyState";
 import Response from "@/components/response/Response";
+import SignUpGuideDialog from "@/components/dialog/SignUpGuideDialog";
 export default {
   data: () => ({
-    showDialog: false,
     targetResponse: []
   }),
   methods: {
@@ -49,7 +35,7 @@ export default {
     },
     async modifyNice(response) {
       if (!this.getLoginUser.isAuthState) {
-        this.showDialog = true;
+        this.$refs.SignUpGuideDialog.openDialog();
         return;
       }
       await this.searchResponseById(response.responseId);
@@ -83,9 +69,6 @@ export default {
         "on-modification-response-click",
         "レスを削除しました。"
       );
-    },
-    closeDialog() {
-      this.showDialog = false;
     }
   },
   props: {
@@ -99,7 +82,8 @@ export default {
   created() {},
   components: {
     EmptyState,
-    Response
+    Response,
+    SignUpGuideDialog
   }
 };
 </script>

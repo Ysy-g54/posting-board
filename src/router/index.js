@@ -7,11 +7,18 @@ import Signup from "@/components/signup/Signup";
 import ThreadDetailSearchResult from "@/components/search/ThreadDetailSearchResult";
 import Thread from "@/components/thread/Thread";
 import ThreadDetail from "@/components/thread/ThreadDetail";
+import Top from "@/components/top/Top";
 
 Vue.use(Router);
 
 const router = new Router({
   routes: [
+    {
+      path: "/",
+      name: "top",
+      component: Top,
+      meta: { isPublic: true, title: "トップ" }
+    },
     {
       path: "/login",
       name: "login",

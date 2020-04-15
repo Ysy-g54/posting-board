@@ -1,11 +1,11 @@
 <template>
   <div>
     <v-toolbar color="indigo lighten-1" dark>
-      <v-menu v-if="getLoginUser.isAuthState" offset-y>
+      <v-menu offset-y>
         <template v-slot:activator="{ on }">
           <v-app-bar-nav-icon v-on="on"></v-app-bar-nav-icon>
         </template>
-        <v-list>
+        <v-list v-if="getLoginUser.isAuthState">
           <v-list-item>
             <v-list-item-content>
               <v-list-item-title>
@@ -21,7 +21,7 @@
             </v-list-item-content>
           </v-list-item>
           <v-divider></v-divider>
-          <v-list-item :to="{ name: 'favorite-response' }">
+          <v-list-item :to="'/favorite-response'">
             <v-icon>mdi-thumb-up</v-icon>
             <v-list-item-title>
               {{
@@ -35,14 +35,20 @@
             <v-list-item-title>{{ "ログアウト" }}</v-list-item-title>
           </v-list-item>
         </v-list>
+        <v-list v-else>
+          <v-list-item :to="'/signup'">
+            <v-icon>mdi-account-plus</v-icon>
+            <v-list-item-title>
+              {{
+              "アカウントを作成する"
+              }}
+            </v-list-item-title>
+          </v-list-item>
+        </v-list>
       </v-menu>
       <v-toolbar-title>
         <div>
-          <v-btn
-            class="custom-transform-class text-none"
-            text
-            :to="{ name: 'thread' }"
-          >posting-board</v-btn>
+          <v-btn class="custom-transform-class text-none" text :to="'/thread'">posting-board</v-btn>
         </div>
       </v-toolbar-title>
       <v-spacer></v-spacer>
