@@ -75,7 +75,8 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.name === "login" || to.name === "signup") {
+  const names = ["login", "signup", "top"];
+  if (names.some((record) => record === to.name)) {
     firebase.auth().onAuthStateChanged((currentUser) => {
       if (currentUser) {
         next({ name: "thread" });
