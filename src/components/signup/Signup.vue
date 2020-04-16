@@ -1,44 +1,36 @@
 <template>
-  <v-container fluid>
-    <Toolbar :title="'アカウントを作成する'"></Toolbar>
-    <CenterTemplate>
-      <v-flex sm8 md4 @keyup.enter="doSignup">
-        <v-form onsubmit="return false;">
-          <v-text-field
-            v-model="userName"
-            placeholder="アカウント名"
-            outlined
-            clearable
-          ></v-text-field>
-          <v-text-field
-            v-model="mailAddress"
-            placeholder="メールアドレス"
-            outlined
-            clearable
-          ></v-text-field>
-          <v-text-field
-            v-model="password"
-            placeholder="パスワード"
-            outlined
-            :type="showPassword ? 'text' : 'password'"
-            :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-            @click:append="changeShowPassword"
-          ></v-text-field>
+  <div>
+    <Toolbar color="indigo lighten-1" dark :title="'アカウントを作成する'"></Toolbar>
+    <v-container fluid>
+      <CenterTemplate>
+        <v-flex sm8 md4 @keyup.enter="doSignup">
+          <v-form onsubmit="return false;">
+            <v-text-field v-model="userName" placeholder="名前(※途中で変更できません！)" outlined clearable></v-text-field>
+            <v-text-field v-model="mailAddress" placeholder="メールアドレス" outlined clearable></v-text-field>
+            <v-text-field
+              v-model="password"
+              placeholder="パスワード"
+              outlined
+              :type="showPassword ? 'text' : 'password'"
+              :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+              @click:append="changeShowPassword"
+            ></v-text-field>
+            <v-layout align-center justify-center>
+              <v-btn large color="primary" @click="doSignup">作成する</v-btn>
+            </v-layout>
+          </v-form>
           <v-layout align-center justify-center>
-            <v-btn large color="primary" @click="doSignup">作成する</v-btn>
+            <div>または</div>
           </v-layout>
-        </v-form>
-        <v-layout align-center justify-center>
-          <div>または</div>
-        </v-layout>
-        <GoogleAccount :btnOperationName="'作成する'"></GoogleAccount>
-      </v-flex>
-      <v-snackbar v-model="snackbar">
-        {{ snackbarMessage }}
-        <v-btn color="pink" text @click="snackbar = false">Close</v-btn>
-      </v-snackbar>
-    </CenterTemplate>
-  </v-container>
+          <GoogleAccount :btnOperationName="'作成する'"></GoogleAccount>
+        </v-flex>
+        <v-snackbar v-model="snackbar">
+          {{ snackbarMessage }}
+          <v-btn color="pink" text @click="snackbar = false">Close</v-btn>
+        </v-snackbar>
+      </CenterTemplate>
+    </v-container>
+  </div>
 </template>
 
 <script>

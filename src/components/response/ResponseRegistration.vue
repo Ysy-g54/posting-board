@@ -2,9 +2,7 @@
   <div>
     <v-container>
       <v-flex>
-        <v-btn large color="primary" @click="registerResponse"
-          >レスを送る</v-btn
-        >
+        <v-btn large color="primary" @click="registerResponse">レスを送る</v-btn>
       </v-flex>
     </v-container>
     <v-container fluid fill-height>
@@ -31,6 +29,7 @@
         </v-tabs>
       </v-layout>
     </v-container>
+    <SignUpGuideDialog ref="SignUpGuideDialog" :actionMessage="'レスを登録するなら'"></SignUpGuideDialog>
   </div>
 </template>
 
@@ -39,6 +38,7 @@ import { mapGetters } from "vuex";
 import marked from "marked";
 import responseService from "@/service/response/response-service";
 import { required } from "vuelidate/lib/validators";
+import SignUpGuideDialog from "@/components/dialog/SignUpGuideDialog";
 export default {
   data: () => ({
     content: "",
@@ -50,20 +50,25 @@ export default {
     }
   },
   methods: {
-    ...mapGetters(["getLoginUser"]),
     async registerResponse() {
+      if (!this.getLoginUser.isAuthState) {
+        this.$refs.SignUpGuideDialog.openDialog();
+        return;
+      }
+
       this.$v.$touch();
       if (this.$v.$invalid) {
         return;
       }
 
       let response = {
-        uniqueId: new Date().getTime().toString(16) + this.getLoginUser().uid,
+        uniqueId: new Date().getTime().toString(16) + this.getLoginUser.uid,
         content: this.content,
         niceList: [],
         insertDateTime: new Date(Date.now()),
-        insertUserId: this.getLoginUser().uid
+        insertUserId: this.getLoginUser.uid
       };
+
       if (this.responseId === "") {
         let target = {
           responseList: [response],
@@ -97,6 +102,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(["getLoginUser"]),
     getContentError() {
       if (this.$v.content.$dirty && !this.$v.content.required) {
         return "レスは必須入力です。";
@@ -109,7 +115,9 @@ export default {
     }
   },
   created() {},
-  components: {}
+  components: {
+    SignUpGuideDialog
+  }
 };
 </script>
 

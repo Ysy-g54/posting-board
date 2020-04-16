@@ -10,12 +10,7 @@
     <CenterTemplate>
       <v-flex sm8 md4>
         <v-form onsubmit="return false;">
-          <v-text-field
-            v-model="mailAddress"
-            placeholder="メールアドレス"
-            outlined
-            clearable
-          ></v-text-field>
+          <v-text-field v-model="mailAddress" placeholder="メールアドレス" outlined clearable></v-text-field>
           <v-text-field
             v-model="password"
             placeholder="パスワード"
@@ -66,9 +61,6 @@ export default {
         this.snackbarMessage =
           "ログインに失敗しました。入力情報を確かめて、再度試してください。";
         this.snackbar = !this.snackbar;
-      });
-      await this.$router.push({
-        name: "thread"
       });
     },
     async onGoogleLoginClick() {

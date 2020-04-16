@@ -2,9 +2,7 @@
   <div>
     <v-container>
       <v-flex>
-        <v-btn large color="primary" @click="registerThread"
-          >スレッドを作成する</v-btn
-        >
+        <v-btn large color="primary" @click="registerThread">スレッドを作成する</v-btn>
       </v-flex>
     </v-container>
     <v-container fluid fill-height>
@@ -28,14 +26,11 @@
             outlined
             label="カテゴリ"
           ></v-select>
-          <v-textarea
-            v-model="description"
-            placeholder="説明(※更新はできません...。)"
-            outlined
-          ></v-textarea>
+          <v-textarea v-model="description" placeholder="説明(※更新はできません...。)" outlined></v-textarea>
         </v-flex>
       </v-layout>
     </v-container>
+    <SignUpGuideDialog ref="SignUpGuideDialog" :actionMessage="'検索をするなら'"></SignUpGuideDialog>
   </div>
 </template>
 
@@ -44,6 +39,7 @@ import { mapGetters } from "vuex";
 import threadService from "@/service/thread/thread-service";
 import { categories } from "@/constants";
 import { required } from "vuelidate/lib/validators";
+import SignUpGuideDialog from "@/components/dialog/SignUpGuideDialog";
 export default {
   data: () => ({
     title: "",
@@ -57,8 +53,11 @@ export default {
     }
   },
   methods: {
-    ...mapGetters(["getLoginUser"]),
     async registerThread() {
+      if (!this.getLoginUser.isAuthState) {
+        this.$refs.SignUpGuideDialog.openDialog();
+        return;
+      }
       this.$v.$touch();
       if (this.$v.$invalid) {
         return;
@@ -68,7 +67,7 @@ export default {
         title: this.title,
         categories: this.selectedCategories,
         description: this.description,
-        insertUserId: this.getLoginUser().uid,
+        insertUserId: this.getLoginUser.uid,
         insertDateTime: new Date(Date.now())
       };
       await threadService.register(thread);
@@ -86,10 +85,13 @@ export default {
       } else {
         return [];
       }
-    }
+    },
+    ...mapGetters(["getLoginUser"])
   },
   created() {},
-  components: {}
+  components: {
+    SignUpGuideDialog
+  }
 };
 </script>
 

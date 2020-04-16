@@ -13,6 +13,7 @@
         ></Response>
       </template>
     </v-list>
+    <SignUpGuideDialog ref="SignUpGuideDialog" :actionMessage="'レスを高評価するなら'"></SignUpGuideDialog>
   </div>
 </template>
 
@@ -21,6 +22,7 @@ import { mapGetters } from "vuex";
 import responseService from "@/service/response/response-service";
 import EmptyState from "@/components/layout/EmptyState";
 import Response from "@/components/response/Response";
+import SignUpGuideDialog from "@/components/dialog/SignUpGuideDialog";
 export default {
   data: () => ({
     targetResponse: []
@@ -32,6 +34,10 @@ export default {
       this.targetResponse = resultResponse.data();
     },
     async modifyNice(response) {
+      if (!this.getLoginUser.isAuthState) {
+        this.$refs.SignUpGuideDialog.openDialog();
+        return;
+      }
       await this.searchResponseById(response.responseId);
       let snackBarMessage = "";
       await this.targetResponse.responseList.find(target => {
@@ -76,7 +82,8 @@ export default {
   created() {},
   components: {
     EmptyState,
-    Response
+    Response,
+    SignUpGuideDialog
   }
 };
 </script>

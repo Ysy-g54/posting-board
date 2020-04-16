@@ -3,11 +3,15 @@ import "firebase/firestore";
 
 /**
  * スレッドリスト情報を取得します。
- * 
+ *
  * @returns スレッドリスト情報
  */
 function searchAll() {
-	return firebase.firestore().collection("thread").orderBy("insertDateTime", "desc").get();
+  return firebase
+    .firestore()
+    .collection("thread")
+    .orderBy("insertDateTime", "desc")
+    .get();
 }
 
 /**
@@ -16,7 +20,11 @@ function searchAll() {
  * @returns スレッド情報
  */
 function searchByThreadId(threadId) {
-	return firebase.firestore().collection("thread").doc(threadId).get();
+  return firebase
+    .firestore()
+    .collection("thread")
+    .doc(threadId)
+    .get();
 }
 
 /**
@@ -25,7 +33,10 @@ function searchByThreadId(threadId) {
  * @returns 登録したスレッド情報
  */
 function register(thread) {
-	return firebase.firestore().collection("thread").add(thread);
+  return firebase
+    .firestore()
+    .collection("thread")
+    .add(thread);
 }
 
 /**
@@ -33,12 +44,16 @@ function register(thread) {
  * @param  {String} threadId
  */
 function remove(threadId) {
-	firebase.firestore().collection("thread").doc(threadId).delete();
+  firebase
+    .firestore()
+    .collection("thread")
+    .doc(threadId)
+    .delete();
 }
 
 export default {
-	searchAll,
-	searchByThreadId,
-	register,
-	remove
+  searchAll,
+  searchByThreadId,
+  register,
+  remove
 };

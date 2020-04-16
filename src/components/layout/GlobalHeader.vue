@@ -5,23 +5,29 @@
         <template v-slot:activator="{ on }">
           <v-app-bar-nav-icon v-on="on"></v-app-bar-nav-icon>
         </template>
-        <v-list>
+        <v-list v-if="getLoginUser.isAuthState">
           <v-list-item>
             <v-list-item-content>
-              <v-list-item-title>{{
+              <v-list-item-title>
+                {{
                 getLoginUser.displayName
-              }}</v-list-item-title>
-              <v-list-item-title>{{
+                }}
+              </v-list-item-title>
+              <v-list-item-title>
+                {{
                 getLoginUser.mailAddress
-              }}</v-list-item-title>
+                }}
+              </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <v-divider></v-divider>
-          <v-list-item :to="{ name: 'favorite-response' }">
+          <v-list-item :to="'/favorite-response'">
             <v-icon>mdi-thumb-up</v-icon>
-            <v-list-item-title>{{
+            <v-list-item-title>
+              {{
               "高く評価したレスを確認する"
-            }}</v-list-item-title>
+              }}
+            </v-list-item-title>
           </v-list-item>
           <v-divider></v-divider>
           <v-list-item @click="onLogoutClick">
@@ -29,15 +35,23 @@
             <v-list-item-title>{{ "ログアウト" }}</v-list-item-title>
           </v-list-item>
         </v-list>
+        <v-list v-else>
+          <v-list-item :to="'/signup'">
+            <v-icon>mdi-account-plus</v-icon>
+            <v-list-item-title>
+              {{
+              "アカウントを作成する"
+              }}
+            </v-list-item-title>
+          </v-list-item>
+        </v-list>
       </v-menu>
       <v-toolbar-title>
         <div>
-          <v-btn
-            class="custom-transform-class text-none"
-            text
-            :to="{ name: 'thread' }"
-            >posting-board</v-btn
-          >
+          <v-btn class="custom-transform-class text-none" text :to="'/thread'">
+            <div class="d-none d-sm-flex">posting-board</div>
+            <div class="d-flex d-sm-none">board</div>
+          </v-btn>
         </div>
       </v-toolbar-title>
       <v-spacer></v-spacer>
@@ -55,6 +69,9 @@ export default {
     ...mapActions(["logout"]),
     async onLogoutClick() {
       await this.logout();
+      await this.$router.push({
+        name: "top"
+      });
     }
   },
   watch: {},
