@@ -1,25 +1,30 @@
 <template>
   <div>
     <v-toolbar class="sticky" color="indigo lighten-1" dark>
-      <v-toolbar-title>posting-board</v-toolbar-title>
+      <v-toolbar-title>
+        <div class="d-none d-sm-flex">posting-board</div>
+        <div class="d-flex d-sm-none">board</div>
+      </v-toolbar-title>
       <v-spacer></v-spacer>
-      <!-- <div class="my-2" @click="goSignup">
-        <v-btn text small>アカウント作成する</v-btn>
-      </div>-->
+      <div class="my-2">
+        <v-btn text small :to="'/login'">ログイン</v-btn>
+      </div>
+      <div class="my-2">
+        <v-btn text small :to="'/signup'">アカウント作成する</v-btn>
+      </div>
     </v-toolbar>
-    <CenterTemplate>
-      <v-flex sm8 md4>
-        <v-layout align-center justify-center></v-layout>
-      </v-flex>
-    </CenterTemplate>
+    <AppGuide />
   </div>
 </template>
 
 <script>
+import AppGuide from "@/components/top/AppGuide";
 export default {
   data: () => ({}),
   methods: {},
-  components: {}
+  components: {
+    AppGuide
+  }
 };
 </script>
 

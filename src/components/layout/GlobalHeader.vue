@@ -48,7 +48,10 @@
       </v-menu>
       <v-toolbar-title>
         <div>
-          <v-btn class="custom-transform-class text-none" text :to="'/thread'">posting-board</v-btn>
+          <v-btn class="custom-transform-class text-none" text :to="'/thread'">
+            <div class="d-none d-sm-flex">posting-board</div>
+            <div class="d-flex d-sm-none">board</div>
+          </v-btn>
         </div>
       </v-toolbar-title>
       <v-spacer></v-spacer>
@@ -67,7 +70,7 @@ export default {
     async onLogoutClick() {
       await this.logout();
       await this.$router.push({
-        name: "login"
+        name: "top"
       });
     }
   },

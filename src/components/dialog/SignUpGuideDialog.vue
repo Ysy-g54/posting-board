@@ -1,6 +1,7 @@
 <template>
   <v-dialog v-model="showDialog" max-width="290">
     <v-card>
+      <AppGuide :showDescription="false" />
       <v-card-text>
         {{
         actionMessage + "サインアップする必要があります！"
@@ -17,6 +18,7 @@
 </template>
 
 <script>
+import AppGuide from "@/components/top/AppGuide";
 export default {
   data: () => ({
     showDialog: false
@@ -32,6 +34,9 @@ export default {
   props: {
     actionMessage: { type: String, required: true }
   },
-  watch: {}
+  watch: {},
+  components: {
+    AppGuide
+  }
 };
 </script>
