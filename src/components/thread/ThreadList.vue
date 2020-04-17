@@ -25,14 +25,21 @@
             <v-list-item-subtitle v-if="thread.description !== ''" v-html="thread.description"></v-list-item-subtitle>
             <v-list-item-subtitle v-html="`作成日: ${formatDate(thread.insertDateTime)}`"></v-list-item-subtitle>
           </v-list-item-content>
-          <v-menu v-if="thread.insertUserId === getLoginUser.uid" offset-y>
+          <v-menu offset-y>
             <template v-slot:activator="{ on }">
               <v-btn icon v-on="on">
                 <v-icon>mdi-dots-vertical</v-icon>
               </v-btn>
             </template>
             <v-list>
-              <v-list-item @click="openDialog(thread.threadId)">
+              <v-list-item>
+                <v-icon>mdi-share-variant</v-icon>
+                <v-list-item-title>{{ "共有する" }}</v-list-item-title>
+              </v-list-item>
+              <v-list-item
+                v-if="thread.insertUserId === getLoginUser.uid"
+                @click="openDialog(thread.threadId)"
+              >
                 <v-icon>mdi-delete</v-icon>
                 <v-list-item-title>{{ "削除する" }}</v-list-item-title>
               </v-list-item>
