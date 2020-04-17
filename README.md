@@ -1,6 +1,13 @@
 # posting-board
 
-## Project setup
+## posting-boardは誰かと気軽に話をするためのアプリです。
+https://posting-board-test.firebaseapp.com/#/
+
+レスポンシブ対応をしているため、PC・スマホから利用することができます。
+アプリとしてインストールするとより利用しやすいです。
+
+
+### Project setup
 ```
 npm install
 ```
