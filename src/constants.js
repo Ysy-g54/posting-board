@@ -15,17 +15,17 @@ export const categories = [
 export const shareApps = [
   {
     appNm: "LINE",
-    url: "http://line.me/R/msg/text/?",
-    img: "@/assets/share/1485482196-line_78675.svg",
+    url: "https://line.me/R/msg/text/?",
+    img: "line-icon.svg",
   },
   {
     appNm: "twitter",
-    url: "http://twitter.com/share?text=",
-    img: "@/assets/share/Twitter_icon-icons.com_66803.svg",
+    url: "https://twitter.com/share?url=",
+    img: "twitter-icon.svg",
   },
   {
     appNm: "Gmail",
     url: "https://mail.google.com/mail/?view=cm&body=",
-    img: "@/assets/share/gmail_icon_130929.svg",
+    img: "gmail-icon.svg",
   },
 ];

@@ -22,7 +22,7 @@ import { mapGetters } from "vuex";
 import responseService from "@/service/response/response-service";
 import EmptyState from "@/components/layout/EmptyState";
 import Response from "@/components/response/Response";
-import SignUpGuideDialog from "@/components/dialog/SignUpGuideDialog";
+import SignUpGuideDialog from "@/components/guide/SignUpGuideDialog";
 export default {
   data: () => ({
     targetResponse: []

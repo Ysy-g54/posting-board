@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import AppGuide from "@/components/top/AppGuide";
+import AppGuide from "@/components/guide/AppGuide";
 export default {
   data: () => ({
     showDialog: false

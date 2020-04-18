@@ -32,7 +32,7 @@
               </v-btn>
             </template>
             <v-list>
-              <v-list-item>
+              <v-list-item @click="openShareDialog(thread)">
                 <v-icon>mdi-share-variant</v-icon>
                 <v-list-item-title>{{ "共有する" }}</v-list-item-title>
               </v-list-item>
@@ -62,6 +62,7 @@
         </v-card>
       </v-dialog>
     </v-list>
+    <ShareDialog ref="ShareDialog"></ShareDialog>
   </div>
 </template>
 
@@ -69,6 +70,7 @@
 import responseService from "@/service/response/response-service";
 import threadService from "@/service/thread/thread-service";
 import EmptyState from "@/components/layout/EmptyState";
+import ShareDialog from "@/components/share/ShareDialog";
 import { mapGetters } from "vuex";
 export default {
   data: () => ({
@@ -85,6 +87,9 @@ export default {
     openDialog(threadId) {
       this.targetThreadId = threadId;
       this.showDialog = true;
+    },
+    openShareDialog(thread) {
+      this.$refs.ShareDialog.openDialog(thread);
     },
     closeDialog() {
       this.showDialog = false;
@@ -115,7 +120,8 @@ export default {
   },
   created() {},
   components: {
-    EmptyState
+    EmptyState,
+    ShareDialog
   }
 };
 </script>
