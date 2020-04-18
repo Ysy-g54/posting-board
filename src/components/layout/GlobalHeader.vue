@@ -29,9 +29,7 @@
               }}
             </v-list-item-title>
           </v-list-item>
-          <v-list-item
-            :href="'https://docs.google.com/forms/d/e/1FAIpQLSdVBxuuhd7j5ii-Id4ma3JPt_N4-caJvFk7h7Vnydo_8B7F6w/viewform?usp=sf_link'"
-          >
+          <v-list-item :href="getContactForm">
             <v-icon>mdi-contacts</v-icon>
             <v-list-item-title>{{ "コンタクト" }}</v-list-item-title>
           </v-list-item>
@@ -68,6 +66,7 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import { contactForm } from "../../constants";
 import ThreadDetailSearchField from "@/components/search/ThreadDetailSearchField";
 export default {
   data: () => ({}),
@@ -82,7 +81,10 @@ export default {
   },
   watch: {},
   computed: {
-    ...mapGetters(["getLoginUser"])
+    ...mapGetters(["getLoginUser"]),
+    getContactForm() {
+      return contactForm;
+    }
   },
   created() {},
   components: {
