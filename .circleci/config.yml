@@ -1,7 +1,7 @@
 version: 2
 jobs:
   # ジョブ名
-  deploy_master: 
+  deploy_master:
     docker:
       # ジョブ実行環境のDockerイメージを記述
       - image: circleci/node:12.16.1
@@ -9,6 +9,9 @@ jobs:
       # ソースコードのチェックアウト
       - checkout
       # 順に実行したいコマンドとコマンドに名前をつけます
+      - run:
+          name: Decode dotenv file
+          command: echo "${ENV}" | base64 --decode > .env
       - run:
           name: npm install
           command: npm install
