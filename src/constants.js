@@ -15,12 +15,12 @@ export const categories = [
 export const shareApps = [
   {
     appNm: "LINE",
-    url: "https://line.me/R/msg/text/?",
+    url: "http://line.me/R/msg/text/?",
     img: "line-icon.svg",
   },
   {
     appNm: "twitter",
-    url: "https://twitter.com/share?url=",
+    url: "http://twitter.com/share?url=",
     img: "twitter-icon.svg",
   },
 ];
