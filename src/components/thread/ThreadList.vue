@@ -32,7 +32,7 @@
               </v-btn>
             </template>
             <v-list>
-              <v-list-item @click="openShareDialog(thread)">
+              <v-list-item @click="openShareDialog(thread.threadId)">
                 <v-icon>mdi-share-variant</v-icon>
                 <v-list-item-title>{{ "共有する" }}</v-list-item-title>
               </v-list-item>
@@ -62,7 +62,7 @@
         </v-card>
       </v-dialog>
     </v-list>
-    <ShareDialog ref="ShareDialog"></ShareDialog>
+    <ShareDialog ref="ShareDialog" @on-copy-to-clip-board-click="showSnackbar"></ShareDialog>
   </div>
 </template>
 
@@ -78,6 +78,12 @@ export default {
     targetThreadId: ""
   }),
   methods: {
+    showSnackbar() {
+      this.$emit(
+        "success-copy-to-clip-board",
+        "クリップボードにコピーしました。"
+      );
+    },
     goThreadDetail(threadId) {
       this.$router.push({
         name: "thread-detail",

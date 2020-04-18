@@ -23,9 +23,12 @@ export const shareApps = [
     url: "https://twitter.com/share?url=",
     img: "twitter-icon.svg",
   },
-  {
-    appNm: "Gmail",
-    url: "https://mail.google.com/mail/?view=cm&body=",
-    img: "gmail-icon.svg",
-  },
 ];
+
+/**
+ * コピー
+ */
+export const copy = {
+  nm: "コピー",
+  img: "copy-to-clip-board.png",
+};

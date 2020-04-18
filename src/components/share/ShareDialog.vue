@@ -4,7 +4,7 @@
       <v-list-item
         v-for="shareApp in shareApps"
         :key="shareApp.appNm"
-        @click="shareMemo(shareApp.url)"
+        @click="shareThreadDetail(shareApp.url)"
       >
         <div>
           <v-img :src="require(`../../assets/share/${shareApp.img}`)" height="80" width="80" />
@@ -13,34 +13,55 @@
           <span>{{ shareApp.appNm }}</span>
         </v-list-item-title>
       </v-list-item>
+      <v-list-item @click="copyToClipBoard">
+        <div>
+          <v-img :src="require(`../../assets/share/${copy.img}`)" height="80" width="80" />
+        </div>
+        <v-list-item-title>
+          <span>{{ copy.nm }}</span>
+        </v-list-item-title>
+      </v-list-item>
     </v-list>
   </v-dialog>
 </template>
 
 <script>
-import { shareApps } from "../../constants";
+import { shareApps, copy } from "../../constants";
 export default {
   data: () => ({
+    copy: copy,
     shareApps: shareApps,
     showDialog: false,
-    targetThread: {}
+    targetThreadId: ""
   }),
   methods: {
-    openDialog(thread) {
-      this.targetThread = thread;
+    openDialog(threadId) {
+      this.targetThreadId = threadId;
       this.showDialog = true;
     },
     closeDialog() {
       this.showDialog = false;
     },
-    async shareMemo(url) {
+    async shareThreadDetail(url) {
       let threadUrl = await this.$router.resolve({
         name: "thread-detail",
         params: {
-          threadId: this.targetThread.threadId
+          threadId: this.targetThreadId
         }
       }).href;
       location.href = url + location.origin + encodeURIComponent(threadUrl);
+    },
+    async copyToClipBoard() {
+      let threadUrl = await this.$router.resolve({
+        name: "thread-detail",
+        params: {
+          threadId: this.targetThreadId
+        }
+      }).href;
+      const copyText = location.origin + threadUrl;
+      await navigator.clipboard.writeText(copyText);
+      await this.closeDialog();
+      await this.$emit("on-copy-to-clip-board-click");
     }
   },
   props: {},
