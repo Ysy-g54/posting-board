@@ -17,6 +17,10 @@
             <br />課題自体は終わりましたが、引き続きこのアプリを成長させています。
           </div>
         </div>
+        <v-btn
+          color="accent"
+          :href="'https://docs.google.com/forms/d/e/1FAIpQLSdVBxuuhd7j5ii-Id4ma3JPt_N4-caJvFk7h7Vnydo_8B7F6w/viewform?usp=sf_link'"
+        >{{ 'コンタクト' }}</v-btn>
       </v-col>
     </v-row>
   </v-container>

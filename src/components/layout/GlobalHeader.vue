@@ -29,6 +29,12 @@
               }}
             </v-list-item-title>
           </v-list-item>
+          <v-list-item
+            :href="'https://docs.google.com/forms/d/e/1FAIpQLSdVBxuuhd7j5ii-Id4ma3JPt_N4-caJvFk7h7Vnydo_8B7F6w/viewform?usp=sf_link'"
+          >
+            <v-icon>mdi-contacts</v-icon>
+            <v-list-item-title>{{ "コンタクト" }}</v-list-item-title>
+          </v-list-item>
           <v-divider></v-divider>
           <v-list-item @click="onLogoutClick">
             <v-icon>mdi-exit-to-app</v-icon>
