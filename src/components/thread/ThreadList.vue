@@ -25,14 +25,21 @@
             <v-list-item-subtitle v-if="thread.description !== ''" v-html="thread.description"></v-list-item-subtitle>
             <v-list-item-subtitle v-html="`作成日: ${formatDate(thread.insertDateTime)}`"></v-list-item-subtitle>
           </v-list-item-content>
-          <v-menu v-if="thread.insertUserId === getLoginUser.uid" offset-y>
+          <v-menu offset-y>
             <template v-slot:activator="{ on }">
               <v-btn icon v-on="on">
                 <v-icon>mdi-dots-vertical</v-icon>
               </v-btn>
             </template>
             <v-list>
-              <v-list-item @click="openDialog(thread.threadId)">
+              <v-list-item @click="openShareDialog(thread.threadId)">
+                <v-icon>mdi-share-variant</v-icon>
+                <v-list-item-title>{{ "共有する" }}</v-list-item-title>
+              </v-list-item>
+              <v-list-item
+                v-if="thread.insertUserId === getLoginUser.uid"
+                @click="openDialog(thread.threadId)"
+              >
                 <v-icon>mdi-delete</v-icon>
                 <v-list-item-title>{{ "削除する" }}</v-list-item-title>
               </v-list-item>
@@ -55,6 +62,7 @@
         </v-card>
       </v-dialog>
     </v-list>
+    <ShareDialog ref="ShareDialog" @on-copy-to-clip-board-click="showSnackbar"></ShareDialog>
   </div>
 </template>
 
@@ -62,6 +70,7 @@
 import responseService from "@/service/response/response-service";
 import threadService from "@/service/thread/thread-service";
 import EmptyState from "@/components/layout/EmptyState";
+import ShareDialog from "@/components/share/ShareDialog";
 import { mapGetters } from "vuex";
 export default {
   data: () => ({
@@ -69,6 +78,12 @@ export default {
     targetThreadId: ""
   }),
   methods: {
+    showSnackbar() {
+      this.$emit(
+        "success-copy-to-clip-board",
+        "クリップボードにコピーしました。"
+      );
+    },
     goThreadDetail(threadId) {
       this.$router.push({
         name: "thread-detail",
@@ -78,6 +93,9 @@ export default {
     openDialog(threadId) {
       this.targetThreadId = threadId;
       this.showDialog = true;
+    },
+    openShareDialog(thread) {
+      this.$refs.ShareDialog.openDialog(thread);
     },
     closeDialog() {
       this.showDialog = false;
@@ -108,7 +126,8 @@ export default {
   },
   created() {},
   components: {
-    EmptyState
+    EmptyState,
+    ShareDialog
   }
 };
 </script>

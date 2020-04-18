@@ -38,7 +38,7 @@ import { mapGetters } from "vuex";
 import marked from "marked";
 import responseService from "@/service/response/response-service";
 import { required } from "vuelidate/lib/validators";
-import SignUpGuideDialog from "@/components/dialog/SignUpGuideDialog";
+import SignUpGuideDialog from "@/components/guide/SignUpGuideDialog";
 export default {
   data: () => ({
     content: "",

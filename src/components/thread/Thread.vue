@@ -7,11 +7,12 @@
         <ThreadList
           :threadList="threads"
           :emptyStateFlg="emptyStateFlg"
-          @on-remove-thread-detail-click="showSnackbar"
+          @on-remove-thread-detail-click="redrawThread"
+          @success-copy-to-clip-board="showSnackbar"
         ></ThreadList>
       </v-col>
       <v-col cols="12" sm="6" md="6" lg="6" xl="6">
-        <ThreadRegistration @on-register-thread-click="showSnackbar"></ThreadRegistration>
+        <ThreadRegistration @on-register-thread-click="redrawThread"></ThreadRegistration>
       </v-col>
     </v-row>
     <v-snackbar v-model="snackbar">
@@ -37,6 +38,9 @@ export default {
     async showSnackbar(message) {
       this.snackbarMessage = await message;
       this.snackbar = true;
+    },
+    async redrawThread(message) {
+      this.showSnackbar(message);
       await this.searchThread();
     },
     async searchThread() {

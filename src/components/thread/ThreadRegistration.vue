@@ -39,7 +39,7 @@ import { mapGetters } from "vuex";
 import threadService from "@/service/thread/thread-service";
 import { categories } from "@/constants";
 import { required } from "vuelidate/lib/validators";
-import SignUpGuideDialog from "@/components/dialog/SignUpGuideDialog";
+import SignUpGuideDialog from "@/components/guide/SignUpGuideDialog";
 export default {
   data: () => ({
     title: "",
