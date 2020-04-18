@@ -17,17 +17,24 @@
             <br />課題自体は終わりましたが、引き続きこのアプリを成長させています。
           </div>
         </div>
+        <v-btn color="accent" :href="getContactForm">{{ 'コンタクト' }}</v-btn>
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
+import { contactForm } from "../../constants";
 export default {
   data: () => ({}),
   methods: {},
   props: {
     showDescription: { type: Boolean, default: true }
+  },
+  computed: {
+    getContactForm() {
+      return contactForm;
+    }
   },
   components: {}
 };

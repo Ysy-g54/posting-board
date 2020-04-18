@@ -29,6 +29,10 @@
               }}
             </v-list-item-title>
           </v-list-item>
+          <v-list-item :href="getContactForm">
+            <v-icon>mdi-contacts</v-icon>
+            <v-list-item-title>{{ "コンタクト" }}</v-list-item-title>
+          </v-list-item>
           <v-divider></v-divider>
           <v-list-item @click="onLogoutClick">
             <v-icon>mdi-exit-to-app</v-icon>
@@ -62,6 +66,7 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import { contactForm } from "../../constants";
 import ThreadDetailSearchField from "@/components/search/ThreadDetailSearchField";
 export default {
   data: () => ({}),
@@ -76,7 +81,10 @@ export default {
   },
   watch: {},
   computed: {
-    ...mapGetters(["getLoginUser"])
+    ...mapGetters(["getLoginUser"]),
+    getContactForm() {
+      return contactForm;
+    }
   },
   created() {},
   components: {

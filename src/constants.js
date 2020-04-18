@@ -32,3 +32,9 @@ export const copy = {
   nm: "コピー",
   img: "copy-to-clip-board.png",
 };
+
+/**
+ * コンタクトフォーム
+ */
+export const contactForm =
+  "https://docs.google.com/forms/d/e/1FAIpQLSdVBxuuhd7j5ii-Id4ma3JPt_N4-caJvFk7h7Vnydo_8B7F6w/viewform?usp=sf_link";

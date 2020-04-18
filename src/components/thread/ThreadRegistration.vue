@@ -20,7 +20,7 @@
             v-model="selectedCategories"
             item-text="categoryNm"
             item-value="categoryId"
-            :items="categories"
+            :items="getCategories"
             chips
             multiple
             outlined
@@ -44,8 +44,7 @@ export default {
   data: () => ({
     title: "",
     selectedCategories: [],
-    description: "",
-    categories: categories
+    description: ""
   }),
   validations: {
     title: {
@@ -85,6 +84,9 @@ export default {
       } else {
         return [];
       }
+    },
+    getCategories() {
+      return categories;
     },
     ...mapGetters(["getLoginUser"])
   },
