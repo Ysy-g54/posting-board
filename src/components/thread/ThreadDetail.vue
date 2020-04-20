@@ -7,7 +7,9 @@
       </span>
       <v-row>
         <v-col cols="12" sm="6" md="6" lg="6" xl="6">
+          <Loading v-if="overlay" />
           <ResponseList
+            v-else
             :responseList="responseContent.responseList"
             :emptyStateFlg="emptyStateFlg"
             @on-modification-response-click="showSnackbar"
@@ -35,11 +37,13 @@ import _ from "lodash";
 import database from "@/service/database";
 import threadService from "@/service/thread/thread-service";
 import ContentNotFound from "@/components/layout/ContentNotFound";
+import Loading from "@/components/layout/Loading";
 import ResponseList from "@/components/response/ResponseList";
 import ResponseRegistration from "@/components/response/ResponseRegistration";
 import Toolbar from "@/components/layout/Toolbar";
 export default {
   data: () => ({
+    overlay: true,
     snackbarMessage: "",
     snackbar: false,
     content: {},
@@ -88,6 +92,7 @@ export default {
         this.content.length !== 0 &&
         (this.responseContent.responseList === undefined ||
           this.responseContent.responseList.length === 0);
+      this.overlay = await false;
     }
   },
   computed: {},
@@ -96,6 +101,7 @@ export default {
   },
   components: {
     ContentNotFound,
+    Loading,
     ResponseList,
     ResponseRegistration,
     Toolbar

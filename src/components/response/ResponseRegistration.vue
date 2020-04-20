@@ -74,11 +74,23 @@ export default {
           responseList: [response],
           threadId: this.$route.params.threadId
         };
-        await responseService.register(target);
+        await responseService.register(target).catch(() => {
+          this.$emit(
+            "on-register-response-click",
+            "レスを送るのに失敗しました。接続確認をし、再度お試しください。"
+          );
+        });
       } else {
         await this.searchResponseById();
         await this.targetResponse.responseList.push(response);
-        await responseService.modify(this.targetResponse, this.responseId);
+        await responseService
+          .modify(this.targetResponse, this.responseId)
+          .catch(() => {
+            this.$emit(
+              "on-register-response-click",
+              "レスを送るのに失敗しました。接続確認をし、再度お試しください。"
+            );
+          });
       }
       this.content = await "";
       this.$v.$reset();

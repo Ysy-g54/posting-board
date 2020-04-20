@@ -6,29 +6,32 @@
     </div>
     <div v-else>
       <v-subheader v-if="notEmptyThread">{{ "スレッド一覧" }}</v-subheader>
-      <ThreadList
-        :threadList="filteredThreads[0]"
-        @on-remove-thread-detail-click="redrawThreadDetail"
-      ></ThreadList>
-      <v-divider class="mx-4" vertical></v-divider>
-      <v-subheader v-if="responseCount !== 0">
-        {{
-        "レス一覧"
-        }}
-      </v-subheader>
-      <div v-for="responseContent in filteredResponseContents" :key="responseContent.uniqueId">
-        <v-btn
-          :to="{
+      <Loading v-if="overlay" />
+      <div v-else>
+        <ThreadList
+          :threadList="filteredThreads[0]"
+          @on-remove-thread-detail-click="redrawThreadDetail"
+        ></ThreadList>
+        <v-divider class="mx-4" vertical></v-divider>
+        <v-subheader v-if="responseCount !== 0">
+          {{
+          "レス一覧"
+          }}
+        </v-subheader>
+        <div v-for="responseContent in filteredResponseContents" :key="responseContent.uniqueId">
+          <v-btn
+            :to="{
             name: 'thread-detail',
             params: { threadId: responseContent[0].threadId }
           }"
-          text
-          color="accent"
-        >{{ "下記レスがあるスレッドを見に行く" }}</v-btn>
-        <ResponseList
-          :responseList="responseContent"
-          @on-modification-response-click="redrawResponse"
-        ></ResponseList>
+            text
+            color="accent"
+          >{{ "下記レスがあるスレッドを見に行く" }}</v-btn>
+          <ResponseList
+            :responseList="responseContent"
+            @on-modification-response-click="redrawResponse"
+          ></ResponseList>
+        </div>
       </div>
       <v-snackbar v-model="snackbar">
         {{ snackbarMessage }}
@@ -43,11 +46,13 @@ import _ from "lodash";
 import responseService from "@/service/response/response-service";
 import threadService from "@/service/thread/thread-service";
 import EmptyState from "@/components/layout/EmptyState";
+import Loading from "@/components/layout/Loading";
 import ResponseList from "@/components/response/ResponseList";
 import ThreadList from "@/components/thread/ThreadList";
 import Toolbar from "@/components/layout/Toolbar";
 export default {
   data: () => ({
+    overlay: true,
     snackbarMessage: "",
     snackbar: false,
     responseContents: [],
@@ -118,6 +123,7 @@ export default {
       await this.filterThread();
       await this.calcCount();
       await this.isEmptySearchResult();
+      this.overlay = await false;
       await this.showSnackbar(message);
     },
     async redrawResponse(message) {
@@ -125,6 +131,7 @@ export default {
       await this.filterResponse();
       await this.calcCount();
       await this.isEmptySearchResult();
+      this.overlay = await false;
       await this.showSnackbar(message);
     },
     async calcCount() {
@@ -147,6 +154,7 @@ export default {
         await this.filterThread();
         await this.calcCount();
         await this.isEmptySearchResult();
+        this.overlay = await false;
       }
     }
   },
@@ -157,9 +165,11 @@ export default {
     await this.filterThread();
     await this.calcCount();
     await this.isEmptySearchResult();
+    this.overlay = await false;
   },
   components: {
     EmptyState,
+    Loading,
     ResponseList,
     ThreadList,
     Toolbar

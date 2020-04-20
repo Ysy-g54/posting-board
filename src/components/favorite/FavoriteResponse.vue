@@ -8,7 +8,8 @@
     </div>
     <div v-else>
       <v-subheader>{{ "レス一覧" }}</v-subheader>
-      <div v-for="responseContent in filteredResponses" :key="responseContent.uniqueId">
+      <Loading v-if="overlay" />
+      <div v-else v-for="responseContent in filteredResponses" :key="responseContent.uniqueId">
         <v-btn
           :to="{
             name: 'thread-detail',
@@ -35,10 +36,12 @@ import _ from "lodash";
 import { mapGetters } from "vuex";
 import responseService from "@/service/response/response-service";
 import EmptyState from "@/components/layout/EmptyState";
+import Loading from "@/components/layout/Loading";
 import ResponseList from "@/components/response/ResponseList";
 import Toolbar from "@/components/layout/Toolbar";
 export default {
   data: () => ({
+    overlay: true,
     snackbarMessage: "",
     snackbar: false,
     responses: [],
@@ -81,6 +84,7 @@ export default {
       } else {
         this.emptyStateFlg = true;
       }
+      this.overlay = await false;
     },
     async redrawResponse(message) {
       await this.searchResponse();
@@ -98,6 +102,7 @@ export default {
   },
   components: {
     EmptyState,
+    Loading,
     ResponseList,
     Toolbar
   }

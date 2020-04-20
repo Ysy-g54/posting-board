@@ -69,7 +69,12 @@ export default {
         insertUserId: this.getLoginUser.uid,
         insertDateTime: new Date(Date.now())
       };
-      await threadService.register(thread);
+      await threadService.register(thread).catch(() => {
+        this.$emit(
+          "on-register-response-click",
+          "スレッドの作成に失敗しました。接続確認をし、再度お試しください。"
+        );
+      });
       this.title = "";
       this.selectedCategories = [];
       this.description = "";
