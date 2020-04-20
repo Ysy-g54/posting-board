@@ -4,7 +4,9 @@
       <v-col cols="12" sm="6" md="6" lg="6" xl="6">
         <v-subheader>スレッド一覧</v-subheader>
         <span>{{ getThreadCount }} 個</span>
+        <Loading v-if="overlay" />
         <ThreadList
+          v-else
           :threadList="threads"
           :emptyStateFlg="emptyStateFlg"
           @on-remove-thread-detail-click="redrawThread"
@@ -25,10 +27,12 @@
 <script>
 import _ from "lodash";
 import threadService from "@/service/thread/thread-service";
+import Loading from "@/components/layout/Loading";
 import ThreadList from "@/components/thread/ThreadList";
 import ThreadRegistration from "@/components/thread/ThreadRegistration";
 export default {
   data: () => ({
+    overlay: true,
     snackbarMessage: "",
     snackbar: false,
     threads: [],
@@ -52,6 +56,7 @@ export default {
       });
       this.threads = threadListSnapshot;
       this.emptyStateFlg = _.isEmpty(this.threads);
+      this.overlay = await false;
     }
   },
   computed: {
@@ -63,6 +68,7 @@ export default {
     this.searchThread();
   },
   components: {
+    Loading,
     ThreadList,
     ThreadRegistration
   }

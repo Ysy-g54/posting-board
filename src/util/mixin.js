@@ -19,7 +19,7 @@ export default {
     }
   },
   data: () => ({
-    isEdited: false
+    isEdited: false,
     // loading: false
   }),
   methods: {
@@ -39,7 +39,7 @@ export default {
     },
     getCategoryColor(categoryId) {
       let categoryColor = "";
-      categories.find(category => {
+      categories.find((category) => {
         if (categoryId === category.categoryId) {
           categoryColor = category.color;
           return true;
@@ -49,7 +49,7 @@ export default {
     },
     formatCategory(categoryId) {
       let categoryNm = "";
-      categories.find(category => {
+      categories.find((category) => {
         if (categoryId === category.categoryId) {
           categoryNm = category.categoryNm;
           return true;
@@ -71,7 +71,7 @@ export default {
     },
     endEdit() {
       this.isEdited = false;
-    }
+    },
   },
   computed: {},
   watch: {
@@ -81,7 +81,7 @@ export default {
       } else {
         window.removeEventListener("beforeunload", this.handler);
       }
-    }
+    },
   },
   mounted() {
     let title = this.$route !== undefined ? this.$route.meta.title : undefined;
@@ -95,5 +95,5 @@ export default {
     marked.setOptions({ breaks: true });
     window.removeEventListener("beforeunload", this.handler);
   },
-  destroyed() {}
+  destroyed() {},
 };

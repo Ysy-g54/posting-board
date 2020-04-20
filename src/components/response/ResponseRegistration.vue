@@ -2,7 +2,7 @@
   <div>
     <v-container>
       <v-flex>
-        <v-btn large color="primary" @click="registerResponse">レスを送る</v-btn>
+        <v-btn large color="primary" @click="registerResponse" :loading="isBtnLoading">レスを送る</v-btn>
       </v-flex>
     </v-container>
     <v-container fluid fill-height>
@@ -41,6 +41,7 @@ import { required } from "vuelidate/lib/validators";
 import SignUpGuideDialog from "@/components/guide/SignUpGuideDialog";
 export default {
   data: () => ({
+    isBtnLoading: false,
     content: "",
     targetResponse: {}
   }),
@@ -61,6 +62,7 @@ export default {
         return;
       }
 
+      this.isBtnLoading = true;
       let response = {
         uniqueId: new Date().getTime().toString(16) + this.getLoginUser.uid,
         content: this.content,
@@ -74,14 +76,28 @@ export default {
           responseList: [response],
           threadId: this.$route.params.threadId
         };
-        await responseService.register(target);
+        await responseService.register(target).catch(() => {
+          this.$emit(
+            "on-register-response-click",
+            "レスを送るのに失敗しました。接続確認をし、再度お試しください。"
+          );
+        });
       } else {
         await this.searchResponseById();
         await this.targetResponse.responseList.push(response);
-        await responseService.modify(this.targetResponse, this.responseId);
+        await responseService
+          .modify(this.targetResponse, this.responseId)
+          .catch(() => {
+            this.isBtnLoading = false;
+            this.$emit(
+              "on-register-response-click",
+              "レスを送るのに失敗しました。接続確認をし、再度お試しください。"
+            );
+          });
       }
       this.content = await "";
       this.$v.$reset();
+      this.isBtnLoading = false;
       await this.$emit("on-register-response-click", "レスを送りました。");
     },
     async searchResponseById() {
