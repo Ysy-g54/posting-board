@@ -2,7 +2,7 @@
   <div>
     <v-container>
       <v-flex>
-        <v-btn large color="primary" @click="registerThread">スレッドを作成する</v-btn>
+        <v-btn large color="primary" @click="registerThread" :loading="isBtnLoading">スレッドを作成する</v-btn>
       </v-flex>
     </v-container>
     <v-container fluid fill-height>
@@ -42,6 +42,7 @@ import { required } from "vuelidate/lib/validators";
 import SignUpGuideDialog from "@/components/guide/SignUpGuideDialog";
 export default {
   data: () => ({
+    isBtnLoading: false,
     title: "",
     selectedCategories: [],
     description: ""
@@ -62,6 +63,7 @@ export default {
         return;
       }
 
+      this.isBtnLoading = true;
       let thread = {
         title: this.title,
         categories: this.selectedCategories,
@@ -70,6 +72,7 @@ export default {
         insertDateTime: new Date(Date.now())
       };
       await threadService.register(thread).catch(() => {
+        this.isBtnLoading = false;
         this.$emit(
           "on-register-response-click",
           "スレッドの作成に失敗しました。接続確認をし、再度お試しください。"
@@ -79,6 +82,7 @@ export default {
       this.selectedCategories = [];
       this.description = "";
       this.$v.$reset();
+      this.isBtnLoading = false;
       await this.$emit("on-register-thread-click", "スレッドを作成しました。");
     }
   },
