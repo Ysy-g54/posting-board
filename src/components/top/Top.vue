@@ -2,7 +2,7 @@
   <div>
     <v-toolbar class="sticky" color="indigo lighten-1" dark>
       <v-toolbar-title>
-        <div class="d-none d-sm-flex">posting-board</div>
+        <div class="d-none d-sm-flex">postingBoard</div>
         <div class="d-flex d-sm-none">board</div>
       </v-toolbar-title>
       <v-spacer></v-spacer>

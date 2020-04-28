@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-toolbar class="sticky" color="indigo lighten-1" dark>
-      <v-toolbar-title>posting-board</v-toolbar-title>
+      <v-toolbar-title>postingBoard</v-toolbar-title>
       <v-spacer></v-spacer>
       <div class="my-2" @click="goSignup">
         <v-btn text small>アカウント作成する</v-btn>

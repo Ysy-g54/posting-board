@@ -1,6 +1,6 @@
-# posting-board
+# postingBoard
 
-## posting-boardは誰かと気軽に話をするためのアプリです。
+## postingBoardは誰かと気軽に話をするためのアプリです。
 https://posting-board-test.firebaseapp.com/#/
 
 レスポンシブ対応をしているため、PC・スマホから利用することができます。

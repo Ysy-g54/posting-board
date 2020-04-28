@@ -53,7 +53,7 @@
       <v-toolbar-title>
         <div>
           <v-btn class="custom-transform-class text-none" text :to="'/thread'">
-            <div class="d-none d-sm-flex">posting-board</div>
+            <div class="d-none d-sm-flex">postingBoard</div>
             <div class="d-flex d-sm-none">board</div>
           </v-btn>
         </div>
