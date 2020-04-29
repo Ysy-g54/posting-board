@@ -12,26 +12,29 @@ const store = new Vuex.Store({
       displayName: "",
       mailAddress: "",
       uid: "",
-      isAuthState: false
-    }
+      isAuthState: false,
+    },
+    isLoading: true,
   },
   mutations: {
     async setLoginUser(state) {
-      await firebase.auth().onAuthStateChanged(loginUser => {
+      await firebase.auth().onAuthStateChanged((loginUser) => {
         if (loginUser !== null) {
           state.loginUser.displayName = loginUser.displayName || "";
           state.loginUser.mailAddress = loginUser.email || "";
           state.loginUser.uid = loginUser.uid || "";
-          state.loginUser.isAuthState = true || false;
+					state.loginUser.isAuthState = true;
         }
+        state.isLoading = false;
       });
+      return true;
     },
     logout(state) {
       state.loginUser.displayName = "";
       state.loginUser.mailAddress = "";
       state.loginUser.uid = "";
-      state.loginUser.isAuthState = false;
-    }
+			state.loginUser.isAuthState = false;
+    },
   },
   actions: {
     loginByEmailAndPassword(context, params) {
@@ -49,6 +52,7 @@ const store = new Vuex.Store({
     },
     async findLoginUser(context) {
       await context.commit("setLoginUser");
+      return true;
     },
     logout(context) {
       return firebase
@@ -57,13 +61,16 @@ const store = new Vuex.Store({
         .then(() => {
           context.commit("logout");
         });
-    }
+    },
   },
   getters: {
-    getLoginUser: state => {
+    getLoginUser: (state) => {
       return state.loginUser;
-    }
-  }
+    },
+    getIsLoading: (state) => {
+      return state.isLoading;
+    },
+  },
 });
 
 export default store;
