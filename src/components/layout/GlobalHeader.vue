@@ -29,7 +29,7 @@
               }}
             </v-list-item-title>
           </v-list-item>
-          <v-list-item :href="getContactForm">
+          <v-list-item :href="getContactForm" target="_blank" rel="noopener">
             <v-icon>mdi-contacts</v-icon>
             <v-list-item-title>{{ "コンタクト" }}</v-list-item-title>
           </v-list-item>

@@ -17,7 +17,7 @@
             <br />課題自体は終わりましたが、引き続きこのアプリを成長させています。
           </div>
         </div>
-        <v-btn color="accent" :href="getContactForm">{{ 'コンタクト' }}</v-btn>
+        <v-btn color="accent" :href="getContactForm" target="_blank" rel="noopener">{{ 'コンタクト' }}</v-btn>
       </v-col>
     </v-row>
   </v-container>
