@@ -8,6 +8,8 @@ import Mixin from "@/util/mixin";
 import Vuelidate from "vuelidate";
 import "./registerServiceWorker";
 import { mapActions } from "vuex";
+import _ from "lodash";
+import threadService from "@/service/thread/thread-service";
 
 Vue.config.productionTip = false;
 Vue.use(Vuelidate);
@@ -20,9 +22,16 @@ new Vue({
   store,
   vuetify,
   methods: {
-    ...mapActions(["findLoginUser"]),
+    ...mapActions(["findLoginUser", "fetchThreads"]),
   },
   async created() {
     await this.findLoginUser();
+    let querySnapshot = await threadService.searchAll();
+    let threadListSnapshot = [];
+    await querySnapshot.forEach((document) => {
+      let threadSnapshot = _.set(document.data(), "threadId", document.id);
+      threadListSnapshot.push(threadSnapshot);
+    });
+    this.fetchThreads(threadListSnapshot);
   },
 }).$mount("#app");

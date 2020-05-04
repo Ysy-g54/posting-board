@@ -35,6 +35,7 @@
 <script>
 import _ from "lodash";
 import database from "@/service/database";
+import responseService from "@/service/response/response-service";
 import threadService from "@/service/thread/thread-service";
 import ContentNotFound from "@/components/layout/ContentNotFound";
 import Loading from "@/components/layout/Loading";
@@ -80,8 +81,8 @@ export default {
     async content() {
       await this.content.find(document => {
         if (document.threadId === this.$route.params.threadId) {
-          this.responseContent = document;
           this.responseId = document.id;
+          this.responseContent = document;
           this.responseContent.responseList.forEach(response => {
             _.set(response, "responseId", this.responseId);
           });
@@ -92,6 +93,23 @@ export default {
         this.content.length !== 0 &&
         (this.responseContent.responseList === undefined ||
           this.responseContent.responseList.length === 0);
+      this.overlay = await false;
+    },
+    async $route() {
+      await this.searchThread();
+      let response = await responseService.searchByThreadId(
+        this.$route.params.threadId
+      );
+      await response.forEach(document => {
+        this.responseId = document.id;
+        this.responseContent = document.data();
+        this.responseContent.responseList.forEach(response => {
+          _.set(response, "responseId", this.responseId);
+        });
+      });
+      this.emptyStateFlg =
+        this.responseContent.responseList === undefined ||
+        this.responseContent.responseList.length === 0;
       this.overlay = await false;
     }
   },

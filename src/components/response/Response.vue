@@ -1,30 +1,34 @@
 <template>
-  <v-card class="mx-auto" outlined>
-    <div v-html="compiledMarkdown(response.content)"></div>
-    <v-list-item-subtitle
-      v-html="`送った日: ${formatDate(response.insertDateTime)}`"
-    ></v-list-item-subtitle>
-    <v-card-actions>
-      <v-spacer></v-spacer>
-      <v-btn icon @click="modifyNice(response)">
-        <v-icon v-if="isNotNiceClick">mdi-thumb-up</v-icon>
-        <v-icon v-else color="blue">mdi-thumb-up</v-icon>
-      </v-btn>
-      <div>{{ response.niceList.length }}</div>
-      <!-- <v-icon>mdi-share-variant</v-icon> -->
-      <v-spacer></v-spacer>
-      <v-btn
-        v-if="response.insertUserId === getLoginUser.uid"
-        icon
-        @click="removeResponse(response)"
-      >
-        <v-icon>mdi-delete</v-icon>
-      </v-btn>
-    </v-card-actions>
-  </v-card>
+  <div>
+    <v-card class="mx-auto" outlined>
+      <div v-html="compiledMarkdown(response.content)"></div>
+      <v-list-item-subtitle v-html="`送った日: ${formatDate(response.insertDateTime)}`"></v-list-item-subtitle>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn icon @click="modifyNice(response)">
+          <v-icon v-if="isNotNiceClick">mdi-thumb-up</v-icon>
+          <v-icon v-else color="blue">mdi-thumb-up</v-icon>
+        </v-btn>
+        <div>{{ response.niceList.length }}</div>
+        <v-btn v-if="getLoginUser.isAuthState" icon @click="openDialog(response.uniqueId)">
+          <v-icon>mdi-share-variant</v-icon>
+        </v-btn>
+        <v-spacer></v-spacer>
+        <v-btn
+          v-if="response.insertUserId === getLoginUser.uid"
+          icon
+          @click="removeResponse(response)"
+        >
+          <v-icon>mdi-delete</v-icon>
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+    <ResponseShareDialog ref="ResponseShareDialog" :responseContent="response.content"></ResponseShareDialog>
+  </div>
 </template>
 
 <script>
+import ResponseShareDialog from "@/components/share/ResponseShareDialog";
 import { mapGetters } from "vuex";
 import marked from "marked";
 export default {
@@ -40,6 +44,9 @@ export default {
     },
     async modifyNice(response) {
       await this.$emit("on-modification-response-click", response);
+    },
+    openDialog(uniqueId) {
+      this.$refs.ResponseShareDialog.openDialog(uniqueId);
     }
   },
   props: {
@@ -57,7 +64,9 @@ export default {
   },
   watch: {},
   created() {},
-  components: {}
+  components: {
+    ResponseShareDialog
+  }
 };
 </script>
 

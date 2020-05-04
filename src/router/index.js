@@ -38,7 +38,7 @@ const router = new Router({
           meta: { isPublic: false, title: "スレッド" },
         },
         {
-          path: "/thread-detail/:threadId",
+          path: "/thread-detail/:threadId/:uniqueId?",
           name: "thread-detail",
           component: ThreadDetail,
           meta: { isPublic: false, title: "スレッド詳細" },

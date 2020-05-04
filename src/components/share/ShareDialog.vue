@@ -47,7 +47,8 @@ export default {
           threadId: this.targetThreadId
         }
       }).href;
-      let targetUrl = url + location.origin + encodeURIComponent(threadUrl);
+      let targetUrl =
+        url + location.origin + "/" + encodeURIComponent(threadUrl);
       window.open(targetUrl, "_blank", "noopener");
     },
     async copyToClipBoard() {
