@@ -26,6 +26,7 @@
 
 <script>
 import _ from "lodash";
+import { mapActions } from "vuex";
 import threadService from "@/service/thread/thread-service";
 import Loading from "@/components/layout/Loading";
 import ThreadList from "@/components/thread/ThreadList";
@@ -39,6 +40,7 @@ export default {
     emptyStateFlg: false
   }),
   methods: {
+    ...mapActions(["fetchThreads"]),
     async showSnackbar(message) {
       this.snackbarMessage = await message;
       this.snackbar = true;
@@ -55,6 +57,7 @@ export default {
         threadListSnapshot.push(threadSnapshot);
       });
       this.threads = threadListSnapshot;
+      this.fetchThreads(threadListSnapshot);
       this.emptyStateFlg = _.isEmpty(this.threads);
       this.overlay = await false;
     }

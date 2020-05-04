@@ -15,6 +15,7 @@ const store = new Vuex.Store({
       isAuthState: false,
     },
     isLoading: true,
+    threads: [],
   },
   mutations: {
     async setLoginUser(state) {
@@ -23,17 +24,20 @@ const store = new Vuex.Store({
           state.loginUser.displayName = loginUser.displayName || "";
           state.loginUser.mailAddress = loginUser.email || "";
           state.loginUser.uid = loginUser.uid || "";
-					state.loginUser.isAuthState = true;
+          state.loginUser.isAuthState = true;
         }
         state.isLoading = false;
       });
       return true;
     },
+    setThreads(state, threads) {
+      state.threads = threads;
+    },
     logout(state) {
       state.loginUser.displayName = "";
       state.loginUser.mailAddress = "";
       state.loginUser.uid = "";
-			state.loginUser.isAuthState = false;
+      state.loginUser.isAuthState = false;
     },
   },
   actions: {
@@ -54,6 +58,9 @@ const store = new Vuex.Store({
       await context.commit("setLoginUser");
       return true;
     },
+    async fetchThreads(context, params) {
+      context.commit("setThreads", params);
+    },
     logout(context) {
       return firebase
         .auth()
@@ -69,6 +76,9 @@ const store = new Vuex.Store({
     },
     getIsLoading: (state) => {
       return state.isLoading;
+    },
+    getThreads: (state) => {
+      return state.threads;
     },
   },
 });
