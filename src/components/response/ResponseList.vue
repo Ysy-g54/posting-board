@@ -10,10 +10,12 @@
           :key="response.uniqueId"
           @on-remove-response-click="removeResponse"
           @on-modification-response-click="modifyNice"
+          @on-response-share-click="openShareDialog"
         ></Response>
       </template>
     </v-list>
-    <SignUpGuideDialog ref="SignUpGuideDialog" :actionMessage="'レスを高評価するなら'"></SignUpGuideDialog>
+    <ResponseShareDialog ref="ResponseShareDialog" :response="shareResponse"></ResponseShareDialog>
+    <SignUpGuideDialog ref="SignUpGuideDialog" :actionMessage="actionMessage"></SignUpGuideDialog>
   </div>
 </template>
 
@@ -22,9 +24,12 @@ import { mapGetters } from "vuex";
 import responseService from "@/service/response/response-service";
 import EmptyState from "@/components/layout/EmptyState";
 import Response from "@/components/response/Response";
+import ResponseShareDialog from "@/components/share/ResponseShareDialog";
 import SignUpGuideDialog from "@/components/guide/SignUpGuideDialog";
 export default {
   data: () => ({
+    actionMessage: "",
+    shareResponse: {},
     targetResponse: []
   }),
   methods: {
@@ -35,6 +40,7 @@ export default {
     },
     async modifyNice(response) {
       if (!this.getLoginUser.isAuthState) {
+        this.actionMessage = "レスを高評価するなら";
         this.$refs.SignUpGuideDialog.openDialog();
         return;
       }
@@ -69,6 +75,15 @@ export default {
         "on-modification-response-click",
         "レスを削除しました。"
       );
+    },
+    openShareDialog(response) {
+      if (!this.getLoginUser.isAuthState) {
+        this.actionMessage = "レスを他のスレッドで共有するなら";
+        this.$refs.SignUpGuideDialog.openDialog();
+        return;
+      }
+      this.shareResponse = response;
+      this.$refs.ResponseShareDialog.openDialog(response.uniqueId);
     }
   },
   props: {
@@ -83,6 +98,7 @@ export default {
   components: {
     EmptyState,
     Response,
+    ResponseShareDialog,
     SignUpGuideDialog
   }
 };

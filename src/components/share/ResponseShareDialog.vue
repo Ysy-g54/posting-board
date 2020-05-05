@@ -28,7 +28,7 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="blue darken-1" text @click="closeDialog">Close</v-btn>
-        <v-btn color="blue darken-1" text @click="registerResponse">レスを送る</v-btn>
+        <v-btn color="blue darken-1" text @click="registerResponse" :loading="isBtnLoading">レスを送る</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -40,6 +40,7 @@ import { required } from "vuelidate/lib/validators";
 import responseService from "@/service/response/response-service";
 export default {
   data: () => ({
+    isBtnLoading: false,
     selectedThread: "",
     content: "",
     showDialog: false,
@@ -57,15 +58,24 @@ export default {
         return;
       }
 
+      this.isBtnLoading = true;
+
+      let threadId = "";
+      if (this.$route.params.threadId !== undefined) {
+        threadId = this.$route.params.threadId;
+      } else {
+        threadId = this.response.threadId;
+      }
+
       let threadUrl = await this.$router.resolve({
         name: "thread-detail",
         params: {
-          threadId: this.$route.params.threadId
+          threadId: threadId
         }
       }).href;
 
-      let shareContent = this.responseContent;
-      let indexOfResult = this.responseContent.indexOf(
+      let shareContent = this.response.content;
+      let indexOfResult = this.response.content.indexOf(
         "[メッセージを確認する。]"
       );
       if (indexOfResult !== -1) {
@@ -114,9 +124,13 @@ export default {
         await targetResponse.responseList.push(response);
         await responseService.modify(targetResponse, responseId);
       }
+      this.isBtnLoading = false;
+
       this.$router.push({
         path: `/thread-detail/${this.selectedThread}`
       });
+      this.content = "";
+      this.uniqueId = "";
       this.closeDialog();
     },
     openDialog(uniqueId) {
@@ -128,7 +142,7 @@ export default {
     }
   },
   props: {
-    responseContent: { type: String, default: "" }
+    response: { type: Object, required: true }
   },
   computed: {
     ...mapGetters(["getLoginUser", "getThreads"]),
@@ -141,6 +155,7 @@ export default {
     }
   },
   watch: {},
-  components: {}
+  components: {},
+  created() {}
 };
 </script>
