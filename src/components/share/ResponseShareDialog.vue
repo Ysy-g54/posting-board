@@ -28,7 +28,7 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="blue darken-1" text @click="closeDialog">Close</v-btn>
-        <v-btn color="blue darken-1" text @click="registerResponse">レスを送る</v-btn>
+        <v-btn color="blue darken-1" text @click="registerResponse" :loading="isBtnLoading">レスを送る</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -40,6 +40,7 @@ import { required } from "vuelidate/lib/validators";
 import responseService from "@/service/response/response-service";
 export default {
   data: () => ({
+    isBtnLoading: false,
     selectedThread: "",
     content: "",
     showDialog: false,
@@ -56,6 +57,8 @@ export default {
       if (this.$v.$invalid) {
         return;
       }
+
+      this.isBtnLoading = true;
 
       let threadId = "";
       if (this.$route.params.threadId !== undefined) {
@@ -121,6 +124,7 @@ export default {
         await targetResponse.responseList.push(response);
         await responseService.modify(targetResponse, responseId);
       }
+      this.isBtnLoading = false;
 
       this.$router.push({
         path: `/thread-detail/${this.selectedThread}`

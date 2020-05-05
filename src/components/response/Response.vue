@@ -10,7 +10,7 @@
           <v-icon v-else color="blue">mdi-thumb-up</v-icon>
         </v-btn>
         <div>{{ response.niceList.length }}</div>
-        <v-btn v-if="getLoginUser.isAuthState" icon @click="openDialog(response)">
+        <v-btn icon @click="openDialog(response)">
           <v-icon>mdi-share-variant</v-icon>
         </v-btn>
         <v-spacer></v-spacer>

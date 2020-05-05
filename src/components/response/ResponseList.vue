@@ -15,7 +15,7 @@
       </template>
     </v-list>
     <ResponseShareDialog ref="ResponseShareDialog" :response="shareResponse"></ResponseShareDialog>
-    <SignUpGuideDialog ref="SignUpGuideDialog" :actionMessage="'レスを高評価するなら'"></SignUpGuideDialog>
+    <SignUpGuideDialog ref="SignUpGuideDialog" :actionMessage="actionMessage"></SignUpGuideDialog>
   </div>
 </template>
 
@@ -28,6 +28,7 @@ import ResponseShareDialog from "@/components/share/ResponseShareDialog";
 import SignUpGuideDialog from "@/components/guide/SignUpGuideDialog";
 export default {
   data: () => ({
+    actionMessage: "",
     shareResponse: {},
     targetResponse: []
   }),
@@ -39,6 +40,7 @@ export default {
     },
     async modifyNice(response) {
       if (!this.getLoginUser.isAuthState) {
+        this.actionMessage = "レスを高評価するなら";
         this.$refs.SignUpGuideDialog.openDialog();
         return;
       }
@@ -75,6 +77,11 @@ export default {
       );
     },
     openShareDialog(response) {
+      if (!this.getLoginUser.isAuthState) {
+        this.actionMessage = "レスを他のスレッドで共有するなら";
+        this.$refs.SignUpGuideDialog.openDialog();
+        return;
+      }
       this.shareResponse = response;
       this.$refs.ResponseShareDialog.openDialog(response.uniqueId);
     }
