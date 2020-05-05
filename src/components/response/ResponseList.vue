@@ -10,9 +10,11 @@
           :key="response.uniqueId"
           @on-remove-response-click="removeResponse"
           @on-modification-response-click="modifyNice"
+          @on-response-share-click="openShareDialog"
         ></Response>
       </template>
     </v-list>
+    <ResponseShareDialog ref="ResponseShareDialog" :responseContent="shareResponseContent"></ResponseShareDialog>
     <SignUpGuideDialog ref="SignUpGuideDialog" :actionMessage="'レスを高評価するなら'"></SignUpGuideDialog>
   </div>
 </template>
@@ -22,9 +24,11 @@ import { mapGetters } from "vuex";
 import responseService from "@/service/response/response-service";
 import EmptyState from "@/components/layout/EmptyState";
 import Response from "@/components/response/Response";
+import ResponseShareDialog from "@/components/share/ResponseShareDialog";
 import SignUpGuideDialog from "@/components/guide/SignUpGuideDialog";
 export default {
   data: () => ({
+    shareResponseContent: "",
     targetResponse: []
   }),
   methods: {
@@ -69,6 +73,10 @@ export default {
         "on-modification-response-click",
         "レスを削除しました。"
       );
+    },
+    openShareDialog(response) {
+      this.shareResponseContent = response.content;
+      this.$refs.ResponseShareDialog.openDialog(response.uniqueId);
     }
   },
   props: {
@@ -83,6 +91,7 @@ export default {
   components: {
     EmptyState,
     Response,
+    ResponseShareDialog,
     SignUpGuideDialog
   }
 };

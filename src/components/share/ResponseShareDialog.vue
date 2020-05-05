@@ -114,9 +114,12 @@ export default {
         await targetResponse.responseList.push(response);
         await responseService.modify(targetResponse, responseId);
       }
+
       this.$router.push({
         path: `/thread-detail/${this.selectedThread}`
       });
+      this.content = "";
+      this.uniqueId = "";
       this.closeDialog();
     },
     openDialog(uniqueId) {
