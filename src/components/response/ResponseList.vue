@@ -14,7 +14,7 @@
         ></Response>
       </template>
     </v-list>
-    <ResponseShareDialog ref="ResponseShareDialog" :responseContent="shareResponseContent"></ResponseShareDialog>
+    <ResponseShareDialog ref="ResponseShareDialog" :response="shareResponse"></ResponseShareDialog>
     <SignUpGuideDialog ref="SignUpGuideDialog" :actionMessage="'レスを高評価するなら'"></SignUpGuideDialog>
   </div>
 </template>
@@ -28,7 +28,7 @@ import ResponseShareDialog from "@/components/share/ResponseShareDialog";
 import SignUpGuideDialog from "@/components/guide/SignUpGuideDialog";
 export default {
   data: () => ({
-    shareResponseContent: "",
+    shareResponse: {},
     targetResponse: []
   }),
   methods: {
@@ -75,7 +75,7 @@ export default {
       );
     },
     openShareDialog(response) {
-      this.shareResponseContent = response.content;
+      this.shareResponse = response;
       this.$refs.ResponseShareDialog.openDialog(response.uniqueId);
     }
   },

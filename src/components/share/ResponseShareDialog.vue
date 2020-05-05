@@ -57,15 +57,22 @@ export default {
         return;
       }
 
+      let threadId = "";
+      if (this.$route.params.threadId !== undefined) {
+        threadId = this.$route.params.threadId;
+      } else {
+        threadId = this.response.threadId;
+      }
+
       let threadUrl = await this.$router.resolve({
         name: "thread-detail",
         params: {
-          threadId: this.$route.params.threadId
+          threadId: threadId
         }
       }).href;
 
-      let shareContent = this.responseContent;
-      let indexOfResult = this.responseContent.indexOf(
+      let shareContent = this.response.content;
+      let indexOfResult = this.response.content.indexOf(
         "[メッセージを確認する。]"
       );
       if (indexOfResult !== -1) {
@@ -131,7 +138,7 @@ export default {
     }
   },
   props: {
-    responseContent: { type: String, default: "" }
+    response: { type: Object, required: true }
   },
   computed: {
     ...mapGetters(["getLoginUser", "getThreads"]),
@@ -144,6 +151,7 @@ export default {
     }
   },
   watch: {},
-  components: {}
+  components: {},
+  created() {}
 };
 </script>
