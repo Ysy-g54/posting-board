@@ -7,19 +7,27 @@
     </v-app>
     <v-app v-else>
       <router-view></router-view>
+      <Footer />
     </v-app>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
+import Footer from "@/components/layout/Footer";
 export default {
   name: "App",
   computed: {
     ...mapGetters(["getIsLoading"])
+  },
+  components: {
+    Footer
   }
 };
 </script>
 
-<style>
+<style scoped>
+footer {
+  margin-top: auto;
+}
 </style>
