@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <Toolbar :title="'検索結果 ' + count + '件'"></Toolbar>
-    <div v-if="emptyStateFlg">
+    <div v-if="emptyStateFlg" class="emptystate">
       <EmptyState :message="'条件を変えて再度検索してみてください...。'"></EmptyState>
     </div>
     <div v-else>
@@ -178,4 +178,8 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped></style>
+<style scoped>
+.emptystate {
+  height: 502px;
+}
+</style>
