@@ -30,7 +30,7 @@
         </v-flex>
       </v-layout>
     </v-container>
-    <SignUpGuideDialog ref="SignUpGuideDialog" :actionMessage="'検索をするなら'"></SignUpGuideDialog>
+    <SignUpGuideDialog ref="SignUpGuideDialog" :actionMessage="'スレッドを登録するなら'"></SignUpGuideDialog>
   </div>
 </template>
 
@@ -73,17 +73,29 @@ export default {
       };
       await threadService.register(thread).catch(() => {
         this.isBtnLoading = false;
-        this.$emit(
-          "on-register-response-click",
-          "スレッドの作成に失敗しました。接続確認をし、再度お試しください。"
-        );
+        if (!this.isXsDisplay) {
+          this.$emit(
+            "on-register-response-click",
+            "スレッドの作成に失敗しました。接続確認をし、再度お試しください。"
+          );
+        }
       });
       this.title = "";
       this.selectedCategories = [];
       this.description = "";
       this.$v.$reset();
       this.isBtnLoading = false;
-      await this.$emit("on-register-thread-click", "スレッドを作成しました。");
+      if (this.isXsDisplay) {
+        this.$router.push({
+          name: "thread",
+          params: { snackbarMessage: "スレッドを作成しました。" }
+        });
+      } else {
+        await this.$emit(
+          "on-register-thread-click",
+          "スレッドを作成しました。"
+        );
+      }
     }
   },
   computed: {
@@ -96,6 +108,9 @@ export default {
     },
     getCategories() {
       return categories;
+    },
+    isXsDisplay() {
+      return this.$vuetify.breakpoint.xsOnly;
     },
     ...mapGetters(["getLoginUser"])
   },
