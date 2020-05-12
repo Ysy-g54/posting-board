@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <v-row>
-      <v-col cols="12" sm="6" md="6" lg="6" xl="6">
+      <v-col cols="12" sm="6">
         <v-subheader>スレッド一覧</v-subheader>
         <span>{{ getThreadCount }} 個</span>
         <Loading v-if="overlay" />
@@ -13,8 +13,23 @@
           @success-copy-to-clip-board="showSnackbar"
         ></ThreadList>
       </v-col>
-      <v-col cols="12" sm="6" md="6" lg="6" xl="6">
-        <ThreadRegistration @on-register-thread-click="redrawThread"></ThreadRegistration>
+      <v-col>
+        <ThreadRegistration
+          v-if="!$vuetify.breakpoint.xsOnly"
+          @on-register-thread-click="redrawThread"
+        ></ThreadRegistration>
+        <v-btn
+          v-else
+          :to="'/thread-registration'"
+          color="accent"
+          dark
+          right
+          fab
+          fixed
+          class="speed-dial"
+        >
+          <v-icon>mdi-plus</v-icon>
+        </v-btn>
       </v-col>
     </v-row>
     <v-snackbar v-model="snackbar">
@@ -56,6 +71,7 @@ export default {
         let threadSnapshot = _.set(document.data(), "threadId", document.id);
         threadListSnapshot.push(threadSnapshot);
       });
+      this.threads.length = 0;
       this.threads = threadListSnapshot;
       this.fetchThreads(threadListSnapshot);
       this.emptyStateFlg = _.isEmpty(this.threads);
@@ -68,6 +84,9 @@ export default {
     }
   },
   created() {
+    if (this.$route.params.snackbarMessage !== undefined) {
+      this.showSnackbar(this.$route.params.snackbarMessage);
+    }
     this.searchThread();
   },
   components: {
@@ -83,5 +102,9 @@ export default {
 .thread-list {
   height: 470px;
   overflow-y: auto;
+}
+
+.speed-dial {
+  bottom: 50px;
 }
 </style>

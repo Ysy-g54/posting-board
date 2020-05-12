@@ -7,6 +7,7 @@ import Signup from "@/components/signup/Signup";
 import ThreadDetailSearchResult from "@/components/search/ThreadDetailSearchResult";
 import Thread from "@/components/thread/Thread";
 import ThreadDetail from "@/components/thread/ThreadDetail";
+import ThreadRegistrationPage from "@/components/thread/ThreadRegistrationPage";
 import Top from "@/components/top/Top";
 import firebase from "firebase";
 
@@ -36,6 +37,12 @@ const router = new Router({
           name: "thread",
           component: Thread,
           meta: { isPublic: false, title: "スレッド" },
+        },
+        {
+          path: "/thread-registration",
+          name: "thread-registration",
+          component: ThreadRegistrationPage,
+          meta: { isPublic: false, title: "スレッド登録" },
         },
         {
           path: "/thread-detail/:threadId/:uniqueId?",
