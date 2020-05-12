@@ -133,8 +133,4 @@ export default {
   height: 478px;
   overflow-y: auto;
 }
-
-.speed-dial {
-  bottom: 50px;
-}
 </style>
