@@ -6,7 +6,7 @@
         <v-chip :color="getCategoryColor(category)">{{ formatCategory(category) }}</v-chip>
       </span>
       <v-row>
-        <v-col cols="12" sm="6" md="6" lg="6" xl="6">
+        <v-col cols="12" sm="6">
           <Loading v-if="overlay" />
           <ResponseList
             v-else
@@ -15,7 +15,7 @@
             @on-modification-response-click="showSnackbar"
           ></ResponseList>
         </v-col>
-        <v-col cols="12" sm="6" md="6" lg="6" xl="6">
+        <v-col>
           <ResponseRegistration
             :responseContent="responseContent"
             :responseId="responseId"
@@ -132,5 +132,9 @@ export default {
 .response-list {
   height: 478px;
   overflow-y: auto;
+}
+
+.speed-dial {
+  bottom: 50px;
 }
 </style>
