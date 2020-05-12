@@ -1,34 +1,51 @@
 <template>
   <div>
-    <v-container>
-      <v-flex>
-        <v-btn large color="primary" @click="registerResponse" :loading="isBtnLoading">レスを送る</v-btn>
-      </v-flex>
-    </v-container>
-    <v-container fluid fill-height>
-      <v-layout align-center justify-center>
-        <v-tabs>
-          <v-tab>編集</v-tab>
-          <v-tab>プレビュー</v-tab>
-          <v-tab-item>
-            <v-flex md12>
-              <v-textarea
-                v-model="content"
-                placeholder="レス(※更新はできません...。)"
-                outlined
-                required
-                :error-messages="getContentError"
-              ></v-textarea>
-            </v-flex>
-          </v-tab-item>
-          <v-tab-item>
-            <v-flex md12 class="preview">
-              <div v-html="compiledMarkdown"></div>
-            </v-flex>
-          </v-tab-item>
-        </v-tabs>
-      </v-layout>
-    </v-container>
+    <div v-if="!$vuetify.breakpoint.xsOnly">
+      <v-container>
+        <v-flex>
+          <v-btn large color="primary" @click="registerResponse" :loading="isBtnLoading">レスを送る</v-btn>
+        </v-flex>
+      </v-container>
+      <v-container fluid fill-height>
+        <v-layout align-center justify-center>
+          <v-tabs>
+            <v-tab>編集</v-tab>
+            <v-tab>プレビュー</v-tab>
+            <v-tab-item>
+              <v-flex md12>
+                <v-textarea
+                  v-model="content"
+                  placeholder="レス(※更新はできません...。)"
+                  outlined
+                  required
+                  :error-messages="getContentError"
+                ></v-textarea>
+              </v-flex>
+            </v-tab-item>
+            <v-tab-item>
+              <v-flex md12 class="preview">
+                <div v-html="compiledMarkdown"></div>
+              </v-flex>
+            </v-tab-item>
+          </v-tabs>
+        </v-layout>
+      </v-container>
+    </div>
+    <div v-else>
+      <v-footer fixed>
+        <v-textarea
+          v-model="content"
+          placeholder="レス(※更新はできません...。)"
+          auto-grow
+          rows="1"
+          required
+          :error-messages="getContentError"
+        ></v-textarea>
+        <v-btn :disabled="content === ''" color="primary" icon @click="registerResponse">
+          <v-icon>mdi-send</v-icon>
+        </v-btn>
+      </v-footer>
+    </div>
     <SignUpGuideDialog ref="SignUpGuideDialog" :actionMessage="'レスを登録するなら'"></SignUpGuideDialog>
   </div>
 </template>

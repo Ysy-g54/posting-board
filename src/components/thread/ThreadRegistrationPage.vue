@@ -10,7 +10,6 @@ import ThreadRegistration from "@/components/thread/ThreadRegistration";
 import Toolbar from "@/components/layout/Toolbar";
 export default {
   data: () => ({}),
-  validations: {},
   methods: {},
   computed: {},
   created() {},
