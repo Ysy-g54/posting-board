@@ -2,7 +2,7 @@
   <div v-if="emptyStateFlg">
     <EmptyState :message="'レスがまだ送られていないようです...。レスを送ってみましょう！'"></EmptyState>
   </div>
-  <div v-else class="response-list">
+  <div v-else :class="{ 'response-list' : !$vuetify.breakpoint.xsOnly}">
     <v-list three-line>
       <template v-for="response in responseList">
         <Response
