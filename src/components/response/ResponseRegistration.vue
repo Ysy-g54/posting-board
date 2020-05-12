@@ -23,7 +23,7 @@
               </v-flex>
             </v-tab-item>
             <v-tab-item>
-              <v-flex md12 class="preview">
+              <v-flex md12 :class="{ 'preview' : !$vuetify.breakpoint.xsOnly}">
                 <div v-html="compiledMarkdown"></div>
               </v-flex>
             </v-tab-item>
@@ -161,7 +161,6 @@ export default {
 }
 
 .preview {
-  height: 260px;
   text-align: -webkit-left;
 }
 </style>

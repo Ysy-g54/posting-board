@@ -4,7 +4,7 @@
         '表示するスレッドがありません。スレッドを作成して話してみましょう！'
       "></EmptyState>
   </div>
-  <div v-else class="thread-list">
+  <div v-else :class="{ 'thread-list' : !$vuetify.breakpoint.xsOnly}">
     <v-list three-line>
       <template v-for="(thread, index) in threadList">
         <v-list-item :key="thread.threadId">
