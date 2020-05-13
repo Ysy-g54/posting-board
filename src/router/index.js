@@ -52,7 +52,7 @@ const router = new Router({
         },
         {
           path: "/search",
-          query: { q: "word" },
+          query: { q: "word", category: "category" },
           name: "search",
           component: ThreadDetailSearchResult,
           meta: { isPublic: false, title: "スレッド・レスの検索結果" },

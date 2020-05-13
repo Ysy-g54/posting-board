@@ -51,15 +51,19 @@
         </v-list>
       </v-menu>
       <v-toolbar-title>
-        <div>
-          <v-btn class="custom-transform-class text-none" text :to="'/thread'">
-            <div class="d-none d-sm-flex">postingBoard</div>
-            <div class="d-flex d-sm-none">board</div>
-          </v-btn>
-        </div>
+        <v-btn class="custom-transform-class text-none" text :to="'/thread'">
+          <div>postingBoard</div>
+        </v-btn>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <ThreadDetailSearchField></ThreadDetailSearchField>
+      <template v-if="!$vuetify.breakpoint.xsOnly">
+        <ThreadSearchTag />
+        <ThreadDetailSearchField />
+      </template>
+      <template v-if="$vuetify.breakpoint.xsOnly" v-slot:extension>
+        <ThreadSearchTag />
+        <ThreadDetailSearchField />
+      </template>
     </v-toolbar>
   </div>
 </template>
@@ -68,6 +72,7 @@
 import { mapActions, mapGetters } from "vuex";
 import { contactForm } from "../../constants";
 import ThreadDetailSearchField from "@/components/search/ThreadDetailSearchField";
+import ThreadSearchTag from "@/components/search/ThreadSearchTag";
 export default {
   data: () => ({}),
   methods: {
@@ -88,7 +93,8 @@ export default {
   },
   created() {},
   components: {
-    ThreadDetailSearchField
+    ThreadDetailSearchField,
+    ThreadSearchTag
   }
 };
 </script>

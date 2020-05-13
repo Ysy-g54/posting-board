@@ -28,7 +28,7 @@ export default {
       }
       this.$router.push({
         name: "search",
-        query: { q: this.q }
+        query: { q: this.q, category: this.$route.query.category }
       });
     }
   },
