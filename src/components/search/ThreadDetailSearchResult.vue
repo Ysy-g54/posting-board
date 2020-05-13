@@ -1,6 +1,10 @@
 <template>
   <v-container fluid>
     <Toolbar :title="'検索結果 ' + count + '件'"></Toolbar>
+    <span v-if="!isEmptyCategoryId">
+      選択したカテゴリ:
+      <v-chip :color="getCategoryColor(getCategoryId)">{{ formatCategory(getCategoryId) }}</v-chip>
+    </span>
     <div v-if="emptyStateFlg" class="emptystate">
       <EmptyState :message="'条件を変えて再度検索してみてください...。'"></EmptyState>
     </div>
@@ -111,8 +115,9 @@ export default {
       await this.filteredThreads.push(
         await this.threads.filter(
           threadContent =>
-            threadContent.title !== "" &&
-            threadContent.title.includes(this.$route.query.q)
+            (threadContent.title !== "" &&
+              threadContent.title.includes(this.$route.query.q)) ||
+            threadContent.categories.includes(this.$route.query.category)
         )
       );
     },
@@ -145,11 +150,23 @@ export default {
   computed: {
     notEmptyThread() {
       return !_.isEmpty(this.filteredThreads[0]);
+    },
+    isEmptyCategoryId() {
+      return (
+        this.$route.query.category === undefined ||
+        this.$route.query.category === ""
+      );
+    },
+    getCategoryId() {
+      return this.$route.query.category;
     }
   },
   watch: {
-    async "$route.query.q"() {
-      if (this.$route.query.q !== undefined) {
+    async "$route.query"() {
+      if (
+        this.$route.query.q !== undefined ||
+        this.$route.query.category !== undefined
+      ) {
         await this.filterResponse();
         await this.filterThread();
         await this.calcCount();
