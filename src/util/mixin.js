@@ -19,8 +19,7 @@ export default {
     }
   },
   data: () => ({
-    isEdited: false,
-    // loading: false
+    isEdited: false
   }),
   methods: {
     formatDate(date, format) {
@@ -38,34 +37,17 @@ export default {
       }
     },
     getCategoryColor(categoryId) {
-      let categoryColor = "";
-      categories.find((category) => {
-        if (categoryId === category.categoryId) {
-          categoryColor = category.color;
-          return true;
-        }
-      });
-      return categoryColor;
+      return this.findCategoryById(categoryId).color;
     },
     formatCategory(categoryId) {
-      let categoryNm = "";
-      categories.find((category) => {
-        if (categoryId === category.categoryId) {
-          categoryNm = category.categoryNm;
-          return true;
-        }
-      });
-      return categoryNm;
+      return this.findCategoryById(categoryId).categoryNm;
+    },
+    findCategoryById(categoryId) {
+      return categories.find((category) => categoryId === category.categoryId);
     },
     handler(event) {
       event.returnValue = "行った変更が保存されない可能性があります。";
     },
-    // startLoading() {
-    // 	this.loading = true;
-    // },
-    // endLoading() {
-    // 	this.loading = false;
-    // },
     startEdit() {
       this.isEdited = true;
     },
