@@ -2,7 +2,9 @@
   <div>
     <v-card class="mx-auto" outlined>
       <div v-html="compiledMarkdown(response.content)"></div>
-      <v-list-item-subtitle v-html="`送った日: ${formatDate(response.insertDateTime)}`"></v-list-item-subtitle>
+      <v-list-item-subtitle
+        v-html="`送った日: ${formatDate(response.insertDateTime)}`"
+      ></v-list-item-subtitle>
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn icon @click="modifyNice(response)">
@@ -28,10 +30,10 @@
 
 <script>
 import { mapGetters } from "vuex";
-import marked from "marked";
+import marked from "marked/lib/marked.js";
 export default {
   data: () => ({
-    targetResponse: []
+    targetResponse: [],
   }),
   methods: {
     compiledMarkdown(content) {
@@ -45,10 +47,10 @@ export default {
     },
     openDialog(response) {
       this.$emit("on-response-share-click", response);
-    }
+    },
   },
   props: {
-    response: { type: Object, required: true }
+    response: { type: Object, required: true },
   },
   computed: {
     ...mapGetters(["getLoginUser"]),
@@ -58,11 +60,11 @@ export default {
       } else {
         return false;
       }
-    }
+    },
   },
   watch: {},
   created() {},
-  components: {}
+  components: {},
 };
 </script>
 

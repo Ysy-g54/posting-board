@@ -52,7 +52,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import marked from "marked";
+import marked from "marked/lib/marked.js";
 import responseService from "@/service/response/response-service";
 import { required } from "vuelidate/lib/validators";
 import SignUpGuideDialog from "@/components/guide/SignUpGuideDialog";
