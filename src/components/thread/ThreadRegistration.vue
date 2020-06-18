@@ -96,7 +96,7 @@ export default {
           "スレッドを作成しました。"
         );
       }
-      this.gaEvent("registered thread");
+      this.gaEvent(`uid ${this.getLoginUser.uid} registered thread`);
     }
   },
   computed: {

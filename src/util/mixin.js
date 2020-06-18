@@ -20,7 +20,7 @@ export default {
     }
   },
   data: () => ({
-    isEdited: false
+    isEdited: false,
   }),
   methods: {
     formatDate(date, format) {
@@ -55,11 +55,9 @@ export default {
     endEdit() {
       this.isEdited = false;
     },
-    gaEvent(action) {
-      firebase
-        .analytics()
-        .logEvent(`uid ${this.getLoginUser.uid} ${action}`);
-    }
+    gaEvent(message) {
+      firebase.analytics().logEvent(`${message}`);
+    },
   },
   computed: {},
   watch: {

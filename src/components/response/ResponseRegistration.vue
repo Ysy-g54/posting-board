@@ -115,7 +115,7 @@ export default {
       this.content = await "";
       this.$v.$reset();
       this.isBtnLoading = false;
-      this.gaEvent("registered response");
+      this.gaEvent(`uid ${this.getLoginUser.uid} registered response`);
       await this.$emit("on-register-response-click", "レスを送りました。");
     },
     async searchResponseById() {
