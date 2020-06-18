@@ -2,6 +2,7 @@ import _ from "lodash";
 import moment from "moment";
 import marked from "marked/lib/marked.js";
 import { categories } from "@/constants";
+import firebase from "firebase";
 
 export default {
   beforeRouteLeave(to, from, next) {
@@ -54,6 +55,11 @@ export default {
     endEdit() {
       this.isEdited = false;
     },
+    gaEvent(action) {
+      firebase
+        .analytics()
+        .logEvent(`uid ${this.getLoginUser.uid} ${action}`);
+    }
   },
   computed: {},
   watch: {

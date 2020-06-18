@@ -10,7 +10,11 @@
           <div class="headline pb-12">
             普段話している人や、話したことのない誰かと気軽にお話するためのアプリです。
             <br />様々な話をすることで、新しい知見を得られたり、発散して、少しでもポジティブに生活できるようになれれば幸いです。
-            <v-btn color="primary" :to="'/thread'">{{ '実際の画面を見たい場合はこちら' }}</v-btn>
+            <v-btn
+              @click="gaEvent('browse the thread screen from the top screen')"
+              color="primary"
+              :to="'/thread'"
+            >{{ '実際の画面を見たい場合はこちら' }}</v-btn>
           </div>
           <div class="headline">
             このアプリは、転職活動の中の「5chみたいなアプリを作成する」課題から生まれました。

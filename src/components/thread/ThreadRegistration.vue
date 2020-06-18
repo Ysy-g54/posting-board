@@ -96,6 +96,7 @@ export default {
           "スレッドを作成しました。"
         );
       }
+      this.gaEvent("registered thread");
     }
   },
   computed: {
