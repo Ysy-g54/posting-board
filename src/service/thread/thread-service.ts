@@ -19,7 +19,7 @@ function searchAll() {
  * @param  {String} threadId
  * @returns スレッド情報
  */
-function searchByThreadId(threadId) {
+function searchByThreadId(threadId: any) {
   return firebase
     .firestore()
     .collection("thread")
@@ -32,7 +32,7 @@ function searchByThreadId(threadId) {
  * @param  {Object} thread
  * @returns 登録したスレッド情報
  */
-function register(thread) {
+function register(thread: any) {
   return firebase
     .firestore()
     .collection("thread")
@@ -43,7 +43,7 @@ function register(thread) {
  * スレッドIDをもとにスレッド情報を削除します。
  * @param  {String} threadId
  */
-function remove(threadId) {
+function remove(threadId: any) {
   firebase
     .firestore()
     .collection("thread")

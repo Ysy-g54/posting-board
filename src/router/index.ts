@@ -1,13 +1,22 @@
 import Vue from "vue";
 import Router from "vue-router";
+// @ts-expect-error ts-migrate(2307) FIXME: Cannot find module '@/components/favorite/Favorite... Remove this comment to see the full error message
 import FavoriteResponse from "@/components/favorite/FavoriteResponse";
+// @ts-expect-error ts-migrate(2307) FIXME: Cannot find module '@/components/layout/Header' or... Remove this comment to see the full error message
 import Header from "@/components/layout/Header";
+// @ts-expect-error ts-migrate(2307) FIXME: Cannot find module '@/components/login/Login' or i... Remove this comment to see the full error message
 import Login from "@/components/login/Login";
+// @ts-expect-error ts-migrate(2307) FIXME: Cannot find module '@/components/signup/Signup' or... Remove this comment to see the full error message
 import Signup from "@/components/signup/Signup";
+// @ts-expect-error ts-migrate(2307) FIXME: Cannot find module '@/components/search/ThreadDeta... Remove this comment to see the full error message
 import ThreadDetailSearchResult from "@/components/search/ThreadDetailSearchResult";
+// @ts-expect-error ts-migrate(2307) FIXME: Cannot find module '@/components/thread/Thread' or... Remove this comment to see the full error message
 import Thread from "@/components/thread/Thread";
+// @ts-expect-error ts-migrate(2307) FIXME: Cannot find module '@/components/thread/ThreadDeta... Remove this comment to see the full error message
 import ThreadDetail from "@/components/thread/ThreadDetail";
+// @ts-expect-error ts-migrate(2307) FIXME: Cannot find module '@/components/thread/ThreadRegi... Remove this comment to see the full error message
 import ThreadRegistrationPage from "@/components/thread/ThreadRegistrationPage";
+// @ts-expect-error ts-migrate(2307) FIXME: Cannot find module '@/components/top/Top' or its c... Remove this comment to see the full error message
 import Top from "@/components/top/Top";
 import firebase from "firebase";
 
@@ -52,6 +61,7 @@ const router = new Router({
         },
         {
           path: "/search",
+          // @ts-expect-error ts-migrate(2322) FIXME: Object literal may only specify known properties, ... Remove this comment to see the full error message
           query: { q: "word", category: "category" },
           name: "search",
           component: ThreadDetailSearchResult,
