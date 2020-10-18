@@ -5,7 +5,7 @@ import { categories } from "@/constants";
 import firebase from "firebase";
 
 export default {
-  beforeRouteLeave(to, from, next) {
+  beforeRouteLeave(to: any, from: any, next: any) {
     if (this.isEdited) {
       const answer = window.confirm(
         "行った変更が保存されない可能性があります。"
@@ -23,7 +23,7 @@ export default {
     isEdited: false,
   }),
   methods: {
-    formatDate(date, format) {
+    formatDate(date: any, format: any) {
       if (
         (!_.isDate(date) && _.isEmpty(date)) ||
         date.toLocaleString().indexOf("Timestamp") === -1
@@ -37,16 +37,16 @@ export default {
         return m.format(format);
       }
     },
-    getCategoryColor(categoryId) {
+    getCategoryColor(categoryId: any) {
       return this.findCategoryById(categoryId).color;
     },
-    formatCategory(categoryId) {
+    formatCategory(categoryId: any) {
       return this.findCategoryById(categoryId).categoryNm;
     },
-    findCategoryById(categoryId) {
-      return categories.find((category) => categoryId === category.categoryId);
+    findCategoryById(categoryId: any) {
+      return categories.find((category: any) => categoryId === category.categoryId);
     },
-    handler(event) {
+    handler(event: any) {
       event.returnValue = "行った変更が保存されない可能性があります。";
     },
     startEdit() {
@@ -55,7 +55,7 @@ export default {
     endEdit() {
       this.isEdited = false;
     },
-    gaEvent(message) {
+    gaEvent(message: any) {
       firebase.analytics().logEvent(`${message}`);
     },
   },

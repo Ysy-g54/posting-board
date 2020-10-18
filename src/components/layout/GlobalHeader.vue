@@ -70,7 +70,7 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-import { contactForm } from "../../constants";
+import { contactForm } from "../../constants.ts";
 import ThreadDetailSearchField from "@/components/search/ThreadDetailSearchField";
 import ThreadSearchTag from "@/components/search/ThreadSearchTag";
 export default {

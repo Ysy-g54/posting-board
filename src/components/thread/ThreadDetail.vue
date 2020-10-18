@@ -34,9 +34,9 @@
 
 <script>
 import _ from "lodash";
-import database from "@/service/database";
-import responseService from "@/service/response/response-service";
-import threadService from "@/service/thread/thread-service";
+import database from "@/service/database.ts";
+import responseService from "@/service/response/response-service.ts";
+import threadService from "@/service/thread/thread-service.ts";
 import ContentNotFound from "@/components/layout/ContentNotFound";
 import Loading from "@/components/layout/Loading";
 import ResponseList from "@/components/response/ResponseList";

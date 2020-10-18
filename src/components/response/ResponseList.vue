@@ -21,7 +21,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import responseService from "@/service/response/response-service";
+import responseService from "@/service/response/response-service.ts";
 import EmptyState from "@/components/layout/EmptyState";
 import Response from "@/components/response/Response";
 import ResponseShareDialog from "@/components/share/ResponseShareDialog";

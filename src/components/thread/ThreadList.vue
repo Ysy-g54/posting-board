@@ -67,8 +67,8 @@
 </template>
 
 <script>
-import responseService from "@/service/response/response-service";
-import threadService from "@/service/thread/thread-service";
+import responseService from "@/service/response/response-service.ts";
+import threadService from "@/service/thread/thread-service.ts";
 import EmptyState from "@/components/layout/EmptyState";
 import ShareDialog from "@/components/share/ShareDialog";
 import { mapGetters } from "vuex";
