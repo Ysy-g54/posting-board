@@ -15,7 +15,6 @@ function searchAll() {
  * @param  {String} responseId
  * @returns レスポンス情報
  */
-// @ts-expect-error ts-migrate(7006) FIXME: Parameter 'responseId' implicitly has an 'any' typ... Remove this comment to see the full error message
 function searchByResponseId(responseId) {
 	return firebase.firestore().collection("response").doc(responseId).get();
 }
@@ -25,7 +24,6 @@ function searchByResponseId(responseId) {
  * 
  * @returns レスポンスリスト情報
  */
-// @ts-expect-error ts-migrate(7006) FIXME: Parameter 'threadId' implicitly has an 'any' type.
 function searchByThreadId(threadId) {
 	return firebase.firestore().collection("response").where("threadId", "==", threadId).get();
 }
@@ -35,8 +33,7 @@ function searchByThreadId(threadId) {
  * @param  {Object} response
  * @returns 登録したスレッド情報
  */
-// @ts-expect-error ts-migrate(7006) FIXME: Parameter 'response' implicitly has an 'any' type.
-function register: any(response) {
+function register(response) {
 	return firebase.firestore().collection("response").add(response);
 }
 
@@ -46,7 +43,6 @@ function register: any(response) {
  * @param  {String} responseId
  * @returns 更新したスレッド情報
  */
-// @ts-expect-error ts-migrate(7006) FIXME: Parameter 'response' implicitly has an 'any' type.
 function modify(response, responseId) {
 	return firebase.firestore().collection("response").doc(responseId).set(response);
 }
@@ -54,7 +50,6 @@ function modify(response, responseId) {
  * レスポンスIDをもとにレスポンス情報を削除します。
  * @param  {String} responseId
  */
-// @ts-expect-error ts-migrate(7006) FIXME: Parameter 'responseId' implicitly has an 'any' typ... Remove this comment to see the full error message
 function remove(responseId) {
 	firebase.firestore().collection("response").doc(responseId).delete();
 }

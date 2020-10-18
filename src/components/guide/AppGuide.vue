@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { contactForm } from "../../constants";
+import { contactForm } from "../../constants.ts";
 export default {
   data: () => ({}),
   methods: {},

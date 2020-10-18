@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { shareApps, copy } from "../../constants";
+import { shareApps, copy } from "../../constants.ts";
 export default {
   data: () => ({
     showDialog: false,

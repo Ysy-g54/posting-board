@@ -36,8 +36,8 @@
 
 <script>
 import { mapGetters } from "vuex";
-import threadService from "@/service/thread/thread-service";
-import { categories } from "@/constants";
+import threadService from "@/service/thread/thread-service.ts";
+import { categories } from "@/constants.ts";
 import { required } from "vuelidate/lib/validators";
 import SignUpGuideDialog from "@/components/guide/SignUpGuideDialog";
 export default {

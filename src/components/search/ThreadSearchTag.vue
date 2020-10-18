@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { categories } from "@/constants";
+import { categories } from "@/constants.ts";
 export default {
   data: () => ({}),
   methods: {

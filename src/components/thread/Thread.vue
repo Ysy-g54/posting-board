@@ -42,7 +42,7 @@
 <script>
 import _ from "lodash";
 import { mapActions } from "vuex";
-import threadService from "@/service/thread/thread-service";
+import threadService from "@/service/thread/thread-service.ts";
 import Loading from "@/components/layout/Loading";
 import ThreadList from "@/components/thread/ThreadList";
 import ThreadRegistration from "@/components/thread/ThreadRegistration";

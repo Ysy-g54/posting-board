@@ -37,7 +37,7 @@
 <script>
 import { mapGetters } from "vuex";
 import { required } from "vuelidate/lib/validators";
-import responseService from "@/service/response/response-service";
+import responseService from "@/service/response/response-service.ts";
 export default {
   data: () => ({
     isBtnLoading: false,
