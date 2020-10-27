@@ -16,7 +16,6 @@ import Thread from "@/components/thread/Thread";
 import ThreadDetail from "@/components/thread/ThreadDetail";
 // @ts-expect-error ts-migrate(2307) FIXME: Cannot find module '@/components/thread/ThreadRegi... Remove this comment to see the full error message
 import ThreadRegistrationPage from "@/components/thread/ThreadRegistrationPage";
-import HelloWorld from "@/components/HelloWorld.vue";
 // @ts-expect-error ts-migrate(2307) FIXME: Cannot find module '@/components/top/Top' or its c... Remove this comment to see the full error message
 import Top from "@/components/top/Top";
 import firebase from "firebase";
@@ -30,12 +29,6 @@ const router = new Router({
       name: "top",
       component: Top,
       meta: { isPublic: true, title: "トップ" },
-    },
-    {
-      path: "/hello",
-      name: "HelloWorld",
-      component: HelloWorld,
-      meta: { isPublic: true, title: "HelloWorld" },
     },
     {
       path: "/login",
