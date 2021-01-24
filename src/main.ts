@@ -11,9 +11,11 @@ import "./registerServiceWorker";
 import { mapActions } from "vuex";
 import _ from "lodash";
 import threadService from "@/service/thread/thread-service.ts";
+import VueCompositionApi from '@vue/composition-api';
 
 Vue.config.productionTip = false;
 Vue.use(Vuelidate);
+Vue.use(VueCompositionApi);
 Vue.component("CenterTemplate", CenterTemplate);
 Vue.mixin(Mixin);
 
